@@ -1,0 +1,36 @@
+﻿@model List<ProductCategoryViewModel>
+<div id="mobile-menu">
+    <ul>
+        <li>
+            <a href="/" rel="nofollow">Trang chủ</a>
+        </li>
+        <li><a href="/gioi-thieu.html">Giới thiệu</a></li>
+        <li>
+            <a href="#">Sản phẩm</a>
+            <ul>
+                @foreach (var item in Model.Where(x => x.ParentId == null))
+                {
+                    <li>
+                        <a href="/@item.SeoAlias-c.@(item.Id).html">@item.Name </a>
+                        @if (Model.Any(x => x.ParentId == item.Id))
+                        {
+                            <ul>
+                                @foreach (var subItem in Model.Where(x => x.ParentId == item.Id))
+                                {
+                                    <li><a href="/@subItem.SeoAlias-c.@(subItem.Id).html"><span>@subItem.Name</span></a></li>
+                                }
+                            </ul>
+                        }
+
+                    </li>
+                }
+
+            </ul>
+        </li>
+        <li>
+            <a href="/bai-viet.html">Bài viết</a>
+        </li>
+        <li><a href="/huong-dan-mua-hang.html">Hướng dẫn mua hàng</a></li>
+        <li><a href="/lien-he.html">Liên hệ</a></li>
+    </ul>
+</div>

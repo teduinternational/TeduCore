@@ -1,0 +1,97 @@
+﻿@model ContactViewModel
+@{
+    ViewData["PageTitle"] = "Liên hệ với chúng tôi";
+    ViewData["SeoKeywords"] = "Liên hệ với chúng tôi";
+    ViewData["SeoDescription"] = "Liên hệ với chúng tôi";
+}
+<!-- Breadcrumbs -->
+
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Trang chủ" href="/">Trang chủ</a><span>&raquo;</span></li>
+                    <li><strong>Liên hệ</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<section class="main-container col1-layout">
+    <div class="main container">
+        <div class="row">
+            <section class="col-main col-sm-12">
+                <div id="contact" class="page-content page-contact">
+                    <div class="page-title">
+                        <h2>Liên hệ với chúng tôi</h2>
+                    </div>
+                    <div id="message-box-conact">Xin vui lòng liên hệ với chúng tôi qua thông tin dưới đây.</div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6" id="contact_form_map">
+                            <h3 class="page-subheading">@Model.ContactDetail.Name</h3>
+                            <br />
+                            <ul class="store_info">
+                                <li><i class="fa fa-home"></i>@Model.ContactDetail.Address</li>
+                                <li><i class="fa fa-phone"></i><span>@Model.ContactDetail.Phone</span></li>
+                                <li><i class="fa fa-envelope"></i>Email: <span><a href="mailto:@Model.ContactDetail.Email">@Model.ContactDetail.Email</a></span></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <h3 class="page-subheading">Gửi thông tin phản hồi</h3>
+                            <div class="contact-form-box">
+                                @if (ViewData["Success"] != null && (bool)ViewData["Success"] == true)
+                                {
+
+                                    <div class="alert alert-success" role="alert">
+                                        Cảm ơn bạn gửi thông tin thành công. Chúng tôi sẽ liên lạc với bạn sớm nhất.
+                                    </div>
+                                }
+                                else
+                                {
+                                    <form action="/lien-he.html" method="post">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+
+                                        @Html.AntiForgeryToken()
+                                        <div class="form-selector">
+                                            <label>Họ tên</label>
+                                            <input type="text" class="form-control input-sm" asp-for="Feedback.Name"/>
+                                        </div>
+                                        <div class="form-selector">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control input-sm" asp-for="Feedback.Email"/>
+                                        </div>
+
+                                        <div class="form-selector">
+                                            <label>Lời nhắn</label>
+                                            <textarea class="form-control input-sm" rows="10" asp-for="Feedback.Message"></textarea>
+                                        </div>
+                                        <div class="form-selector">
+                                            <recaptcha />
+                                            <span class="text-danger" id="recaptchaErrorMessage"></span>
+                                        </div>
+                                        <div class="form-selector">
+                                            <button type="submit" class="button"><i class="icon-paper-plane icons"></i>&nbsp; <span>Gửi đi</span></button>
+                                            &nbsp; <a href="#" class="button">Xóa</a>
+                                        </div>
+                                    </form>
+
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- Main Container End --> 
+@section Scripts {
+    <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

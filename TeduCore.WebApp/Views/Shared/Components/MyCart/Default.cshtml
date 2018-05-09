@@ -1,0 +1,47 @@
+﻿@model List<ShoppingCartViewModel>
+<div class="block sidebar-cart" id="sidebarCart">
+    <div class="sidebar-bar-title">
+        <h3>Giỏ hàng của tôi</h3>
+    </div>
+    <div class="block-content">
+        @if (Model.Count > 0)
+        {
+            <p class="amount">Đang có <a href="/gio-hang.html">@Model.Count sản phẩm</a> trong giỏ hàng.
+            </p>
+            <ul>
+                @foreach (var item in Model)
+                {
+                    var url = "/" + item.Product.SeoAlias + "-p." + item.Product.Id + ".html";
+                    <li class="item">
+                        <a href="@url" target="_blank" title="@item.Product.Name" class="product-image">
+                            <img src="@item.Product.ThumbnailImage" alt="@item.Product.Name">
+                        </a>
+                        <div class="product-details">
+                            <div class="access">
+                                <a href="#" title="@item.Product.Name" data-id="@item.Product.Id" class="remove-cart"><i class="icon-close"></i></a>
+                            </div>
+                            <p class="product-name">
+                                <a href="@url">@item.Product.Name</a>
+                            </p>
+                            <strong>@item.Quantity</strong> x <span class="price">@((item.Product.PromotionPrice ?? item.Product.Price).ToString("N0"))</span>
+                        </div>
+                    </li>
+                }
+
+
+            </ul>
+            <div class="summary">
+                <p class="subtotal"> <span class="label">Tổng tiền:</span> <span class="price">@Model.Sum(x => x.Quantity * x.Price).ToString("N0")</span>
+                </p>
+            </div>
+            <div class="cart-checkout">
+                <button class="button button-checkout" title="Đặt hàng" type="button" onclick="window.location.href = '/dat-hang.html'"><span>Đặt hàng</span></button>
+            </div>
+        }
+        else
+        {
+            <p class="amount">Chưa có sản phẩm nào trong giỏ hàng.
+            </p>
+        }
+    </div>
+</div>

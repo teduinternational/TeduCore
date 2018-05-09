@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewData["Title"] = "Đăng nhập hệ thống";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Panda Shop </title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <!-- Font Awesome -->
+        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <!-- NProgress -->
+        <link href="~/lib/nprogress/nprogress.css" rel="stylesheet">
+
+        <!-- Animate.css -->
+        <link href="~/lib/animate.css/animate.min.css" rel="stylesheet">
+        <!-- Custom Theme Style -->
+        <link href="~/admin-side/css/custom.css" rel="stylesheet" asp-append-version="true">
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <!-- Font Awesome -->
+        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <!-- NProgress -->
+        <link href="~/lib/nprogress/nprogress.css" rel="stylesheet">
+        <!-- Animate.css -->
+        <link href="~/lib/animate.css/animate.min.css" rel="stylesheet">
+        <link href="~/lib/notifyjs/dist/styles/metro/notify-metro.css" rel="stylesheet" />
+        <!-- Custom Theme Style -->
+        <link rel="stylesheet" href="~/admin-side/css/custom.min.css" asp-append-version="true" />
+    </environment>
+</head>
+
+<body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+
+        <div id="login" class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    <form method="post">
+                        <h1>ĐĂNG NHẬP</h1>
+                        <div>
+                            <input type="text" id="txtUserName" class="form-control" placeholder="Tài khoản" required="" />
+                        </div>
+                        <div>
+                            <input type="password" id="txtPassword" class="form-control" placeholder="Mật khẩu" required="" />
+                        </div>
+                        <div>
+                            <button class="btn btn-default submit" type="button" id="btnLogin">Đăng nhập</button>
+                            <a class="reset_pass" href="#">Bạn quên mật khẩu?</a>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+
+                            <div>
+                                <h1><i class="fa fa-paw"></i> Panda Shop</h1>
+                                <p>©2016 All Rights Reserved. Privacy and Terms</p>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+            asp-fallback-test="window.jQuery"
+            crossorigin="anonymous"
+            integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+    </script>
+    <script src="~/lib/notifyjs/dist/notify.js"></script>
+    <script src="~/lib/notifyjs/dist/styles/metro/notify-metro.js"></script>
+@*<script src="~/app/shared/tedu.js" asp-append-version="true"></script>
+    <script src="~/app/controllers/login/index.js" asp-append-version="true"></script>*@
+    <script src="~/bundled/site-admin.min.js"></script>
+    <script>
+        var loginObj = new LoginController();
+        loginObj.initialize();
+    </script>
+</body>
+</html>

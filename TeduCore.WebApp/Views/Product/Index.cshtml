@@ -1,0 +1,72 @@
+﻿@model List<ProductCategoryViewModel>
+@{
+    ViewData["PageTitle"] = "Tất cả danh mục sản phẩm";
+    ViewData["SeoKeywords"] = "Tất cả danh mục sản phẩm";
+    ViewData["SeoDescription"] = "Tất cả danh mục của Phụ kiện nữ - Khuyên tai xinh";
+}
+<!-- Breadcrumbs -->
+
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Về trang chủ" href="/">Trang chủ</a><span>&raquo;</span></li>
+                    <li><strong>Sản phẩm</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<div class="main-container col2-left-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-main col-sm-12 col-xs-12">
+                <div class="shop-inner">
+                    <div class="page-title">
+                        <h2>Tất cả danh mục sản phẩm</h2>
+                    </div>
+                    <div class="product-grid-area">
+                        <ul class="products-grid">
+                            @foreach (var item in Model)
+                            {
+                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
+
+                                    <div class="product-item">
+                                        <div class="item-inner">
+                                            <div class="product-thumbnail">
+                                                <div class="pr-img-area">
+                                                    <a title="@item.Name" href="/@item.SeoAlias-c.@(item.Id).html">
+                                                        <figure> <img class="first-img" src="@item.Image?h=200" alt="@item.Name"> <img class="hover-img" src="@item.Image" alt="@item.Name"></figure>
+                                                    </a>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="item-info">
+                                                <div class="info-inner">
+                                                    <div class="item-title"> <a title="@item.Name" href="/@item.SeoAlias-c.@(item.Id).html">@item.Name</a> </div>
+                                                    <div class="item-content">
+                                                        @*<div class="pro-action">
+                                                            <button type="button" class="add-to-cart" data-id="@item.Id"><span> Xem sản phẩm</span> </button>
+                                                        </div>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <!--Paging-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Container End -->
+@Html.Partial("~/Views/Shared/_Service.cshtml")

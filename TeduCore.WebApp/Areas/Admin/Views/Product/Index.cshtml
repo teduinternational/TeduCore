@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+}
+@section Scripts{
+
+    @*<script src="~/app/controllers/product/image-management.js" asp-append-version="true"></script>
+    <script src="~/app/controllers/product/quantity-management.js" asp-append-version="true"></script>
+    <script src="~/app/controllers/product/whole-price-management.js" asp-append-version="true"></script>
+    <script src="~/app/controllers/product/index.js" asp-append-version="true"></script>*@
+
+    <script>
+        var productObj = new productController();
+        productObj.initialize();
+    </script>
+}
+@section Styles{
+
+}
+<input type="hidden" id="hid-category-id" value="0" />
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Sản phẩm</h3>
+        </div>
+
+        <div class="title_right">
+            <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-right top_search">
+                @*<a class="btn btn-danger" href="~/templates/ProductImportTemplate.xlsx">Tải mẫu</a>
+                <button class="btn btn-primary" id="btn-import" type="button">Nhập Excel</button>*@
+                <button class="btn btn-default" id="btn-export" type="button">Xuất Excel</button>
+                <button class="btn btn-success" id="btn-create" type="button">Tạo mới</button>
+
+
+            </div>
+           
+            <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-right">
+                <div class="input-group">
+                    <input type="text" id="txt-search-keyword" class="form-control" placeholder="Tìm kiếm...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" id="btn-search" type="button">Tìm!</button>
+                    </span>
+                </div>
+
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-right top_search">
+                <input id="ddlCategoryIdS" required class="form-control" name="ddlCategoryIdS" value="">
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <table id="tbl-product" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Mã</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Mã</th>
+                                <th>Danh mục</th>
+                                <th>Giá nhập</th>
+                                <th>Giá bán</th>
+                                <th>Số lượng</th>
+                                <th>Ảnh</th>
+                                <th>Trạng thái</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl-content"></tbody>
+                    </table>
+
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="dataTables_info" id="datatable-checkbox_info" role="status" aria-live="polite">
+                                <select id="ddl-show-page">
+                                    <option value="10" selected="selected">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                </select>
+                                <span class="item-per-page">
+                                    bản ghi/trang.
+                                </span>
+                                Tổng số bản ghi: <strong id="lbl-total-records"></strong>
+                            </div>
+                        </div><div class="col-sm-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="datatable-checkbox_paginate">
+                                <ul id="paginationUL"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script id="table-template" type="x-tmpl-mustache">
+        <tr>
+            <td>{{Id}}</td>
+            <td>{{Name}}</td>
+            <td>{{Code}}</td>
+            <td>{{CategoryName}}</td>
+            <td>{{OriginalPrice}}</td>
+            <td>{{Price}}</td>
+            <td>{{Quantity}}</td>
+            <td>{{{Image}}}</td>
+            <td>{{{Status}}}</td>
+            <td>
+                <a href="#" data-id="{{Id}}" class="btn btn-xs btn-images"><i class="fa fa-image"></i></a>
+                @*<a href="#" data-id="{{Id}}" class="btn btn-xs btn-quantity"><i class="fa fa-hourglass-start"></i></a>
+                <a href="#" data-id="{{Id}}" class="btn btn-xs btn-whole-price"><i class="fa fa-money"></i></a>*@
+
+                <a href="#" data-id="{{Id}}" class="btn btn-xs btn-edit"><i class="fa fa-pencil-square-o"></i></a>
+                <a href="#" data-id="{{Id}}" class="btn btn-xs btn-delete"><i class="fa fa-trash-o"></i></a>
+            </td>
+        </tr>
+    </script>
+</div>
+@Html.Partial("_AddEditModal.cshtml")
+@Html.Partial("_ImportExcel.cshtml")
+@Html.Partial("_ImageManagement.cshtml")
+@Html.Partial("_WholePriceManagement.cshtml")

@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  teducore.webapp:
+    image: teducore.webapp
+    build:
+      context: ./TeduCore.WebApp
+      dockerfile: Dockerfile

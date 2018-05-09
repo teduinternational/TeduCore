@@ -1,0 +1,137 @@
+﻿@model TeduCore.WebApp.Models.ProductViewModels.SearchResultViewModel
+@{
+    ViewData["PageTitle"] = "Kết quả tìm kiếm sản phẩm cho từ khoá: " + Model.Keyword;
+    ViewData["SeoKeywords"] = "Kết quả tìm kiếm sản phẩm cho từ khoá: " + Model.Keyword;
+    ViewData["SeoDescription"] = "Kết quả tìm kiếm sản phẩm cho từ khoá: " + Model.Keyword;
+}
+<!-- Breadcrumbs -->
+
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Về trang chủ" href="/">Trang chủ</a><span>&raquo;</span></li>
+                    <li class=""> <a title="Về trang sản phẩm" href="/san-pham.html">Sản phẩm</a><span>&raquo;</span></li>
+                    <li><strong>Kết quả tìm kiếm: @Model.Keyword</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<div class="main-container col2-left-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-main col-sm-9 col-xs-12 col-sm-push-3">
+                <div class="shop-inner">
+                    <div class="page-title">
+                        <h2>@Model.Keyword</h2>
+                    </div>
+                    <div class="toolbar">
+                        <form action="/tim-kiem.html?keyword=@Model.Keyword" id="frmFilter" method="get">
+                            <div class="sorter">
+                                <div class="short-by">
+                                    <label>Sắp xếp theo:</label>
+                                    <select name="sortBy" asp-for="SortType" onchange="this.form.submit()" asp-items="Model.SortTypes"></select>
+                                </div>
+                                <div class="short-by page">
+                                    <label>Hiển thị:</label>
+                                    <select name="pageSize" asp-for="PageSize" onchange="this.form.submit()" asp-items="Model.PageSizes"></select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="product-grid-area">
+                        <ul class="products-grid">
+                            @foreach (var item in Model.Data.Results)
+                            {
+                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
+
+                                    <div class="product-item">
+                                        <div class="item-inner">
+                                            <div class="product-thumbnail">
+                                                <div class="icon-new-label new-left">Mới</div>
+                                                <div class="pr-img-area">
+                                                    <a title="@item.Name-@item.Code" href="/@item.SeoAlias-p.@(item.Id).html">
+                                                        <figure>
+                                                            <img class="first-img" src="@item.ThumbnailImage?h=200" alt="@item.Name-@item.Code"> 
+                                                            @*<img class="hover-img" src="@item.ThumbnailImage" alt="@item.Name-@item.Code">*@
+                                                        </figure>
+                                                    </a>
+                                                </div>
+                                                <div class="pr-info-area">
+                                                    <div class="pr-button">
+                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
+                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
+                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="item-info">
+                                                <div class="info-inner">
+                                                    <div class="item-title"> <a title="@item.Name-@item.Code" href="/@item.SeoAlias-p.@(item.Id).html">@item.Name-@item.Code</a> </div>
+                                                    <div class="item-content">
+                                                        @*<div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>*@
+                                                        <div class="item-price">
+                                                            <div class="price-box"> <span class="regular-price"> <span class="price">@item.Price.ToString("N0")</span> </span> </div>
+                                                        </div>
+                                                        <div class="pro-action">
+                                                            <button type="button" class="add-to-cart" data-id="@item.Id"><span> Thêm vào giỏ</span> </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <!--Paging-->
+                    @(await Component.InvokeAsync("Pager", Model.Data))
+                </div>
+            </div>
+            <aside class="sidebar col-sm-3 col-xs-12 col-sm-pull-9">
+                @(await Component.InvokeAsync("MyCart"))
+                <div class="block special-product">
+                    <div class="sidebar-bar-title">
+                        <h3>Sản phẩm mới</h3>
+                    </div>
+                    <div class="block-content">
+                        <ul>
+                            @foreach (var item in Model.LastestProducts)
+                            {
+                                var url = item.SeoAlias + "-p." + item.Id + ".html";
+                                <li class="item">
+                                    <div class="products-block-left">
+                                        <a href="@url" title="@item.Name-@item.Code" class="product-image"><img src="@item.ThumbnailImage" alt="@item.Name-@item.Code"></a>
+                                    </div>
+                                    <div class="products-block-right">
+                                        <p class="product-name">
+                                            <a href="@url">@item.Name-@item.Code</a>
+                                        </p>
+                                        <span class="price">@item.Price.ToString("N0")</span>
+                                        @*<div class="rating">
+                                                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i>
+                                            </div>*@
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <a class="link-all" href="/san-pham.html">Xem tất cả</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+<!-- Main Container End -->
+@Html.Partial("~/Views/Shared/_Service.cshtml")
+
+
+
+
