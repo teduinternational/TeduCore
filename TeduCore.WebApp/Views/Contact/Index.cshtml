@@ -57,11 +57,11 @@
                                         @Html.AntiForgeryToken()
                                         <div class="form-selector">
                                             <label>Họ tên</label>
-                                            <input type="text" class="form-control input-sm" asp-for="Feedback.Name"/>
+                                            <input type="text" class="form-control input-sm" asp-for="Feedback.Name" />
                                         </div>
                                         <div class="form-selector">
                                             <label>Email</label>
-                                            <input type="text" class="form-control input-sm" asp-for="Feedback.Email"/>
+                                            <input type="text" class="form-control input-sm" asp-for="Feedback.Email" />
                                         </div>
 
                                         <div class="form-selector">
@@ -79,8 +79,6 @@
                                     </form>
 
                                 }
-
-
                             </div>
                         </div>
                     </div>
@@ -89,7 +87,7 @@
         </div>
     </div>
 </section>
-<!-- Main Container End --> 
+<!-- Main Container End -->
 @section Scripts {
     <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
 

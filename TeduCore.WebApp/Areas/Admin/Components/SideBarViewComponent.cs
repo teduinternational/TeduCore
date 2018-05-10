@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using TeduCore.Services.Interfaces;
-using TeduCore.Services.ViewModels;
+using TeduCore.Application.Systems.Functions;
+using TeduCore.Application.Systems.Functions.Dtos;
 using TeduCore.Utilities.Constants;
 
 namespace TeduCore.WebApp.Areas.Admin.Components

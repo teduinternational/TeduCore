@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TeduCore.Services.ViewModels;
-using TeduCore.Services.ViewModels.Blog;
+﻿using System.Collections.Generic;
+using TeduCore.Application.Content.Blogs.Dtos;
+using TeduCore.Application.Content.Slides.Dtos;
+using TeduCore.Application.ECommerce.ProductCategories.Dtos;
+using TeduCore.Application.ECommerce.Products.Dtos;
 
 namespace TeduCore.WebApp.Models
 {
@@ -19,6 +18,5 @@ namespace TeduCore.WebApp.Models
         public string Title { set; get; }
         public string MetaKeyword { set; get; }
         public string MetaDescription { set; get; }
-
     }
 }

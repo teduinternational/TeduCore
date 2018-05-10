@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using TeduCore.Services.Interfaces;
-using TeduCore.Services.ViewModels;
-using TeduCore.Utilities.Helpers;
+using TeduCore.Application.ECommerce.ProductCategories;
+using TeduCore.Application.ECommerce.ProductCategories.Dtos;
 
 namespace TeduCore.WebApp.Areas.Admin.Controllers
 {

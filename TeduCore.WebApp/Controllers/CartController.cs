@@ -1,18 +1,18 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using TeduCore.Application.ECommerce.Bills;
+using TeduCore.Application.ECommerce.Bills.Dtos;
+using TeduCore.Application.ECommerce.Products;
 using TeduCore.Data.Enums;
-using TeduCore.Services.Interfaces;
-using TeduCore.Services.ViewModels;
 using TeduCore.Utilities.Constants;
 using TeduCore.WebApp.Extensions;
 using TeduCore.WebApp.Models;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using TeduCore.WebApp.Services;
 
 namespace TeduCore.WebApp.Controllers
@@ -36,7 +36,6 @@ namespace TeduCore.WebApp.Controllers
             _billService = billService;
             _emailSender = emailSender;
             _viewRenderService = viewRenderService;
-
         }
 
         [Route("gio-hang.html", Name = "Cart")]
@@ -90,7 +89,6 @@ namespace TeduCore.WebApp.Controllers
                         CustomerId = User.Identity.IsAuthenticated == true
                             ? ((ClaimsIdentity)User.Identity).GetSpecificClaim("UserId")
                             : null
-
                     };
                     _billService.Create(billViewModel);
                     try
@@ -106,7 +104,6 @@ namespace TeduCore.WebApp.Controllers
                         ViewData["Success"] = false;
                         ModelState.AddModelError("", ex.Message);
                     }
-
                 }
             }
             model.Carts = session;

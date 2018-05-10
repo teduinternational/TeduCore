@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OfficeOpenXml;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using TeduCore.Application.ECommerce.Bills;
+using TeduCore.Application.ECommerce.Bills.Dtos;
 using TeduCore.Data.Enums;
-using TeduCore.Services.Interfaces;
-using TeduCore.Services.ViewModels;
-using TeduCore.Services.ViewModels.Common;
-using TeduCore.Utilities.Helpers;
+using TeduCore.Utilities.Dtos;
 using TeduCore.Utilities.Extensions;
+using TeduCore.Utilities.Helpers;
 
 namespace TeduCore.WebApp.Areas.Admin.Controllers
 {
@@ -19,6 +19,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
     {
         private readonly IBillService _billService;
         private readonly IHostingEnvironment _hostingEnvironment;
+
         public BillController(IBillService billService, IHostingEnvironment hostingEnvironment)
         {
             _billService = billService;
@@ -37,6 +38,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
 
             return new OkObjectResult(model);
         }
+
         [HttpGet]
         public IActionResult UpdateStatus(int billId, BillStatus status)
         {
@@ -44,12 +46,14 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
 
             return new OkResult();
         }
+
         [HttpGet]
         public IActionResult GetAllPaging(string startDate, string endDate, string keyword, int page, int pageSize)
         {
             var model = _billService.GetAllPaging(startDate, endDate, keyword, page, pageSize);
             return new OkObjectResult(model);
         }
+
         [HttpPost]
         public IActionResult SaveEntity(BillViewModel billVm)
         {
@@ -100,7 +104,6 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             }
         }
 
-
         [HttpPost]
         public IActionResult PendingBill(int billId)
         {
@@ -139,7 +142,6 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
                 }).ToList();
             return new OkObjectResult(enums);
         }
-
 
         [HttpPost]
         public IActionResult ExportExcel(int billId)
@@ -197,7 +199,6 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
                     worksheet.Cells[26, 1].Value = numberWord;
                     var billDate = billDetail.DateCreated;
                     worksheet.Cells[28, 3].Value = "Ngày " + billDate.Day + " tháng " + billDate.Month + " năm " + billDate.Year;
-
 
                     package.SaveAs(file); //Save the workbook.
                 }

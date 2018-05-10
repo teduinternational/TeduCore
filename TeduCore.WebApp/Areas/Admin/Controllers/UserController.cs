@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using TeduCore.Services.Interfaces;
-using TeduCore.Services.ViewModels;
+using TeduCore.Application.Systems.Users;
+using TeduCore.Application.Systems.Users.Dtos;
 using TeduCore.WebApp.Authorization;
 using TeduCore.WebApp.Helpers;
 

@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using TeduCore.Services.Interfaces;
+using TeduCore.Application.ECommerce.ProductCategories;
+using TeduCore.Application.ECommerce.Products;
+using TeduCore.Application.Systems.Commons;
 using TeduCore.WebApp.Models;
+using TTeduCore.Application.Content.Blogs;
 
 namespace TeduCore.WebApp.Controllers
 {

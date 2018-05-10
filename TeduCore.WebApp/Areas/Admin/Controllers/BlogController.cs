@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using TeduCore.Services.Interfaces;
-using TeduCore.Services.ViewModels.Blog;
+using TeduCore.Application.Content.Blogs.Dtos;
 using TeduCore.Utilities.Helpers;
+using TTeduCore.Application.Content.Blogs;
 
 namespace TeduCore.WebApp.Areas.Admin.Controllers
 {

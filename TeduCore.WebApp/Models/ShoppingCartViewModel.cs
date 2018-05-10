@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TeduCore.Services.ViewModels;
+﻿using TeduCore.Application.ECommerce.Products.Dtos;
 
 namespace TeduCore.WebApp.Models
 {

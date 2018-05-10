@@ -10,17 +10,29 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using System;
+using TeduCore.Application.Content.Blogs;
+using TeduCore.Application.Content.Contacts;
+using TeduCore.Application.Content.Feedbacks;
+using TeduCore.Application.Content.Pages;
+using TeduCore.Application.Content.Slides;
+using TeduCore.Application.ECommerce.Bills;
+using TeduCore.Application.ECommerce.ProductCategories;
+using TeduCore.Application.ECommerce.Products;
+using TeduCore.Application.Implementation;
+using TeduCore.Application.Systems.Commons;
+using TeduCore.Application.Systems.Functions;
+using TeduCore.Application.Systems.Roles;
+using TeduCore.Application.Systems.Users;
 using TeduCore.Data.EF;
 using TeduCore.Data.Entities;
 using TeduCore.Infrastructure.Interfaces;
 using TeduCore.Services.Dapper.Implementation;
 using TeduCore.Services.Dapper.Interfaces;
-using TeduCore.Services.Implementation;
-using TeduCore.Services.Interfaces;
 using TeduCore.WebApp.Authorization;
 using TeduCore.WebApp.Extensions;
 using TeduCore.WebApp.Helpers;
 using TeduCore.WebApp.Services;
+using TTeduCore.Application.Content.Blogs;
 
 namespace TeduCore.WebApp
 {
@@ -176,10 +188,5 @@ namespace TeduCore.WebApp
             //dbInitializer.Seed().Wait();
         }
 
-        private static void RegisterServices(IServiceCollection services)
-        {
-            // Adding dependencies from another layers (isolated from Presentation)
-            NativeInjectorBootStrapper.RegisterServices(services);
-        }
     }
 }

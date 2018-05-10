@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TeduCore.Services.Interfaces;
+using TeduCore.Application.ECommerce.ProductCategories;
 
 namespace TeduCore.WebApi.Controllers
 {

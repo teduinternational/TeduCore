@@ -1,5 +1,4 @@
-﻿
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @using TeduCore.Data.Entities
 @using TeduCore.WebApp.Views.Manage
 @inject SignInManager<AppUser> SignInManager
@@ -16,4 +15,3 @@
     }
     <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Two-factor authentication</a></li>
 </ul>
-

@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TeduCore.Services.Interfaces;
-using TeduCore.Services.ViewModels;
-using TeduCore.Utilities.Helpers;
+using TeduCore.Application.Systems.Functions;
+using TeduCore.Application.Systems.Functions.Dtos;
 
 namespace TeduCore.WebApp.Areas.Admin.Controllers
 {
@@ -141,7 +140,8 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         #region Private Functions
-        private void GetByParentId(IEnumerable<FunctionViewModel> allCats, 
+
+        private void GetByParentId(IEnumerable<FunctionViewModel> allCats,
             FunctionViewModel parent, IList<FunctionViewModel> items)
         {
             var categoryEntities = allCats as FunctionViewModel[] ?? allCats.ToArray();
@@ -154,6 +154,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
                 GetByParentId(categoryEntities, cat, items);
             }
         }
-        #endregion
+
+        #endregion Private Functions
     }
 }

@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
-using TeduCore.Services.Interfaces;
-using TeduCore.Services.ViewModels.Common;
+using TeduCore.Application.Content.Pages;
+using TeduCore.Application.Content.Pages.Dtos;
 
 namespace TeduCore.WebApp.Areas.Admin.Controllers
 {

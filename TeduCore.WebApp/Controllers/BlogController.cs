@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using TeduCore.Services.Interfaces;
 using TeduCore.WebApp.Models;
+using TTeduCore.Application.Content.Blogs;
 
 namespace TeduCore.WebApp.Controllers
 {

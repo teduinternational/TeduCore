@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using System.Linq;
-using Microsoft.AspNetCore.Hosting;
 using TeduCore.Data.EF.Configurations;
 using TeduCore.Data.EF.Extensions;
 using TeduCore.Data.Entities;
@@ -52,8 +51,6 @@ namespace TeduCore.Data.EF
             modelBuilder.AddConfiguration(new ProductTagConfiguration());
             modelBuilder.AddConfiguration(new SystemConfigConfiguration());
             modelBuilder.AddConfiguration(new AdvertistmentPositionConfiguration());
-
-
         }
 
         public override int SaveChanges()
@@ -118,7 +115,6 @@ namespace TeduCore.Data.EF
         public DbSet<Advertistment> Advertistments { get; set; }
         public DbSet<AdvertistmentPosition> AdvertistmentPositions { get; set; }
         public DbSet<ProductWishlist> ProductWishlists { get; set; }
-
     }
 
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>

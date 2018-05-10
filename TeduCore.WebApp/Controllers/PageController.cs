@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TeduCore.Services.Interfaces;
+using TeduCore.Application.Content.Pages;
 
 namespace TeduCore.WebApp.Controllers
 {

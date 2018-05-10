@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TeduCore.Services.ViewModels;
+﻿using TeduCore.Application.Content.Contacts.Dtos;
+using TeduCore.Application.Content.Feedbacks.Dtos;
 
 namespace TeduCore.WebApp.Models
 {

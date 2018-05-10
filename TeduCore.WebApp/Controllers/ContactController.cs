@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using TeduCore.Services.Interfaces;
+using System.Threading.Tasks;
+using TeduCore.Application.Content.Contacts;
+using TeduCore.Application.Content.Feedbacks;
 using TeduCore.WebApp.Models;
 using TeduCore.WebApp.Services;
 
@@ -31,7 +32,7 @@ namespace TeduCore.WebApp.Controllers
         public IActionResult Index()
         {
             var contact = _contactService.GetById("default");
-            var model = new ContactViewModel {ContactDetail = contact};
+            var model = new ContactViewModel { ContactDetail = contact };
             return View(model);
         }
 

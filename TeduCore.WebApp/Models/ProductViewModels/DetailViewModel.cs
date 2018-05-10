@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TeduCore.Services.ViewModels;
+﻿using System.Collections.Generic;
+using TeduCore.Application.ECommerce.ProductCategories.Dtos;
+using TeduCore.Application.ECommerce.Products.Dtos;
 
 namespace TeduCore.WebApp.Models.ProductViewModels
 {
@@ -19,7 +17,5 @@ namespace TeduCore.WebApp.Models.ProductViewModels
         public List<ProductViewModel> UpsellProducts { get; set; }
 
         public List<ProductViewModel> LastestProducts { get; set; }
-
-
     }
 }

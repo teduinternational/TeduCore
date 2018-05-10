@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using TeduCore.Services.Interfaces;
+using TeduCore.Application.Systems.Commons;
 
 namespace TeduCore.WebApp.Controllers.Components
 {

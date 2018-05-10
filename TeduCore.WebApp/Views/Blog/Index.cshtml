@@ -1,4 +1,4 @@
-﻿@model PagedResult<TeduCore.Services.ViewModels.Blog.BlogViewModel>
+﻿@model PagedResult<TeduCore.Application.Content.Blogs.Dtos.BlogViewModel>
 @{
     ViewData["PageTitle"] = "Hướng dẫn mua hàng";
     ViewData["SeoKeywords"] = "Hướng dẫn mua hàng";
@@ -34,14 +34,12 @@
                         </div>
                     </li>
                 }
-
             </ul>
             <div class="sortPagiBar">
                 @(await Component.InvokeAsync("Pager", Model))
             </div>
         </div>
         <!-- ./ Center colunm -->
-
     </div>
 </section>
 <!-- Main Container End --> 

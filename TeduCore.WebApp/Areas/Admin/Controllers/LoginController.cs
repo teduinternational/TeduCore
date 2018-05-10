@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using TeduCore.Data.Entities;
-using TeduCore.Services.ViewModels;
 using TeduCore.WebApp.Models;
 using TeduCore.WebApp.Models.AccountViewModels;
 
@@ -44,7 +43,6 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    
                     return new ObjectResult(new GenericResult(true));
                 }
 
@@ -52,19 +50,16 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
                 {
                     _logger.LogWarning("User account locked out.");
                     return new ObjectResult(new GenericResult(false, "Tài khoản đã bị khoá"));
-
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return new ObjectResult(new GenericResult(false, "Đăng nhập sai"));
-
                 }
             }
 
             // If we got this far, something failed, redisplay form
             return new ObjectResult(new GenericResult(false, model));
-
         }
 
         [HttpPost]
@@ -74,7 +69,5 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             _logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(LoginController.Index), "Login");
         }
-
-
     }
 }

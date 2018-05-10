@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using System.Security.Claims;
-using TeduCore.Services.Interfaces;
+using TeduCore.Application.ECommerce.ProductCategories;
+using TeduCore.Application.ECommerce.Products;
 using TeduCore.WebApp.Extensions;
 using TeduCore.WebApp.Models.ProductViewModels;
 
@@ -76,6 +75,7 @@ namespace TeduCore.WebApp.Controllers
 
             return View(model);
         }
+
         [Route("{alias}-p.{id}.html", Name = "ProductDetail")]
         public IActionResult Details(int id)
         {

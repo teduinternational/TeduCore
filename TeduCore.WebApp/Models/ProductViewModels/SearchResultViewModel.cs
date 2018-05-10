@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using TeduCore.Services.ViewModels;
+using TeduCore.Application.ECommerce.Products.Dtos;
 using TeduCore.Utilities.Dtos;
 
 namespace TeduCore.WebApp.Models.ProductViewModels
@@ -18,12 +15,14 @@ namespace TeduCore.WebApp.Models.ProductViewModels
         public List<ProductViewModel> LastestProducts { set; get; }
 
         public string SortType { set; get; }
+
         public List<SelectListItem> SortTypes { get; } = new List<SelectListItem>
         {
             new SelectListItem(){Value = "lastest",Text = "Mới nhất"},
             new SelectListItem(){Value = "price",Text = "Giá"},
             new SelectListItem(){Value = "name",Text = "Tên"},
         };
+
         public int? PageSize { set; get; }
 
         public List<SelectListItem> PageSizes { get; } = new List<SelectListItem>

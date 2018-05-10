@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TeduCore.Services.ViewModels.Blog;
+﻿using System.Collections.Generic;
+using TeduCore.Application.Content.Blogs.Dtos;
 
 namespace TeduCore.WebApp.Models
 {

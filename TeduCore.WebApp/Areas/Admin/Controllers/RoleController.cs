@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TeduCore.Services.Interfaces;
-using TeduCore.Services.ViewModels;
+using TeduCore.Application.Systems.Permissions.Dtos;
+using TeduCore.Application.Systems.Roles;
+using TeduCore.Application.Systems.Roles.Dtos;
 
 namespace TeduCore.WebApp.Areas.Admin.Controllers
 {
@@ -73,7 +74,6 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             await _roleService.DeleteAsync(id);
             return new OkObjectResult(id);
         }
-
 
         [HttpPost]
         public IActionResult ListAllFunction(string roleId)

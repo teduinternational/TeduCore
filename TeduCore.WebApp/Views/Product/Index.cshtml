@@ -1,4 +1,4 @@
-﻿@model List<ProductCategoryViewModel>
+﻿@model List<TeduCore.Application.ECommerce.ProductCategories.Dtos.ProductCategoryViewModel>
 @{
     ViewData["PageTitle"] = "Tất cả danh mục sản phẩm";
     ViewData["SeoKeywords"] = "Tất cả danh mục sản phẩm";
@@ -42,7 +42,6 @@
                                                         <figure> <img class="first-img" src="@item.Image?h=200" alt="@item.Name"> <img class="hover-img" src="@item.Image" alt="@item.Name"></figure>
                                                     </a>
                                                 </div>
-                                                
                                             </div>
                                             <div class="item-info">
                                                 <div class="info-inner">
@@ -56,8 +55,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </li>
                             }
                         </ul>

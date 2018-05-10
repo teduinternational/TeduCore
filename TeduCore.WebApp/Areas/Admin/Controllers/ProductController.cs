@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using TeduCore.Services.Interfaces;
-using TeduCore.Services.ViewModels;
-using TeduCore.Services.ViewModels.Product;
-using TeduCore.Utilities.Helpers;
+using TeduCore.Application.ECommerce.Products;
+using TeduCore.Application.ECommerce.Products.Dtos;
 
 namespace TeduCore.WebApp.Areas.Admin.Controllers
 {
@@ -84,10 +82,11 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
                 return new OkObjectResult(productVm);
             }
         }
+
         [HttpPost]
-        public IActionResult SaveImages(int productId,string[] images)
+        public IActionResult SaveImages(int productId, string[] images)
         {
-            _productService.AddImages(productId,images);
+            _productService.AddImages(productId, images);
             _productService.Save();
             return new OkObjectResult(images);
         }
@@ -98,7 +97,6 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             var images = _productService.GetImages(productId);
             return new OkObjectResult(images);
         }
-
 
         [HttpPost]
         public IActionResult SaveQuantities(int productId, List<ProductQuantityViewModel> quantities)
@@ -129,7 +127,6 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             var wholePrices = _productService.GetWholePrices(productId);
             return new OkObjectResult(wholePrices);
         }
-
 
         [HttpPost]
         public IActionResult Delete(int id)

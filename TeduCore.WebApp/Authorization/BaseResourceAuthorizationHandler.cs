@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using TeduCore.Services.Interfaces;
+using TeduCore.Application.Systems.Roles;
 using TeduCore.Utilities.Constants;
 
 namespace TeduCore.WebApp.Authorization
@@ -38,7 +38,6 @@ namespace TeduCore.WebApp.Authorization
             {
                 context.Fail();
             }
-
         }
     }
 }
