@@ -16,7 +16,7 @@ using TeduCore.Utilities.Helpers;
 
 namespace TeduCore.Application.ECommerce.Products
 {
-    public class ProductService : IProductService
+    public class ProductService : WebServiceBase<Product, Guid, ProductViewModel>, IProductService
     {
         private readonly IRepository<Product, Guid> _productRepository;
         private readonly IRepository<Tag, string> _tagRepository;
@@ -25,8 +25,6 @@ namespace TeduCore.Application.ECommerce.Products
         private readonly IRepository<ProductCategory, Guid> _productCategoryRepository;
         private readonly IRepository<ProductWishlist, Guid> _productWishlistRepository;
 
-        private readonly IUnitOfWork _unitOfWork;
-
         public ProductService(IRepository<Product, Guid> productRepository,
             IRepository<ProductTag, Guid> productTagRepository,
             IRepository<ProductWishlist, Guid> productWishlistRepository,
@@ -34,6 +32,7 @@ namespace TeduCore.Application.ECommerce.Products
             IRepository<ProductCategory, Guid> productCategoryRepository,
             IRepository<ProductImage, Guid> productImageRepository,
             IUnitOfWork unitOfWork)
+            : base(productRepository, unitOfWork)
         {
             _productRepository = productRepository;
             _productTagRepository = productTagRepository;
@@ -41,10 +40,10 @@ namespace TeduCore.Application.ECommerce.Products
             _productCategoryRepository = productCategoryRepository;
             _tagRepository = tagRepository;
             _productWishlistRepository = productWishlistRepository;
-            _unitOfWork = unitOfWork;
+
         }
 
-        public ProductViewModel Add(ProductViewModel productVm)
+        public override void Add(ProductViewModel productVm)
         {
             var product = Mapper.Map<ProductViewModel, Product>(productVm);
             if (string.IsNullOrEmpty(productVm.SeoAlias))
@@ -83,19 +82,6 @@ namespace TeduCore.Application.ECommerce.Products
                 }
             }
             _productRepository.Insert(product);
-
-            return productVm;
-        }
-
-        public void Delete(Guid id)
-        {
-            _productRepository.Delete(id);
-        }
-
-        public List<ProductViewModel> GetAll()
-        {
-            return _productRepository.GetAll()
-                .ProjectTo<ProductViewModel>().ToList();
         }
 
         public PagedResult<ProductViewModel> GetAllPaging(Guid? categoryId, string keyword, int page, int pageSize, string sortBy)
@@ -141,17 +127,7 @@ namespace TeduCore.Application.ECommerce.Products
             return paginationSet;
         }
 
-        public ProductViewModel GetById(Guid id)
-        {
-            return Mapper.Map<Product, ProductViewModel>(_productRepository.Get(id));
-        }
-
-        public void Save()
-        {
-            _unitOfWork.Commit();
-        }
-
-        public void Update(ProductViewModel productVm)
+        public override void Update(ProductViewModel productVm)
         {
             var product = Mapper.Map<ProductViewModel, Product>(productVm);
             _productTagRepository.Delete(x => x.Id == product.Id);
@@ -311,15 +287,6 @@ namespace TeduCore.Application.ECommerce.Products
             return Mapper.Map<Tag, TagViewModel>(_tagRepository.Single(x => x.Id == tagId));
         }
 
-        //Selling product
-        public bool SellProduct(Guid productId, int quantity)
-        {
-            var product = _productRepository.Get(productId);
-            //if (product.Quantity < quantity)
-            //    return false;
-            //product.Quantity -= quantity;
-            return true;
-        }
 
         public List<ProductViewModel> GetListProduct(string keyword)
         {

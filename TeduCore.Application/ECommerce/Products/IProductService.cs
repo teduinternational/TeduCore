@@ -2,19 +2,13 @@
 using System.Collections.Generic;
 using TeduCore.Application.Dtos;
 using TeduCore.Application.ECommerce.Products.Dtos;
+using TeduCore.Data.Entities;
 using TeduCore.Utilities.Dtos;
 
 namespace TeduCore.Application.ECommerce.Products
 {
-    public interface IProductService
+    public interface IProductService : IWebServiceBase<Product, Guid, ProductViewModel>
     {
-        ProductViewModel Add(ProductViewModel product);
-
-        void Update(ProductViewModel product);
-
-        void Delete(Guid id);
-
-        List<ProductViewModel> GetAll();
 
         PagedResult<ProductViewModel> GetAllPaging(Guid? categoryId, string keyword, int page, int pageSize, string sortBy);
 
@@ -32,10 +26,6 @@ namespace TeduCore.Application.ECommerce.Products
 
         List<string> GetListProductByName(string name);
 
-        ProductViewModel GetById(Guid id);
-
-        void Save();
-
         List<TagViewModel> GetListTagByProductId(Guid id);
 
         TagViewModel GetTag(string tagId);
@@ -43,8 +33,6 @@ namespace TeduCore.Application.ECommerce.Products
         void IncreaseView(Guid id);
 
         List<ProductViewModel> GetListProductByTag(string tagId, int page, int pagesize, out int totalRow);
-
-        bool SellProduct(Guid productId, int quantity);
 
         List<TagViewModel> GetListProductTag(string searchText);
 

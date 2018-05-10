@@ -12,42 +12,27 @@ using TeduCore.Utilities.Helpers;
 
 namespace TeduCore.Application.ECommerce.ProductCategories
 {
-    public class ProductCategoryService : IProductCategoryService
+    public class ProductCategoryService : WebServiceBase<ProductCategory, Guid, ProductCategoryViewModel>,
+        IProductCategoryService
     {
         private readonly IRepository<Product, Guid> _productRepository;
         private readonly IRepository<ProductCategory, Guid> _productCategoryRepository;
 
-        private readonly IUnitOfWork _unitOfWork;
-
         public ProductCategoryService(IRepository<ProductCategory, Guid> productCategoryRepository,
             IRepository<Product, Guid> productRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork) : base(productCategoryRepository, unitOfWork)
         {
             _productCategoryRepository = productCategoryRepository;
             _productRepository = productRepository;
-            _unitOfWork = unitOfWork;
         }
 
-        public ProductCategoryViewModel Add(ProductCategoryViewModel productCategoryVm)
+        public override void Add(ProductCategoryViewModel productCategoryVm)
         {
             if (string.IsNullOrEmpty(productCategoryVm.SeoAlias))
                 productCategoryVm.SeoAlias = TextHelper.ToUnsignString(productCategoryVm.Name);
 
             var productCategory = Mapper.Map<ProductCategoryViewModel, ProductCategory>(productCategoryVm);
             _productCategoryRepository.Insert(productCategory);
-            return productCategoryVm;
-        }
-
-        public void Delete(Guid id)
-        {
-            _productCategoryRepository.Delete(id);
-        }
-
-        public List<ProductCategoryViewModel> GetAll()
-        {
-            return _productCategoryRepository.GetAll().OrderBy(x => x.ParentId)
-                .ProjectTo<ProductCategoryViewModel>()
-                .ToList();
         }
 
         public List<ProductCategoryViewModel> GetAll(string keyword)
@@ -66,11 +51,6 @@ namespace TeduCore.Application.ECommerce.ProductCategories
             return _productCategoryRepository.GetAll().Where(x => x.Status == Status.Actived && x.ParentId == parentId)
                 .ProjectTo<ProductCategoryViewModel>()
                 .ToList();
-        }
-
-        public ProductCategoryViewModel GetById(Guid id)
-        {
-            return Mapper.Map<ProductCategory, ProductCategoryViewModel>(_productCategoryRepository.Get(id));
         }
 
         public List<ProductCategoryViewModel> GetHomeCategories(int top)
@@ -102,12 +82,7 @@ namespace TeduCore.Application.ECommerce.ProductCategories
             _productCategoryRepository.Update(target);
         }
 
-        public void Save()
-        {
-            _unitOfWork.Commit();
-        }
-
-        public void Update(ProductCategoryViewModel productCategoryVm)
+        public override void Update(ProductCategoryViewModel productCategoryVm)
         {
             if (string.IsNullOrEmpty(productCategoryVm.SeoAlias))
                 productCategoryVm.SeoAlias = TextHelper.ToUnsignString(productCategoryVm.Name);

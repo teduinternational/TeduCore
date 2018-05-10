@@ -1,22 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using TeduCore.Infrastructure.Enums;
 using TeduCore.Utilities.Dtos;
 
 namespace TeduCore.Application
 {
-    public interface IWebServiceBase<T, K, VM> where VM : class
-        where T : class
+    public interface IWebServiceBase<TEntity,TPrimaryKey,ViewModel> where ViewModel : class
+        where TEntity : class
     {
-        void Create(VM viewModel);
+        void Add(ViewModel viewModel);
 
-        void Update(VM viewModel);
+        void Update(ViewModel viewModel);
 
-        void Delete(K id);
+        void Delete(TPrimaryKey id);
 
-        T Get(K id);
+        ViewModel GetById(TPrimaryKey id);
 
-        List<VM> GetAll();
+        List<ViewModel> GetAll();
 
-        PagedResult<VM> GetAllPaging(string keyword, int pageSize, int page);
+        PagedResult<ViewModel> GetAllPaging(Expression<Func<TEntity, bool>> predicate, Func<TEntity, bool> orderBy,
+            SortDirection sortDirection, int pageIndex, int pageSize);
 
         void Save();
     }
