@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeduCore.Services.ViewModels.Common
+namespace TeduCore.Utilities.Dtos
 {
     public class EnumModel
     {

@@ -4,6 +4,7 @@ using System.Linq;
 using TeduCore.Data.Enums;
 using TeduCore.Services.ViewModels;
 using TeduCore.Services.ViewModels.Common;
+using TeduCore.Utilities.Dtos;
 using TeduCore.Utilities.Extensions;
 
 namespace TeduCore.WebApp.Models
