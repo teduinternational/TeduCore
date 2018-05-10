@@ -11,7 +11,7 @@ namespace TeduCore.Application.Systems.Users.Dtos
         {
             Roles = new List<string>();
         }
-        public string Id { set; get; }
+        public Guid Id { set; get; }
         public string FullName { set; get; }
         public string BirthDay { set; get; }
         public string Email { set; get; }

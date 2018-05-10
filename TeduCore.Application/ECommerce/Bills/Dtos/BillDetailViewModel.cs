@@ -1,13 +1,14 @@
-﻿using TeduCore.Application.ECommerce.Products.Dtos;
+﻿using System;
+using TeduCore.Application.ECommerce.Products.Dtos;
 
 namespace TeduCore.Application.ECommerce.Bills.Dtos
 {
     public class BillDetailViewModel
     {
-        public Guid id { get; set; }
-        public Guid billId { set; get; }
+        public Guid Id { get; set; }
+        public Guid BillId { set; get; }
 
-        public Guid productId { set; get; }
+        public Guid ProductId { set; get; }
 
         public int Quantity { set; get; }
 

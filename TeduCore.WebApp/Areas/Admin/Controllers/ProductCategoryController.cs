@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TeduCore.Application.ECommerce.ProductCategories;
@@ -41,7 +42,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Guid id)
         {
             var model = _productCategoryService.GetById(id);
 
@@ -56,7 +57,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
                 return new BadRequestObjectResult(allErrors);
             }
-            if (productVm.Id == 0)
+            if (productVm.Id == Guid.Empty)
             {
                 _productCategoryService.Add(productVm);
             }
@@ -69,7 +70,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateParentId(int sourceId, int targetId, Dictionary<int, int> items)
+        public IActionResult UpdateParentId(Guid sourceId, Guid targetId, Dictionary<Guid, int> items)
         {
             if (!ModelState.IsValid)
             {
@@ -85,7 +86,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult ReOrder(int sourceId, int targetId)
+        public IActionResult ReOrder(Guid sourceId, Guid targetId)
         {
             if (!ModelState.IsValid)
             {
@@ -101,7 +102,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -119,7 +120,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             {
                 return new BadRequestResult();
             }
-            var listProductCategory = JsonConvert.DeserializeObject<List<int>>(checkedProductCategories);
+            var listProductCategory = JsonConvert.DeserializeObject<List<Guid>>(checkedProductCategories);
             foreach (var item in listProductCategory)
             {
                 _productCategoryService.Delete(item);

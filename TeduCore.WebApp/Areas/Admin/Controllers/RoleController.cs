@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetById(string id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var model = await _roleService.GetById(id);
 
@@ -65,7 +66,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -76,14 +77,14 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult ListAllFunction(string roleId)
+        public IActionResult ListAllFunction(Guid roleId)
         {
             var functions = _roleService.GetListFunctionWithRole(roleId);
             return new OkObjectResult(functions);
         }
 
         [HttpPost]
-        public IActionResult SavePermission(List<PermissionViewModel> listPermmission, string roleId)
+        public IActionResult SavePermission(List<PermissionViewModel> listPermmission, Guid roleId)
         {
             _roleService.SavePermission(listPermmission, roleId);
             return new OkResult();

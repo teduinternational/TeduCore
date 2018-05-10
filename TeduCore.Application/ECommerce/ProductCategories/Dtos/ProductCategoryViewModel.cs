@@ -16,7 +16,7 @@ namespace TeduCore.Application.ECommerce.ProductCategories.Dtos
         [MaxLength(500)]
         public string Description { set; get; }
 
-        public int? ParentId { set; get; }
+        public Guid? ParentId { set; get; }
 
         public int? HomeOrder { set; get; }
 

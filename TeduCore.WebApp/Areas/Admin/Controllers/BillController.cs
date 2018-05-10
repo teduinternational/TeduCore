@@ -32,7 +32,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Guid id)
         {
             var model = _billService.GetDetail(id);
 
@@ -40,7 +40,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateStatus(int billId, BillStatus status)
+        public IActionResult UpdateStatus(Guid billId, BillStatus status)
         {
             _billService.UpdateStatus(billId, status);
 
@@ -62,7 +62,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
                 return new BadRequestObjectResult(allErrors);
             }
-            if (billVm.Id == 0)
+            if (billVm.Id == Guid.Empty)
             {
                 _billService.Create(billVm);
             }
@@ -75,7 +75,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult ConfirmBill(int billId)
+        public IActionResult ConfirmBill(Guid billId)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult CancelBill(int billId)
+        public IActionResult CancelBill(Guid billId)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult PendingBill(int billId)
+        public IActionResult PendingBill(Guid billId)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult ExportExcel(int billId)
+        public IActionResult ExportExcel(Guid billId)
         {
             string sWebRootFolder = _hostingEnvironment.WebRootPath;
             string sFileName = $"Bill_{billId}.xlsx";

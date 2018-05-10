@@ -9,19 +9,19 @@ namespace TeduCore.Application.Systems.Announcements
     {
         void Create(Announcement announcement);
 
-        List<Announcement> GetListByUserId(string userId, int pageIndex, int pageSize, out int totalRow);
+        List<Announcement> GetListByUserId(Guid userId, int pageIndex, int pageSize, out int totalRow);
 
-        List<Announcement> GetListByUserId(string userId, int top);
+        List<Announcement> GetListByUserId(Guid userId, int top);
 
-        void Delete(string notificationId);
+        void Delete(Guid notificationId);
 
-        void MarkAsRead(string userId, string notificationId);
+        void MarkAsRead(Guid userId, Guid notificationId);
 
-        Announcement GetDetail(string id);
+        Announcement GetDetail(Guid id);
 
         List<Announcement> GetListAll(int pageIndex, int pageSize, out int totalRow);
 
-        List<Announcement> ListAllUnread(string userId, int pageIndex, int pageSize, out int totalRow);
+        List<Announcement> ListAllUnread(Guid userId, int pageIndex, int pageSize, out int totalRow);
 
         void Save();
 

@@ -1,4 +1,6 @@
-﻿namespace TeduCore.Application.ECommerce.Products.Dtos
+﻿using System;
+
+namespace TeduCore.Application.ECommerce.Products.Dtos
 {
     public class SizeViewModel
     {

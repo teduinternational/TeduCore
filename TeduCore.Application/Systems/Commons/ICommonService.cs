@@ -10,8 +10,7 @@ namespace TeduCore.Application.Systems.Commons
     {
         FooterViewModel GetFooter();
 
-        List<SlideViewModel> GetSlides(SlideGroup groupAlias);
-
         SystemConfigViewModel GetSystemConfig(string code);
+        List<SlideViewModel> GetSlides(SlideGroup groupAlias);
     }
 }

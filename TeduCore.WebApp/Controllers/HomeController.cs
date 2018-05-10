@@ -3,6 +3,7 @@ using System.Diagnostics;
 using TeduCore.Application.ECommerce.ProductCategories;
 using TeduCore.Application.ECommerce.Products;
 using TeduCore.Application.Systems.Commons;
+using TeduCore.Data.Enums;
 using TeduCore.WebApp.Models;
 using TTeduCore.Application.Content.Blogs;
 
@@ -35,7 +36,7 @@ namespace TeduCore.WebApp.Controllers
                 HotProducts = _productService.GetHotProduct(5),
                 TopSellProducts = _productService.GetLastest(5),
                 LastestBlogs = _blogService.GetLastest(5),
-                HomeSlides = _commonService.GetSlides("top"),
+                HomeSlides = _commonService.GetSlides(SlideGroup.Top),
                 Title = _commonService.GetSystemConfig("HomeTitle").Value1,
                 MetaKeyword = _commonService.GetSystemConfig("HomeMetaKeyword").Value1,
                 MetaDescription = _commonService.GetSystemConfig("HomeMetaDescription").Value1

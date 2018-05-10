@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Security.Claims;
 using TeduCore.Application.ECommerce.ProductCategories;
 using TeduCore.Application.ECommerce.Products;
@@ -31,7 +32,7 @@ namespace TeduCore.WebApp.Controllers
         }
 
         [Route("{alias}-c.{id}.html", Name = "ProductCatalog")]
-        public IActionResult Catalog(int id, string keyword, int? pageSize, string sortBy, int page = 1)
+        public IActionResult Catalog(Guid id, string keyword, int? pageSize, string sortBy, int page = 1)
         {
             var model = new CatalogViewModel();
 
@@ -77,7 +78,7 @@ namespace TeduCore.WebApp.Controllers
         }
 
         [Route("{alias}-p.{id}.html", Name = "ProductDetail")]
-        public IActionResult Details(int id)
+        public IActionResult Details(Guid id)
         {
             ViewData["BodyClass"] = "product-page";
             var model = new DetailViewModel();
@@ -97,7 +98,7 @@ namespace TeduCore.WebApp.Controllers
 
             if (pageSize == null)
                 pageSize = _configuration.GetValue<int>("PageSize");
-            var userId = ((ClaimsIdentity)User.Identity).GetSpecificClaim("UserId");
+            var userId = Guid.Parse(((ClaimsIdentity)User.Identity).GetSpecificClaim("UserId"));
             var model = _productService.GetMyWishlist(userId, page, pageSize.Value);
             return View(model);
         }

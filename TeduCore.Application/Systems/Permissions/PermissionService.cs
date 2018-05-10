@@ -51,7 +51,7 @@ namespace TeduCore.Application.Systems.Permissions
 
         public async Task<List<PermissionViewModel>> GetByUserId(Guid userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId.ToString());
             var roles = await _userManager.GetRolesAsync(user);
 
             var query = (from f in _functionRepository.GetAll()

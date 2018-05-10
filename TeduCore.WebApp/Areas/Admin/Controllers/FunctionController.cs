@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,7 +51,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetById(string id)
+        public IActionResult GetById(Guid id)
         {
             var model = _functionService.GetById(id);
 
@@ -67,7 +68,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             }
             else
             {
-                if (string.IsNullOrWhiteSpace(functionVm.Id))
+                if (functionVm.Id == Guid.Empty)
                 {
                     _functionService.Add(functionVm);
                 }
@@ -81,7 +82,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateParentId(string sourceId, string targetId, Dictionary<string, int> items)
+        public IActionResult UpdateParentId(Guid sourceId, Guid targetId, Dictionary<Guid, int> items)
         {
             if (!ModelState.IsValid)
             {
@@ -103,7 +104,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult ReOrder(string sourceId, string targetId)
+        public IActionResult ReOrder(Guid sourceId, Guid targetId)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +126,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(Guid id)
         {
             if (!ModelState.IsValid)
             {

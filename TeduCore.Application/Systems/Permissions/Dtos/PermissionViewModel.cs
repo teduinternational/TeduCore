@@ -10,12 +10,12 @@ namespace TeduCore.Application.Systems.Permissions.Dtos
     public class PermissionViewModel
     {
 
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
 
 
-        public string RoleId { get; set; }
+        public Guid RoleId { get; set; }
 
-        public string FunctionId { get; set; }
+        public Guid FunctionId { get; set; }
 
         public bool CanCreate { set; get; }
 
@@ -25,8 +25,5 @@ namespace TeduCore.Application.Systems.Permissions.Dtos
 
         public bool CanDelete { set; get; }
 
-        public AppRoleViewModel AppRole { get; set; }
-
-        public FunctionViewModel Function { get; set; }
     }
 }

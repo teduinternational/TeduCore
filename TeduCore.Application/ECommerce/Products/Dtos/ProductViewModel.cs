@@ -8,7 +8,7 @@ namespace TeduCore.Application.ECommerce.Products.Dtos
 {
     public class ProductViewModel
     {
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
         public string Name { set; get; }
 
         public string Code { set; get; }

@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using TeduCore.Data.Enums;
+using TeduCore.Infrastructure.Enums;
 
 namespace TeduCore.Application.Content.Slides.Dtos
 {
     public class SlideViewModel
     {
-        public Guid id { set; get; }
+        public Guid Id { set; get; }
 
         [StringLength(250)]
         [Required]
@@ -20,14 +23,13 @@ namespace TeduCore.Application.Content.Slides.Dtos
         [StringLength(250)]
         public string Url { set; get; }
 
-        public int? DisplayOrder { set; get; }
+        public int DisplayOrder { set; get; }
 
-        public bool Status { set; get; }
+        public Status Status { set; get; }
 
         public string Content { set; get; }
 
-        [StringLength(25)]
         [Required]
-        public string GroupAlias { get; set; }
+        public SlideGroup GroupAlias { get; set; }
     }
 }

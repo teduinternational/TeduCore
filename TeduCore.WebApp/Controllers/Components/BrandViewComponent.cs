@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TeduCore.Application.Systems.Commons;
+using TeduCore.Data.Enums;
 
 namespace TeduCore.WebApp.Controllers.Components
 {
@@ -15,7 +16,7 @@ namespace TeduCore.WebApp.Controllers.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View(_commonService.GetSlides("brand"));
+            return View(_commonService.GetSlides(SlideGroup.Branch));
         }
     }
 }

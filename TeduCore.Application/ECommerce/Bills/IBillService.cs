@@ -23,13 +23,10 @@ namespace TeduCore.Application.ECommerce.Bills
 
         void DeleteDetail(Guid productId, Guid billId);
 
-        void UpdateStatus(int orderId, BillStatus status);
+        void UpdateStatus(Guid orderId, BillStatus status);
 
         List<BillDetailViewModel> GetBillDetails(Guid billId);
 
-        List<ColorViewModel> GetColors();
-
-        List<SizeViewModel> GetSizes();
 
         void Save();
 

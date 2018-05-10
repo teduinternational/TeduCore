@@ -27,8 +27,6 @@ namespace TeduCore.Application.AutoMapper
             CreateMap<ProductCategory, ProductCategoryViewModel>().MaxDepth(2);
             CreateMap<Product, ProductViewModel>().MaxDepth(2);
             CreateMap<Tag, TagViewModel>().MaxDepth(2);
-            CreateMap<Color, ColorViewModel>().MaxDepth(2);
-            CreateMap<Size, SizeViewModel>().MaxDepth(2);
             CreateMap<ProductTag, ProductTagViewModel>().MaxDepth(2);
             CreateMap<Post, BlogViewModel>().MaxDepth(2);
             CreateMap<PostTag, BlogTagViewModel>().MaxDepth(2);
@@ -38,8 +36,6 @@ namespace TeduCore.Application.AutoMapper
             CreateMap<AppUser, AppUserViewModel>().MaxDepth(2);
             CreateMap<AppRole, AppRoleViewModel>().MaxDepth(2);
             CreateMap<ProductImage, ProductImageViewModel>().MaxDepth(2);
-            CreateMap<ProductQuantity, ProductQuantityViewModel>().MaxDepth(2);
-            CreateMap<WholePrice, WholePriceViewModel>().MaxDepth(2);
             CreateMap<Page, PageViewModel>().MaxDepth(2);
 
             CreateMap<ContactDetail, ContactDetailViewModel>().MaxDepth(2);

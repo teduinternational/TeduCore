@@ -13,21 +13,21 @@ namespace TeduCore.Application.Systems.Roles
     {
         Task<bool> AddAsync(AppRoleViewModel userVm);
 
-        Task DeleteAsync(string id);
+        Task DeleteAsync(Guid id);
 
         Task<List<AppRoleViewModel>> GetAllAsync();
 
         PagedResult<AppRoleViewModel> GetAllPagingAsync(string keyword, int page, int pageSize);
 
-        Task<AppRoleViewModel> GetById(string id);
+        Task<AppRoleViewModel> GetById(Guid id);
 
 
         Task UpdateAsync(AppRoleViewModel userVm);
 
-        List<PermissionViewModel> GetListFunctionWithRole(string roleId);
+        List<PermissionViewModel> GetListFunctionWithRole(Guid roleId);
 
-        void SavePermission(List<PermissionViewModel> permissions, string roleId);
+        void SavePermission(List<PermissionViewModel> permissions, Guid roleId);
 
-        Task<bool> CheckPermission(string functionId, string action, string[] roles);
+        Task<bool> CheckPermission(string functionCode, string action, string[] roles);
     }
 }

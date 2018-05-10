@@ -27,7 +27,7 @@ namespace TeduCore.WebApp.Helpers
             var roles = await _userManager.GetRolesAsync(user);
             // Add your claims here
             ((ClaimsIdentity)principal.Identity).AddClaims(new[] {
-                new Claim("UserId",user.Id),
+                new Claim("UserId",user.Id.ToString()),
                 new Claim(ClaimTypes.Email,user.Email),
                 new Claim("FullName",user.FullName),
                 new Claim("Avatar",string.IsNullOrEmpty(user.Avatar)?string.Empty:user.Avatar),

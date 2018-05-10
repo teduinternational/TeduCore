@@ -38,7 +38,7 @@ namespace TeduCore.Application.AutoMapper
               c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
 
             CreateMap<BillViewModel, Bill>()
-              .ConstructUsing(c => new Bill(c.Id, c.CustomerName, c.CustomerAddress, c.CustomerMobile, c.CustomerMessage, c.BillStatus, c.PaymentMethod, c.Status, c.CustomerFacebook, c.ShippingFee));
+              .ConstructUsing(c => new Bill(c.Id, c.CustomerName, c.CustomerAddress, c.CustomerMobile, c.CustomerMessage, c.BillStatus, c.PaymentMethod, c.CustomerFacebook, c.ShippingFee));
 
             CreateMap<BillDetailViewModel, BillDetail>()
               .ConstructUsing(c => new BillDetail(c.Id, c.BillId, c.ProductId, c.Quantity, c.Price));
@@ -47,7 +47,7 @@ namespace TeduCore.Application.AutoMapper
              .ConstructUsing(c => new AppUser(c.FullName, c.UserName, c.Email, c.PhoneNumber, c.Avatar, c.Status));
 
             CreateMap<PermissionViewModel, Permission>()
-             .ConstructUsing(c => new Permission(c.RoleId, c.FunctionId, c.CanCreate, c.CanRead, c.CanUpdate, c.CanDelete));
+             .ConstructUsing(c => new Permission(c.RoleId, c.FunctionId));
 
             CreateMap<SlideViewModel, Slide>()
                 .ConstructUsing(c => new Slide(c.Id, c.Name, c.Description, c.Image, c.Url, c.DisplayOrder, c.Status, c.Content, c.GroupAlias));

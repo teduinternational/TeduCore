@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetById(string id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var model = await _userService.GetById(id);
 
@@ -64,7 +65,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             }
             else
             {
-                if (string.IsNullOrWhiteSpace(productVm.Id))
+                if (productVm.Id == Guid.Empty)
                 {
                     await _userService.AddAsync(productVm);
                 }
@@ -77,7 +78,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             if (!ModelState.IsValid)
             {

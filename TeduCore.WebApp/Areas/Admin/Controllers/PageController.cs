@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TeduCore.Application.Content.Pages;
@@ -29,7 +30,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Guid id)
         {
             var model = _pageService.GetById(id);
 
@@ -51,7 +52,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
                 return new BadRequestObjectResult(allErrors);
             }
-            if (pageVm.Id == 0)
+            if (pageVm.Id == Guid.Empty)
             {
                 _pageService.Add(pageVm);
             }
@@ -64,7 +65,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             if (!ModelState.IsValid)
             {

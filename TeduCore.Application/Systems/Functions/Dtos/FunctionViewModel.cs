@@ -20,7 +20,7 @@ namespace TeduCore.Application.Systems.Functions.Dtos
 
         public int DisplayOrder { set; get; }
 
-        public string ParentId { set; get; }
+        public Guid? ParentId { set; get; }
 
         public Status Status { set; get; }
 

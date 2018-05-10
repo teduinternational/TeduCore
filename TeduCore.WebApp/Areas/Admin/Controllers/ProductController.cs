@@ -46,7 +46,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Guid id)
         {
             var model = _productService.GetById(id);
 
@@ -54,7 +54,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllPaging(int? categoryId, string keyword, int page, int pageSize, string sortBy)
+        public IActionResult GetAllPaging(Guid? categoryId, string keyword, int page, int pageSize, string sortBy)
         {
             var model = _productService.GetAllPaging(categoryId, keyword, page, pageSize, sortBy);
             return new OkObjectResult(model);
@@ -70,7 +70,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             }
             else
             {
-                if (productVm.Id == 0)
+                if (productVm.Id == Guid.Empty)
                 {
                     _productService.Add(productVm);
                 }
@@ -84,7 +84,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveImages(int productId, string[] images)
+        public IActionResult SaveImages(Guid productId, string[] images)
         {
             _productService.AddImages(productId, images);
             _productService.Save();
@@ -92,44 +92,13 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetImages(int productId)
+        public IActionResult GetImages(Guid productId)
         {
             var images = _productService.GetImages(productId);
             return new OkObjectResult(images);
         }
-
         [HttpPost]
-        public IActionResult SaveQuantities(int productId, List<ProductQuantityViewModel> quantities)
-        {
-            _productService.AddQuantity(productId, quantities);
-            _productService.Save();
-            return new OkObjectResult(quantities);
-        }
-
-        [HttpGet]
-        public IActionResult GetQuantities(int productId)
-        {
-            var quantities = _productService.GetQuantities(productId);
-            return new OkObjectResult(quantities);
-        }
-
-        [HttpPost]
-        public IActionResult SaveWholePrice(int productId, List<WholePriceViewModel> wholePrices)
-        {
-            _productService.AddWholePrice(productId, wholePrices);
-            _productService.Save();
-            return new OkObjectResult(wholePrices);
-        }
-
-        [HttpGet]
-        public IActionResult GetWholePrices(int productId)
-        {
-            var wholePrices = _productService.GetWholePrices(productId);
-            return new OkObjectResult(wholePrices);
-        }
-
-        [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -153,7 +122,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             }
             else
             {
-                var listProductCategory = JsonConvert.DeserializeObject<List<int>>(checkedProducts);
+                var listProductCategory = JsonConvert.DeserializeObject<List<Guid>>(checkedProducts);
                 foreach (var item in listProductCategory)
                 {
                     _productService.Delete(item);
@@ -166,7 +135,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult ImportExcel(IList<IFormFile> files, int categoryId)
+        public IActionResult ImportExcel(IList<IFormFile> files, Guid categoryId)
         {
             if (files != null && files.Count > 0)
             {

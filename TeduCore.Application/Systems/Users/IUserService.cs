@@ -12,13 +12,13 @@ namespace TeduCore.Application.Systems.Users
     {
         Task<bool> AddAsync(AppUserViewModel userVm);
 
-        Task DeleteAsync(string id);
+        Task DeleteAsync(Guid id);
 
         Task<List<AppUserViewModel>> GetAllAsync();
 
         PagedResult<AppUserViewModel> GetAllPagingAsync(string keyword, int page, int pageSize);
 
-        Task<AppUserViewModel> GetById(string id);
+        Task<AppUserViewModel> GetById(Guid id);
 
 
         Task UpdateAsync(AppUserViewModel userVm);

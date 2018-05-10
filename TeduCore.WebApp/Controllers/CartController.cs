@@ -140,7 +140,7 @@ namespace TeduCore.WebApp.Controllers
         /// <param name="productId"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
-        public IActionResult UpdateCart(int productId, int quantity)
+        public IActionResult UpdateCart(Guid productId, int quantity)
         {
             var session = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.CartSession);
             if (session != null)
@@ -171,7 +171,7 @@ namespace TeduCore.WebApp.Controllers
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
-        public IActionResult RemoveFromCart(int productId)
+        public IActionResult RemoveFromCart(Guid productId)
         {
             var session = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.CartSession);
             if (session != null)
@@ -202,7 +202,7 @@ namespace TeduCore.WebApp.Controllers
         /// <param name="quantity"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult AddToCart(int productId, int quantity)
+        public IActionResult AddToCart(Guid productId, int quantity)
         {
             //Get product detail
             var product = _productService.GetById(productId);

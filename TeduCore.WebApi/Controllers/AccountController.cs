@@ -54,7 +54,7 @@ namespace TeduCore.WebApi.Controllers
                 {
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim("fullName", user.FullName),
                     new Claim("avatar", string.IsNullOrEmpty(user.Avatar)? string.Empty:user.Avatar),
                     new Claim("roles", string.Join(";",roles)),

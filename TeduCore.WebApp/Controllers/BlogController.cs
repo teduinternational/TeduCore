@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
 using TeduCore.WebApp.Models;
 using TTeduCore.Application.Content.Blogs;
 
@@ -25,7 +26,7 @@ namespace TeduCore.WebApp.Controllers
         }
 
         [Route("{alias}-b.{id}.html")]
-        public IActionResult Details(int id)
+        public IActionResult Details(Guid id)
         {
             var model = new BlogDetailViewModel();
             model.Blog = _blogService.GetById(id);

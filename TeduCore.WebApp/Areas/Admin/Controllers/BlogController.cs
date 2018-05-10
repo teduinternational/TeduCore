@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TeduCore.Application.Content.Blogs.Dtos;
@@ -38,7 +39,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Guid id)
         {
             var model = _blogService.GetById(id);
 
@@ -63,7 +64,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             else
             {
                 blogVm.SeoAlias = TextHelper.ToUnsignString(blogVm.Name);
-                if (blogVm.Id == 0)
+                if (blogVm.Id == Guid.Empty)
                 {
                     _blogService.Add(blogVm);
                 }
@@ -77,7 +78,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -101,7 +102,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             }
             else
             {
-                var listProductCategory = JsonConvert.DeserializeObject<List<int>>(checkedProducts);
+                var listProductCategory = JsonConvert.DeserializeObject<List<Guid>>(checkedProducts);
                 foreach (var item in listProductCategory)
                 {
                     _blogService.Delete(item);
