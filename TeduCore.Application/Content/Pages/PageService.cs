@@ -73,7 +73,7 @@ namespace TeduCore.Application.Implementation
 
         public PageViewModel GetById(Guid id)
         {
-            return Mapper.Map<Page, PageViewModel>(_pageRepository.Get(id));
+            return Mapper.Map<Page, PageViewModel>(_pageRepository.GetById(id));
         }
 
         public void SaveChanges()

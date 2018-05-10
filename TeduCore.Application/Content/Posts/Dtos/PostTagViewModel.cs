@@ -1,14 +1,14 @@
 ﻿using TeduCore.Application.Dtos;
 
-namespace TeduCore.Application.Content.Blogs.Dtos
+namespace TeduCore.Application.Content.Posts.Dtos
 {
-    public class BlogTagViewModel
+    public class PostTagViewModel
     {
         public int BlogId { set; get; }
 
         public string TagId { set; get; }
 
-        public BlogViewModel Blog { set; get; }
+        public PostViewModel Blog { set; get; }
 
         public TagViewModel Tag { set; get; }
     }

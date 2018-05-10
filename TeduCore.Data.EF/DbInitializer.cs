@@ -101,7 +101,6 @@ namespace TeduCore.Data.EF
                     Id = CommonConstants.DefaultFooterId,
                     Content = content
                 });
-                _context.SaveChanges();
             }
             if (_context.ContactDetails.Count(x => x.Id == CommonConstants.DefaultFooterId) == 0)
             {
@@ -117,7 +116,6 @@ namespace TeduCore.Data.EF
                     Lng = 21.0435483,
                     Lat = 105.790058,
                 });
-                _context.SaveChanges();
             }
 
             if (!_context.AdvertistmentPages.Any())

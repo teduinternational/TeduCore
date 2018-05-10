@@ -64,7 +64,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
             }
             if (billVm.Id == Guid.Empty)
             {
-                _billService.Create(billVm);
+                _billService.Add(billVm);
             }
             else
             {

@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using TeduCore.Infrastructure.Enums;
+using System.Threading.Tasks;
+using TeduCore.Data.Interfaces;
 using TeduCore.Infrastructure.Interfaces;
 using TeduCore.Infrastructure.SharedKernel;
-using System.Threading.Tasks;
 
 namespace TeduCore.Data.EF
 {
@@ -17,7 +17,8 @@ namespace TeduCore.Data.EF
     /// </summary>
     /// <typeparam name="TEntity">The type of entity this repository works with. Must be a class inheriting DomainEntity</typeparam>
     /// <typeparam name="TPrimaryKey">The type of primary key</typeparam>
-    public class EFRepository<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey>, IDisposable where TEntity : DomainEntity<TPrimaryKey>
+    public class EFRepository<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey>, IDisposable
+        where TEntity : DomainEntity<TPrimaryKey>
     {
         protected readonly AppDbContext DbContext;
 
@@ -53,7 +54,7 @@ namespace TeduCore.Data.EF
 
         public void Delete(TPrimaryKey id)
         {
-            DbContext.Set<TEntity>().Remove(Get(id));
+            DbContext.Set<TEntity>().Remove(GetById(id));
         }
 
         public void Delete(Expression<Func<TEntity, bool>> predicate)
@@ -64,7 +65,6 @@ namespace TeduCore.Data.EF
         public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
             return GetAll().FirstOrDefault(predicate);
-
         }
 
         public TEntity FirstOrDefault(TPrimaryKey id)
@@ -82,13 +82,17 @@ namespace TeduCore.Data.EF
             return await GetAll().FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
-        public TEntity Get(TPrimaryKey id)
+        public TEntity GetById(TPrimaryKey id)
         {
             return DbContext.Set<TEntity>().Find(id);
         }
 
-        public IQueryable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll(bool isAll = true)
         {
+            if (typeof(TEntity) is IHasSoftDelete && isAll == false)
+            {
+                return DbContext.Set<TEntity>().Where(x => ((IHasSoftDelete)x).IsDeleted == false).AsQueryable();
+            }
             return DbContext.Set<TEntity>().AsQueryable();
         }
 
@@ -181,7 +185,7 @@ namespace TeduCore.Data.EF
 
         public async Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate)
         {
-             return await GetAll().SingleAsync(predicate);
+            return await GetAll().SingleAsync(predicate);
         }
 
         public TEntity Update(TEntity entity)
@@ -190,8 +194,8 @@ namespace TeduCore.Data.EF
             return result.Entity;
         }
 
-
         private bool disposed = false;
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
@@ -208,6 +212,11 @@ namespace TeduCore.Data.EF
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate, bool isAll = true)
+        {
+            return GetAll(isAll).Where(predicate);
         }
     }
 }

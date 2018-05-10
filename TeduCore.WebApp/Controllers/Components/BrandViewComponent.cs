@@ -16,7 +16,8 @@ namespace TeduCore.WebApp.Controllers.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View(_commonService.GetSlides(SlideGroup.Branch));
+            return await Task.FromResult<IViewComponentResult>(View(_commonService.GetSlides(SlideGroup.Branch)));
+
         }
     }
 }

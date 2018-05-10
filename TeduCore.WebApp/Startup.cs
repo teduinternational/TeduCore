@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using System;
-using TeduCore.Application.Content.Blogs;
+using TeduCore.Application.Content.Posts;
 using TeduCore.Application.Content.Contacts;
 using TeduCore.Application.Content.Feedbacks;
 using TeduCore.Application.Content.Pages;
@@ -32,7 +32,7 @@ using TeduCore.WebApp.Authorization;
 using TeduCore.WebApp.Extensions;
 using TeduCore.WebApp.Helpers;
 using TeduCore.WebApp.Services;
-using TTeduCore.Application.Content.Blogs;
+using TTeduCore.Application.Content.Posts;
 
 namespace TeduCore.WebApp
 {
@@ -118,7 +118,7 @@ namespace TeduCore.WebApp
             services.AddTransient<IFunctionService, FunctionService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
-            services.AddTransient<IBlogService, BlogService>();
+            services.AddTransient<IPostService, PostService>();
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<IPageService, PageService>();
             services.AddTransient<IUserService, UserService>();

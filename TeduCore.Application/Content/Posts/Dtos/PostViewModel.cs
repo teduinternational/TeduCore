@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TeduCore.Infrastructure.Enums;
 
-namespace TeduCore.Application.Content.Blogs.Dtos
+namespace TeduCore.Application.Content.Posts.Dtos
 {
-    public class BlogViewModel
+    public class PostViewModel
     {
         public Guid Id { get; set; }
         [Required]

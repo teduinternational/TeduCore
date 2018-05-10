@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TeduCore.Application.Content.Blogs.Dtos;
+using TeduCore.Application.Content.Posts.Dtos;
 using TeduCore.Application.Content.Contacts.Dtos;
 using TeduCore.Application.Content.Feedbacks.Dtos;
 using TeduCore.Application.Content.Pages.Dtos;
@@ -28,8 +28,8 @@ namespace TeduCore.Application.AutoMapper
             CreateMap<Product, ProductViewModel>().MaxDepth(2);
             CreateMap<Tag, TagViewModel>().MaxDepth(2);
             CreateMap<ProductTag, ProductTagViewModel>().MaxDepth(2);
-            CreateMap<Post, BlogViewModel>().MaxDepth(2);
-            CreateMap<PostTag, BlogTagViewModel>().MaxDepth(2);
+            CreateMap<Post, PostViewModel>().MaxDepth(2);
+            CreateMap<PostTag, PostTagViewModel>().MaxDepth(2);
             CreateMap<Footer, FooterViewModel>().MaxDepth(2);
             CreateMap<Slide, SlideViewModel>().MaxDepth(2);
             CreateMap<Setting, SystemConfigViewModel>().MaxDepth(2);

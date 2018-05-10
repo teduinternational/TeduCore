@@ -71,8 +71,8 @@ namespace TeduCore.Application.ECommerce.ProductCategories
 
         public void ReOrder(Guid sourceId, Guid targetId)
         {
-            var source = _productCategoryRepository.Get(sourceId);
-            var target = _productCategoryRepository.Get(targetId);
+            var source = _productCategoryRepository.GetById(sourceId);
+            var target = _productCategoryRepository.GetById(targetId);
             int tempOrder = source.SortOrder;
 
             source.SortOrder = target.SortOrder;
@@ -95,7 +95,7 @@ namespace TeduCore.Application.ECommerce.ProductCategories
         public void UpdateParentId(Guid sourceId, Guid targetId, Dictionary<Guid, int> items)
         {
             //Update parent id for source
-            var category = _productCategoryRepository.Get(sourceId);
+            var category = _productCategoryRepository.GetById(sourceId);
             category.ParentId = targetId;
             _productCategoryRepository.Update(category);
 

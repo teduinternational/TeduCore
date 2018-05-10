@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using TeduCore.Application.ECommerce.Bills.Dtos;
 using TeduCore.Application.ECommerce.Products.Dtos;
 using TeduCore.Application.ViewModels;
+using TeduCore.Data.Entities;
 using TeduCore.Data.Enums;
 using TeduCore.Utilities.Dtos;
 
 namespace TeduCore.Application.ECommerce.Bills
 {
-    public interface IBillService
+    public interface IBillService: IWebServiceBase<Bill, Guid, BillViewModel>
     {
-        void Create(BillViewModel billVm);
-
-        void Update(BillViewModel billVm);
-
         PagedResult<BillViewModel> GetAllPaging(string startDate, string endDate, string keyword,
             int pageIndex, int pageSize);
 
@@ -26,9 +23,6 @@ namespace TeduCore.Application.ECommerce.Bills
         void UpdateStatus(Guid orderId, BillStatus status);
 
         List<BillDetailViewModel> GetBillDetails(Guid billId);
-
-
-        void Save();
 
         void ConfirmBill(Guid id);
 

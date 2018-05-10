@@ -4,17 +4,17 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TeduCore.Application.Content.Blogs.Dtos;
+using TeduCore.Application.Content.Posts.Dtos;
 using TeduCore.Utilities.Helpers;
-using TTeduCore.Application.Content.Blogs;
+using TTeduCore.Application.Content.Posts;
 
 namespace TeduCore.WebApp.Areas.Admin.Controllers
 {
     public class BlogController : BaseController
     {
-        private readonly IBlogService _blogService;
+        private readonly IPostService _blogService;
 
-        public BlogController(IBlogService blogService)
+        public BlogController(IPostService blogService)
         {
             _blogService = blogService;
         }
@@ -54,7 +54,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveEntity(BlogViewModel blogVm)
+        public IActionResult SaveEntity(PostViewModel blogVm)
         {
             if (!ModelState.IsValid)
             {

@@ -68,7 +68,7 @@ namespace TeduCore.Application.Content.Slides
 
         public SlideViewModel GetById(Guid id)
         {
-            return Mapper.Map<Slide, SlideViewModel>(_slideRepository.Get(id));
+            return Mapper.Map<Slide, SlideViewModel>(_slideRepository.GetById(id));
         }
 
         public void SaveChanges()

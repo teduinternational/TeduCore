@@ -1,50 +1,47 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using TeduCore.Application.Content.Posts.Dtos;
+using TeduCore.Application.Dtos;
 using TeduCore.Data.Entities;
+using TeduCore.Data.Enums;
 using TeduCore.Infrastructure.Enums;
 using TeduCore.Infrastructure.Interfaces;
-using TeduCore.Utilities.Constants;
 using TeduCore.Utilities.Dtos;
 using TeduCore.Utilities.Helpers;
-using TeduCore.Application.Content.Blogs.Dtos;
-using TeduCore.Application.Dtos;
-using TTeduCore.Application.Content.Blogs;
-using System;
-using TeduCore.Data.Enums;
+using TTeduCore.Application.Content.Posts;
 
-namespace TeduCore.Application.Content.Blogs
+namespace TeduCore.Application.Content.Posts
 {
-    public class BlogService : IBlogService
+    public class PostService : WebServiceBase<Post, Guid, PostViewModel>, IPostService
     {
-        private readonly IRepository<Post,Guid> _blogRepository;
-        private readonly IRepository<Tag,string> _tagRepository;
+        private readonly IRepository<Post, Guid> _blogRepository;
+        private readonly IRepository<Tag, string> _tagRepository;
         private readonly IRepository<PostTag, Guid> _blogTagRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
-        public BlogService(IRepository<Post, Guid> blogRepository,
+        public PostService(IRepository<Post, Guid> blogRepository,
             IRepository<PostTag, Guid> blogTagRepository,
-            IRepository<Tag,string> tagRepository,
-            IUnitOfWork unitOfWork)
+            IRepository<Tag, string> tagRepository,
+            IUnitOfWork unitOfWork) : base(blogRepository, unitOfWork)
         {
             _blogRepository = blogRepository;
             _blogTagRepository = blogTagRepository;
             _tagRepository = tagRepository;
-            _unitOfWork = unitOfWork;
         }
 
-        public BlogViewModel Add(BlogViewModel blogVm)
+        public override void Add(PostViewModel blogVm)
         {
-            var blog = Mapper.Map<BlogViewModel, Post>(blogVm);
-
+            var blog = Mapper.Map<PostViewModel, Post>(blogVm);
+            blog.Id = Guid.NewGuid();
             if (!string.IsNullOrEmpty(blog.Tags))
             {
                 var tags = blog.Tags.Split(',');
                 foreach (string t in tags)
                 {
                     var tagId = TextHelper.ToUnsignString(t);
-                    if (!_tagRepository.GetAll().Where(x => x.Id == tagId).Any())
+                    if (_tagRepository.Count(x => x.Id == tagId) == 0)
                     {
                         Tag tag = new Tag
                         {
@@ -55,26 +52,14 @@ namespace TeduCore.Application.Content.Blogs
                         _tagRepository.Insert(tag);
                     }
 
-                    var blogTag = new PostTag { TagId = tagId };
-                   // blog.BlogTags.Insert(blogTag);
+                    var blogTag = new PostTag { TagId = tagId, PostId = blog.Id };
+                    _blogTagRepository.Insert(blogTag);
                 }
             }
             _blogRepository.Insert(blog);
-            return blogVm;
         }
 
-        public void Delete(Guid id)
-        {
-            _blogRepository.Delete(id);
-        }
-
-        public List<BlogViewModel> GetAll()
-        {
-            return _blogRepository.GetAll()
-                .ProjectTo<BlogViewModel>().ToList();
-        }
-
-        public PagedResult<BlogViewModel> GetAllPaging(string keyword, int pageSize, int page = 1)
+        public PagedResult<PostViewModel> GetAllPaging(string keyword, int pageSize, int page = 1)
         {
             var query = _blogRepository.GetAll();
             if (!string.IsNullOrEmpty(keyword))
@@ -85,9 +70,9 @@ namespace TeduCore.Application.Content.Blogs
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize);
 
-            var paginationSet = new PagedResult<BlogViewModel>()
+            var paginationSet = new PagedResult<PostViewModel>()
             {
-                Results = data.ProjectTo<BlogViewModel>().ToList(),
+                Results = data.ProjectTo<PostViewModel>().ToList(),
                 CurrentPage = page,
                 RowCount = totalRow,
                 PageSize = pageSize,
@@ -96,19 +81,9 @@ namespace TeduCore.Application.Content.Blogs
             return paginationSet;
         }
 
-        public BlogViewModel GetById(Guid id)
+        public override void Update(PostViewModel blog)
         {
-            return Mapper.Map<Post, BlogViewModel>(_blogRepository.Get(id));
-        }
-
-        public void Save()
-        {
-            _unitOfWork.Commit();
-        }
-
-        public void Update(BlogViewModel blog)
-        {
-            _blogRepository.Update(Mapper.Map<BlogViewModel, Post>(blog));
+            _blogRepository.Update(Mapper.Map<PostViewModel, Post>(blog));
             if (!string.IsNullOrEmpty(blog.Tags))
             {
                 string[] tags = blog.Tags.Split(',');
@@ -136,22 +111,22 @@ namespace TeduCore.Application.Content.Blogs
             }
         }
 
-        public List<BlogViewModel> GetLastest(int top)
+        public List<PostViewModel> GetLastest(int top)
         {
             return _blogRepository.GetAll().Where(x => x.Status == Status.Actived).OrderByDescending(x => x.DateCreated)
-                .Take(top).ProjectTo<BlogViewModel>().ToList();
+                .Take(top).ProjectTo<PostViewModel>().ToList();
         }
 
-        public List<BlogViewModel> GetHotProduct(int top)
+        public List<PostViewModel> GetHotProduct(int top)
         {
             return _blogRepository.GetAll().Where(x => x.Status == Status.Actived && x.HotFlag == true)
                 .OrderByDescending(x => x.DateCreated)
                 .Take(top)
-                .ProjectTo<BlogViewModel>()
+                .ProjectTo<PostViewModel>()
                 .ToList();
         }
 
-        public List<BlogViewModel> GetListPaging(int page, int pageSize, string sort, out int totalRow)
+        public List<PostViewModel> GetListPaging(int page, int pageSize, string sort, out int totalRow)
         {
             var query = _blogRepository.GetAll().Where(x => x.Status == Status.Actived);
 
@@ -170,7 +145,7 @@ namespace TeduCore.Application.Content.Blogs
 
             return query.Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .ProjectTo<BlogViewModel>().ToList();
+                .ProjectTo<PostViewModel>().ToList();
         }
 
         public List<string> GetListByName(string name)
@@ -179,7 +154,7 @@ namespace TeduCore.Application.Content.Blogs
             && x.Name.Contains(name)).Select(y => y.Name).ToList();
         }
 
-        public List<BlogViewModel> Search(string keyword, int page, int pageSize, string sort, out int totalRow)
+        public List<PostViewModel> Search(string keyword, int page, int pageSize, string sort, out int totalRow)
         {
             var query = _blogRepository.GetAll().Where(x => x.Status == Status.Actived
             && x.Name.Contains(keyword));
@@ -199,17 +174,17 @@ namespace TeduCore.Application.Content.Blogs
 
             return query.Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .ProjectTo<BlogViewModel>()
+                .ProjectTo<PostViewModel>()
                 .ToList();
         }
 
-        public List<BlogViewModel> GetReatedBlogs(Guid id, int top)
+        public List<PostViewModel> GetReatedBlogs(Guid id, int top)
         {
             return _blogRepository.GetAll().Where(x => x.Status == Status.Actived
                 && x.Id != id)
             .OrderByDescending(x => x.DateCreated)
             .Take(top)
-            .ProjectTo<BlogViewModel>()
+            .ProjectTo<PostViewModel>()
             .ToList();
         }
 
@@ -224,14 +199,14 @@ namespace TeduCore.Application.Content.Blogs
 
         public void IncreaseView(Guid id)
         {
-            var product = _blogRepository.Get(id);
+            var product = _blogRepository.GetById(id);
             if (product.ViewCount.HasValue)
                 product.ViewCount += 1;
             else
                 product.ViewCount = 1;
         }
 
-        public List<BlogViewModel> GetListByTag(string tagId, int page, int pageSize, out int totalRow)
+        public List<PostViewModel> GetListByTag(string tagId, int page, int pageSize, out int totalRow)
         {
             var query = from p in _blogRepository.GetAll()
                         join pt in _blogTagRepository.GetAll()
@@ -244,7 +219,7 @@ namespace TeduCore.Application.Content.Blogs
 
             query = query.Skip((page - 1) * pageSize).Take(pageSize);
 
-            var model = query.ProjectTo<BlogViewModel>();
+            var model = query.ProjectTo<PostViewModel>();
             return model.ToList();
         }
 
@@ -253,11 +228,11 @@ namespace TeduCore.Application.Content.Blogs
             return Mapper.Map<Tag, TagViewModel>(_tagRepository.FirstOrDefault(x => x.Id == tagId));
         }
 
-        public List<BlogViewModel> GetList(string keyword)
+        public List<PostViewModel> GetList(string keyword)
         {
             var query = !string.IsNullOrEmpty(keyword) ?
-                _blogRepository.GetAll().Where(x => x.Name.Contains(keyword)).ProjectTo<BlogViewModel>()
-                : _blogRepository.GetAll().ProjectTo<BlogViewModel>();
+                _blogRepository.GetAll().Where(x => x.Name.Contains(keyword)).ProjectTo<PostViewModel>()
+                : _blogRepository.GetAll().ProjectTo<PostViewModel>();
             return query.ToList();
         }
 

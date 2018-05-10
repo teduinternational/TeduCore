@@ -15,7 +15,7 @@ namespace TeduCore.WebApp.Controllers.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View(_productCategoryService.GetAll());
+            return await Task.FromResult<IViewComponentResult>(View(_productCategoryService.GetAll()));
         }
     }
 }

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using TeduCore.Application.ECommerce.Bills.Dtos;
-using TeduCore.Application.ECommerce.Products.Dtos;
 using TeduCore.Data.Entities;
 using TeduCore.Data.Enums;
 using TeduCore.Infrastructure.Interfaces;
@@ -13,41 +12,39 @@ using TeduCore.Utilities.Dtos;
 
 namespace TeduCore.Application.ECommerce.Bills
 {
-    public class BillService : IBillService
+    public class BillService : WebServiceBase<Bill, Guid, BillViewModel>, IBillService
     {
         private readonly IRepository<Bill, Guid> _orderRepository;
         private readonly IRepository<BillDetail, Guid> _orderDetailRepository;
         private readonly IRepository<Product, Guid> _productRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
         public BillService(IRepository<Bill, Guid> orderRepository,
             IRepository<BillDetail, Guid> orderDetailRepository,
             IRepository<Product, Guid> productRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork) : base(orderRepository, unitOfWork)
         {
             _orderRepository = orderRepository;
             _orderDetailRepository = orderDetailRepository;
             _productRepository = productRepository;
-            _unitOfWork = unitOfWork;
         }
 
-        public void Create(BillViewModel billVm)
+        public override void Add(BillViewModel billVm)
         {
             var order = Mapper.Map<BillViewModel, Bill>(billVm);
             var orderDetails = Mapper.Map<List<BillDetailViewModel>, List<BillDetail>>(billVm.BillDetails);
             foreach (var detail in orderDetails)
             {
-                var product = _productRepository.Get(detail.ProductId);
+                var product = _productRepository.GetById(detail.ProductId);
                 detail.Price = product.PromotionPrice ?? product.Price;
             }
             //order.BillDetails = orderDetails;
             _orderRepository.Insert(order);
         }
 
-        public void Update(BillViewModel billVm)
+        public override void Update(BillViewModel billVm)
         {
             //Mapping to order domain
-            var order = _orderRepository.Get(billVm.Id);
+            var order = _orderRepository.GetById(billVm.Id);
 
             //Get order Detail
             var newDetails = Mapper.Map<List<BillDetailViewModel>, List<BillDetail>>(billVm.BillDetails);
@@ -67,10 +64,10 @@ namespace TeduCore.Application.ECommerce.Bills
 
             foreach (var detailVm in updatedDetailVms)
             {
-                var detail = _orderDetailRepository.Get(detailVm.Id);
+                var detail = _orderDetailRepository.GetById(detailVm.Id);
                 detail.Quantity = detailVm.Quantity;
                 detail.ProductId = detailVm.ProductId;
-                var product = _productRepository.Get(detailVm.ProductId);
+                var product = _productRepository.GetById(detailVm.ProductId);
                 detail.Price = product.PromotionPrice ?? product.Price;
                 _orderDetailRepository.Update(detail);
                 updatedDetails.Add(detail);
@@ -78,7 +75,7 @@ namespace TeduCore.Application.ECommerce.Bills
 
             foreach (var detail in addedDetails)
             {
-                var product = _productRepository.Get(detail.ProductId);
+                var product = _productRepository.GetById(detail.ProductId);
                 detail.Price = product.PromotionPrice ?? product.Price;
                 detail.BillId = order.Id;
                 _orderDetailRepository.Insert(detail);
@@ -108,26 +105,21 @@ namespace TeduCore.Application.ECommerce.Bills
 
         public void UpdateStatus(Guid billId, BillStatus status)
         {
-            var order = _orderRepository.Get(billId);
+            var order = _orderRepository.GetById(billId);
             order.BillStatus = status;
             _orderRepository.Update(order);
         }
 
-        public void Save()
-        {
-            _unitOfWork.Commit();
-        }
-
         public void ConfirmBill(Guid id)
         {
-            var bill = _orderRepository.Get(id);
+            var bill = _orderRepository.GetById(id);
             var billDetails = _orderDetailRepository.GetAll().Where(x => x.BillId == id);
             if (bill.BillStatus != BillStatus.Completed)
             {
                 bill.BillStatus = BillStatus.Completed;
                 foreach (var detail in billDetails)
                 {
-                    var product = _productRepository.Get(detail.ProductId);
+                    var product = _productRepository.GetById(detail.ProductId);
                     if (product.Quantity >= detail.Quantity)
                     {
                         product.Quantity -= detail.Quantity;
@@ -144,14 +136,14 @@ namespace TeduCore.Application.ECommerce.Bills
 
         public void CancelBill(Guid id)
         {
-            var bill = _orderRepository.Get(id);
+            var bill = _orderRepository.GetById(id);
             var billDetails = _orderDetailRepository.GetAll().Where(x => x.BillId == id);
             if (bill.BillStatus != BillStatus.Cancelled)
             {
                 bill.BillStatus = BillStatus.Cancelled;
                 foreach (var detail in billDetails)
                 {
-                    var product = _productRepository.Get(detail.ProductId);
+                    var product = _productRepository.GetById(detail.ProductId);
                     product.Quantity += detail.Quantity;
                 }
             }
@@ -163,7 +155,7 @@ namespace TeduCore.Application.ECommerce.Bills
 
         public void PendingBill(Guid id)
         {
-            var bill = _orderRepository.Get(id);
+            var bill = _orderRepository.GetById(id);
             if (bill.BillStatus != BillStatus.Pending)
             {
                 bill.BillStatus = BillStatus.Pending;
@@ -222,7 +214,6 @@ namespace TeduCore.Application.ECommerce.Bills
                 .GetAll().Where(x => x.BillId == billId)
                 .ProjectTo<BillDetailViewModel>().ToList();
         }
-
 
         public BillDetailViewModel CreateDetail(BillDetailViewModel billDetailVm)
         {

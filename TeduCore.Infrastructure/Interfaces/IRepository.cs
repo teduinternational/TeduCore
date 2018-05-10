@@ -141,7 +141,7 @@ namespace TeduCore.Infrastructure.Interfaces
         //
         // Returns:
         //     Entity
-        TEntity Get(TPrimaryKey id);
+        TEntity GetById(TPrimaryKey id);
 
         //
         // Summary:
@@ -149,8 +149,15 @@ namespace TeduCore.Infrastructure.Interfaces
         //
         // Returns:
         //     IQueryable to be used to select entities from database
-        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll(bool isAll = true);
 
+        /// <summary>
+        /// Get all with predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="isAll"></param>
+        /// <returns></returns>
+        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate,bool isAll = true);
         //
         // Summary:
         //     Used to get a IQueryable that is used to retrieve entities from entire table.

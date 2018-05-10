@@ -90,7 +90,7 @@ namespace TeduCore.WebApp.Controllers
                             ? ((ClaimsIdentity)User.Identity).GetSpecificClaim("UserId")
                             : null
                     };
-                    _billService.Create(billViewModel);
+                    _billService.Add(billViewModel);
                     try
                     {
                         _billService.Save();

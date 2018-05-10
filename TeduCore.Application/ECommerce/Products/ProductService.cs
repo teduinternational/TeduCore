@@ -51,7 +51,7 @@ namespace TeduCore.Application.ECommerce.Products
 
             if (string.IsNullOrEmpty(productVm.Code))
             {
-                var category = _productCategoryRepository.Get(productVm.CategoryId);
+                var category = _productCategoryRepository.GetById(productVm.CategoryId);
                 var code = category.Code + (category.CurrentIdentity + 1).ToString("0000");
                 category.CurrentIdentity += 1;
                 product.Code = code;
@@ -241,7 +241,7 @@ namespace TeduCore.Application.ECommerce.Products
 
         public List<ProductViewModel> GetReatedProducts(Guid id, int top)
         {
-            var product = _productRepository.Get(id);
+            var product = _productRepository.GetById(id);
             return _productRepository.GetAll().Where(x => x.Status == Status.Actived
                 && x.Id != id && x.CategoryId == product.CategoryId)
             .OrderByDescending(x => x.DateCreated)
@@ -260,7 +260,7 @@ namespace TeduCore.Application.ECommerce.Products
 
         public void IncreaseView(Guid id)
         {
-            var product = _productRepository.Get(id);
+            var product = _productRepository.GetById(id);
             if (product.ViewCount.HasValue)
                 product.ViewCount += 1;
             else

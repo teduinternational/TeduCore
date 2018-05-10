@@ -67,7 +67,7 @@ namespace TeduCore.Application.Content.Feedbacks
 
         public FeedbackViewModel GetById(Guid id)
         {
-            return Mapper.Map<Feedback, FeedbackViewModel>(_feedbackRepository.Get(id));
+            return Mapper.Map<Feedback, FeedbackViewModel>(_feedbackRepository.GetById(id));
         }
 
         public void SaveChanges()

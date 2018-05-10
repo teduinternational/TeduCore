@@ -5,7 +5,7 @@ using TeduCore.Application.ECommerce.Products;
 using TeduCore.Application.Systems.Commons;
 using TeduCore.Data.Enums;
 using TeduCore.WebApp.Models;
-using TTeduCore.Application.Content.Blogs;
+using TTeduCore.Application.Content.Posts;
 
 namespace TeduCore.WebApp.Controllers
 {
@@ -14,11 +14,11 @@ namespace TeduCore.WebApp.Controllers
         private readonly IProductService _productService;
         private readonly IProductCategoryService _productCategoryService;
 
-        private readonly IBlogService _blogService;
+        private readonly IPostService _blogService;
         private readonly ICommonService _commonService;
 
         public HomeController(IProductService productService,
-        IBlogService blogService, ICommonService commonService,
+        IPostService blogService, ICommonService commonService,
         IProductCategoryService productCategoryService)
         {
             _blogService = blogService;

@@ -18,7 +18,7 @@ namespace TeduCore.WebApp.Controllers.Components
             var cart = new List<ShoppingCartViewModel>();
             if (session != null)
                 cart = JsonConvert.DeserializeObject<List<ShoppingCartViewModel>>(session);
-            return View(cart);
+            return await Task.FromResult<IViewComponentResult>(View(cart));
         }
     }
 }

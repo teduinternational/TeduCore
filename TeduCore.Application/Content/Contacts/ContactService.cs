@@ -68,7 +68,7 @@ namespace TeduCore.Application.Content.Contacts
 
         public ContactDetailViewModel GetById(string id)
         {
-            return Mapper.Map<ContactDetail, ContactDetailViewModel>(_pageRepository.Get(id));
+            return Mapper.Map<ContactDetail, ContactDetailViewModel>(_pageRepository.GetById(id));
         }
 
         public void SaveChanges()

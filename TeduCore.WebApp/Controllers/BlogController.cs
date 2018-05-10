@@ -2,16 +2,16 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using TeduCore.WebApp.Models;
-using TTeduCore.Application.Content.Blogs;
+using TTeduCore.Application.Content.Posts;
 
 namespace TeduCore.WebApp.Controllers
 {
     public class BlogController : Controller
     {
-        private readonly IBlogService _blogService;
+        private readonly IPostService _blogService;
         private readonly IConfiguration _configuration;
 
-        public BlogController(IBlogService blogService, IConfiguration configuration)
+        public BlogController(IPostService blogService, IConfiguration configuration)
         {
             _blogService = blogService;
             _configuration = configuration;

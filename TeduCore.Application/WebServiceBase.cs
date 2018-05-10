@@ -45,7 +45,7 @@ namespace TeduCore.Application
 
         public virtual ViewModel GetById(TPrimaryKey id)
         {
-            return Mapper.Map<TEntity, ViewModel>(_repository.Get(id));
+            return Mapper.Map<TEntity, ViewModel>(_repository.GetById(id));
         }
 
         public virtual List<ViewModel> GetAll()

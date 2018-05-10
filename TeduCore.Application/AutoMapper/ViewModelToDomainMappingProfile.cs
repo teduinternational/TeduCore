@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TeduCore.Application.Content.Blogs.Dtos;
+using TeduCore.Application.Content.Posts.Dtos;
 using TeduCore.Application.Content.Contacts.Dtos;
 using TeduCore.Application.Content.Feedbacks.Dtos;
 using TeduCore.Application.Content.Pages.Dtos;
@@ -29,10 +29,9 @@ namespace TeduCore.Application.AutoMapper
 
             CreateMap<ProductCategoryViewModel, ProductCategory>()
                 .ConstructUsing(c => new ProductCategory(c.Id, c.Name, c.Code, c.Description, c.ParentId, c.HomeOrder, c.Image,
-                    c.HomeFlag, c.SortOrder, c.Status, c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription))
-                .ForMember("Products", conf => conf.Ignore());
+                    c.HomeFlag, c.SortOrder, c.Status, c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
 
-            CreateMap<BlogViewModel, Post>()
+            CreateMap<PostViewModel, Post>()
               .ConstructUsing(c => new Post(c.Name, c.Image, c.Description,
               c.Content, c.HomeFlag, c.HotFlag, c.Tags, c.Status,
               c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));

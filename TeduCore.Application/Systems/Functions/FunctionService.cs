@@ -39,7 +39,7 @@ namespace TeduCore.Application.Systems.Functions
 
         public bool CheckExistedId(Guid id)
         {
-            return _functionRepository.Get(id) != null;
+            return _functionRepository.GetById(id) != null;
         }
 
         public void Add(FunctionViewModel functionVm)
@@ -97,14 +97,14 @@ namespace TeduCore.Application.Systems.Functions
 
         public void Update(FunctionViewModel functionVm)
         {
-            var functionDb = _functionRepository.Get(functionVm.Id);
+            var functionDb = _functionRepository.GetById(functionVm.Id);
             var function = _mapper.Map<Function>(functionVm);
         }
 
         public void ReOrder(Guid sourceId, Guid targetId)
         {
-            var source = _functionRepository.Get(sourceId);
-            var target = _functionRepository.Get(targetId);
+            var source = _functionRepository.GetById(sourceId);
+            var target = _functionRepository.GetById(targetId);
             int tempOrder = source.SortOrder;
 
             source.SortOrder = target.SortOrder;
@@ -117,7 +117,7 @@ namespace TeduCore.Application.Systems.Functions
         public void UpdateParentId(Guid sourceId, Guid targetId, Dictionary<Guid, int> items)
         {
             //Update parent id for source
-            var category = _functionRepository.Get(sourceId);
+            var category = _functionRepository.GetById(sourceId);
             category.ParentId = targetId;
             _functionRepository.Update(category);
 
