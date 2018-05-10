@@ -11,7 +11,7 @@ namespace TeduCore.Application.Content.Pages
 
         void Update(PageViewModel pageVm);
 
-        void Delete(int id);
+        void Delete(Guid id);
 
         List<PageViewModel> GetAll();
 
@@ -19,7 +19,7 @@ namespace TeduCore.Application.Content.Pages
 
         PageViewModel GetByAlias(string alias);
 
-        PageViewModel GetById(int id);
+        PageViewModel GetById(Guid id);
 
         void SaveChanges();
     }

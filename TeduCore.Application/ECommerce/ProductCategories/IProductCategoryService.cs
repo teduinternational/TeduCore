@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TeduCore.Application.ECommerce.ProductCategories.Dtos;
 
 namespace TeduCore.Application.ECommerce.ProductCategories
@@ -9,19 +10,19 @@ namespace TeduCore.Application.ECommerce.ProductCategories
 
         void Update(ProductCategoryViewModel productCategoryVm);
 
-        void Delete(int id);
+        void Delete(Guid id);
 
         List<ProductCategoryViewModel> GetAll();
 
         List<ProductCategoryViewModel> GetAll(string keyword);
 
-        List<ProductCategoryViewModel> GetAllByParentId(int parentId);
+        List<ProductCategoryViewModel> GetAllByParentId(Guid? parentId);
 
-        ProductCategoryViewModel GetById(int id);
+        ProductCategoryViewModel GetById(Guid id);
 
-        void UpdateParentId(int sourceId, int targetId, Dictionary<int, int> items);
+        void UpdateParentId(Guid sourceId, Guid targetId, Dictionary<Guid, int> items);
 
-        void ReOrder(int sourceId, int targetId);
+        void ReOrder(Guid sourceId, Guid targetId);
 
         List<ProductCategoryViewModel> GetHomeCategories(int top);
 

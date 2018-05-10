@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TeduCore.Application.Systems.Permissions.Dtos;
 
@@ -6,13 +7,13 @@ namespace TeduCore.Application.Systems.Permissions
 {
     public interface IPermissionService
     {
-        ICollection<PermissionViewModel> GetByFunctionId(string functionId);
+        ICollection<PermissionViewModel> GetByFunctionId(Guid functionId);
 
-        Task<List<PermissionViewModel>> GetByUserId(string userId);
+        Task<List<PermissionViewModel>> GetByUserId(Guid userId);
 
         void Add(PermissionViewModel permission);
 
-        void DeleteAll(string functionId);
+        void DeleteAll(Guid functionId);
 
         void SaveChange();
     }

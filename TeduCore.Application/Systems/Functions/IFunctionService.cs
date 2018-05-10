@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TeduCore.Application.Systems.Functions.Dtos;
 using TeduCore.Application.ViewModels;
@@ -13,20 +14,20 @@ namespace TeduCore.Application.Systems.Functions
 
         Task<List<FunctionViewModel>> GetAllWithPermission(string userName);
 
-        IEnumerable<FunctionViewModel> GetAllWithParentId(string parentId);
+        IEnumerable<FunctionViewModel> GetAllWithParentId(Guid? parentId);
 
-        FunctionViewModel GetById(string id);
+        FunctionViewModel GetById(Guid id);
 
         void Update(FunctionViewModel function);
 
-        void Delete(string id);
+        void Delete(Guid id);
 
         void Save();
 
-        bool CheckExistedId(string id);
+        bool CheckExistedId(Guid id);
 
-        void UpdateParentId(string sourceId, string targetId, Dictionary<string, int> items);
+        void UpdateParentId(Guid sourceId, Guid targetId, Dictionary<Guid, int> items);
 
-        void ReOrder(string sourceId, string targetId);
+        void ReOrder(Guid sourceId, Guid targetId);
     }
 }

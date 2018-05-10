@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,16 +13,16 @@ namespace TeduCore.Application.Systems.Permissions
 {
     public class PermissionService : IPermissionService
     {
-        private IRepository<Function, string> _functionRepository;
-        private IRepository<Permission, int> _permissionRepository;
+        private IRepository<Function, Guid> _functionRepository;
+        private IRepository<Permission, Guid> _permissionRepository;
         private RoleManager<AppRole> _roleManager;
         private UserManager<AppUser> _userManager;
         private IUnitOfWork _unitOfWork;
 
-        public PermissionService(IRepository<Permission, int> permissionRepository,
+        public PermissionService(IRepository<Permission, Guid> permissionRepository,
               RoleManager<AppRole> roleManager,
               UserManager<AppUser> userManager,
-            IRepository<Function, string> functionRepository, IUnitOfWork unitOfWork)
+            IRepository<Function, Guid> functionRepository, IUnitOfWork unitOfWork)
         {
             _permissionRepository = permissionRepository;
             _functionRepository = functionRepository;
@@ -33,29 +34,28 @@ namespace TeduCore.Application.Systems.Permissions
         public void Add(PermissionViewModel permissionVm)
         {
             var permission = Mapper.Map<PermissionViewModel, Permission>(permissionVm);
-            _permissionRepository.Add(permission);
+            _permissionRepository.Insert(permission);
         }
 
-        public void DeleteAll(string functionId)
+        public void DeleteAll(Guid functionId)
         {
-            var permissions = _permissionRepository.FindAll(x => x.FunctionId == functionId).ToList();
-            _permissionRepository.RemoveMultiple(permissions);
+            _permissionRepository.Delete(x => x.FunctionId == functionId);
         }
 
-        public ICollection<PermissionViewModel> GetByFunctionId(string functionId)
+        public ICollection<PermissionViewModel> GetByFunctionId(Guid functionId)
         {
             return _permissionRepository
-                .FindAll(x => x.FunctionId == functionId, x => x.AppRole)
+                .GetAll().Where(x => x.FunctionId == functionId)
                 .ProjectTo<PermissionViewModel>().ToList();
         }
 
-        public async Task<List<PermissionViewModel>> GetByUserId(string userId)
+        public async Task<List<PermissionViewModel>> GetByUserId(Guid userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             var roles = await _userManager.GetRolesAsync(user);
 
-            var query = (from f in _functionRepository.FindAll()
-                         join p in _permissionRepository.FindAll() on f.Id equals p.FunctionId
+            var query = (from f in _functionRepository.GetAll()
+                         join p in _permissionRepository.GetAll() on f.Id equals p.FunctionId
                          join r in _roleManager.Roles on p.RoleId equals r.Id
                          where roles.Contains(r.Name)
                          select p);

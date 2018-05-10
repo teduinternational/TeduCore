@@ -8,7 +8,7 @@ namespace TeduCore.Application.ECommerce.Products.Dtos
     public class ProductQuantityViewModel
     {
 
-        public int ProductId { get; set; }
+        public Guid productId { get; set; }
 
         public int SizeId { get; set; }
 

@@ -7,7 +7,7 @@ namespace TeduCore.Application.Content.Blogs.Dtos
 {
     public class BlogViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         [MaxLength(256)]
         public string Name { set; get; }
@@ -26,7 +26,6 @@ namespace TeduCore.Application.Content.Blogs.Dtos
 
         public string Tags { get; set; }
 
-        public ICollection<BlogTagViewModel> BlogTags { set; get; }
         public DateTime DateCreated { set; get; }
         public DateTime DateModified { set; get; }
         public Status Status { set; get; }

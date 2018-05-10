@@ -26,12 +26,12 @@ namespace TeduCore.Application.Content.Contacts
         public void Add(ContactDetailViewModel pageVm)
         {
             var page = Mapper.Map<ContactDetailViewModel, ContactDetail>(pageVm);
-            _pageRepository.Add(page);
+            _pageRepository.Insert(page);
         }
 
         public void Delete(string id)
         {
-            _pageRepository.Remove(id);
+            _pageRepository.Delete(id);
         }
 
         public void Dispose()
@@ -41,12 +41,12 @@ namespace TeduCore.Application.Content.Contacts
 
         public List<ContactDetailViewModel> GetAll()
         {
-            return _pageRepository.FindAll().ProjectTo<ContactDetailViewModel>().ToList();
+            return _pageRepository.GetAll().ProjectTo<ContactDetailViewModel>().ToList();
         }
 
         public PagedResult<ContactDetailViewModel> GetAllPaging(string keyword, int page, int pageSize)
         {
-            var query = _pageRepository.FindAll();
+            var query = _pageRepository.GetAll();
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.Name.Contains(keyword));
 
@@ -68,7 +68,7 @@ namespace TeduCore.Application.Content.Contacts
 
         public ContactDetailViewModel GetById(string id)
         {
-            return Mapper.Map<ContactDetail, ContactDetailViewModel>(_pageRepository.FindById(id));
+            return Mapper.Map<ContactDetail, ContactDetailViewModel>(_pageRepository.Get(id));
         }
 
         public void SaveChanges()

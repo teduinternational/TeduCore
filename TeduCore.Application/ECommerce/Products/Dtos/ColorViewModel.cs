@@ -7,7 +7,7 @@ namespace TeduCore.Application.ECommerce.Products.Dtos
 {
     public class ColorViewModel
     {
-        public int Id { get; set; }
+        public Guid id { get; set; }
 
         public string Name { set; get; }
     }

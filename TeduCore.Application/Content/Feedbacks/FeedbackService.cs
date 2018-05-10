@@ -12,10 +12,10 @@ namespace TeduCore.Application.Content.Feedbacks
 {
     public class FeedbackService : IFeedbackService
     {
-        private IRepository<Feedback, int> _feedbackRepository;
+        private IRepository<Feedback, Guid> _feedbackRepository;
         private IUnitOfWork _unitOfWork;
 
-        public FeedbackService(IRepository<Feedback, int> feedbackRepository,
+        public FeedbackService(IRepository<Feedback, Guid> feedbackRepository,
             IUnitOfWork unitOfWork)
         {
             _feedbackRepository = feedbackRepository;
@@ -25,12 +25,12 @@ namespace TeduCore.Application.Content.Feedbacks
         public void Add(FeedbackViewModel feedbackVm)
         {
             var page = Mapper.Map<FeedbackViewModel, Feedback>(feedbackVm);
-            _feedbackRepository.Add(page);
+            _feedbackRepository.Insert(page);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
-            _feedbackRepository.Remove(id);
+            _feedbackRepository.Delete(id);
         }
 
         public void Dispose()
@@ -40,12 +40,12 @@ namespace TeduCore.Application.Content.Feedbacks
 
         public List<FeedbackViewModel> GetAll()
         {
-            return _feedbackRepository.FindAll().ProjectTo<FeedbackViewModel>().ToList();
+            return _feedbackRepository.GetAll().ProjectTo<FeedbackViewModel>().ToList();
         }
 
         public PagedResult<FeedbackViewModel> GetAllPaging(string keyword, int page, int pageSize)
         {
-            var query = _feedbackRepository.FindAll();
+            var query = _feedbackRepository.GetAll();
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.Name.Contains(keyword));
 
@@ -65,9 +65,9 @@ namespace TeduCore.Application.Content.Feedbacks
             return paginationSet;
         }
 
-        public FeedbackViewModel GetById(int id)
+        public FeedbackViewModel GetById(Guid id)
         {
-            return Mapper.Map<Feedback, FeedbackViewModel>(_feedbackRepository.FindById(id));
+            return Mapper.Map<Feedback, FeedbackViewModel>(_feedbackRepository.Get(id));
         }
 
         public void SaveChanges()

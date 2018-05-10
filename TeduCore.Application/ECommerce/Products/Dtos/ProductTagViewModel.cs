@@ -4,7 +4,7 @@ namespace TeduCore.Application.ECommerce.Products.Dtos
 {
     public class ProductTagViewModel
     {
-        public int ProductId { set; get; }
+        public Guid productId { set; get; }
 
         public string TagId { set; get; }
 

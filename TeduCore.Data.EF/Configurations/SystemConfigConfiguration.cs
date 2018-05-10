@@ -7,9 +7,9 @@ using TeduCore.Data.Entities;
 
 namespace TeduCore.Data.EF.Configurations
 {
-    class SystemConfigConfiguration : DbEntityConfiguration<SystemConfig>
+    public class SystemConfigConfiguration : DbEntityConfiguration<Setting>
     {
-        public override void Configure(EntityTypeBuilder<SystemConfig> entity)
+        public override void Configure(EntityTypeBuilder<Setting> entity)
         {
             entity.Property(c => c.Id).HasMaxLength(255).IsRequired();
             // etc.

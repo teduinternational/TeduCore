@@ -2,6 +2,7 @@
 using TeduCore.Application.Content.Slides.Dtos;
 using TeduCore.Application.Systems.Settings.Dtos;
 using TeduCore.Application.ViewModels;
+using TeduCore.Data.Enums;
 
 namespace TeduCore.Application.Systems.Commons
 {
@@ -9,7 +10,7 @@ namespace TeduCore.Application.Systems.Commons
     {
         FooterViewModel GetFooter();
 
-        List<SlideViewModel> GetSlides(string groupAlias);
+        List<SlideViewModel> GetSlides(SlideGroup groupAlias);
 
         SystemConfigViewModel GetSystemConfig(string code);
     }

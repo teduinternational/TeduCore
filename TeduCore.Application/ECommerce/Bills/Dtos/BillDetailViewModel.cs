@@ -4,10 +4,10 @@ namespace TeduCore.Application.ECommerce.Bills.Dtos
 {
     public class BillDetailViewModel
     {
-        public int Id { get; set; }
-        public int BillId { set; get; }
+        public Guid id { get; set; }
+        public Guid billId { set; get; }
 
-        public int ProductId { set; get; }
+        public Guid productId { set; get; }
 
         public int Quantity { set; get; }
 

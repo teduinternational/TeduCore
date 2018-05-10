@@ -15,6 +15,11 @@ namespace TeduCore.Data.Interfaces
         /// <summary>
         /// Gets or sets the date and time the object was last modified.
         /// </summary>
-        DateTime DateModified { get; set; }
+        DateTime? DateModified { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date and time the object was delete.
+        /// </summary>
+        DateTime? DateDeleted { get; set; }
     }
 }

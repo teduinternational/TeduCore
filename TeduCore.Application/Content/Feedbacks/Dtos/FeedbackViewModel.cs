@@ -7,7 +7,7 @@ namespace TeduCore.Application.Content.Feedbacks.Dtos
 {
     public class FeedbackViewModel
     {
-        public int Id { set; get; }
+        public Guid id { set; get; }
 
         [MaxLength(250, ErrorMessage = "Tên không được quá 250 ký tự")]
         [Required(ErrorMessage = "Tên phải nhập")]

@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,12 +17,12 @@ namespace TeduCore.Application.Systems.Roles
     public class RoleService : IRoleService
     {
         private RoleManager<AppRole> _roleManager;
-        private IRepository<Function, string> _functionRepository;
-        private IRepository<Permission, int> _permissionRepository;
+        private IRepository<Function, Guid> _functionRepository;
+        private IRepository<Permission, Guid> _permissionRepository;
         private IUnitOfWork _unitOfWork;
 
         public RoleService(RoleManager<AppRole> roleManager, IUnitOfWork unitOfWork,
-            IRepository<Function, string> functionRepository, IRepository<Permission, int> permissionRepository)
+            IRepository<Function, Guid> functionRepository, IRepository<Permission, Guid> permissionRepository)
         {
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
@@ -40,25 +41,21 @@ namespace TeduCore.Application.Systems.Roles
             return result.Succeeded;
         }
 
-        public Task<bool> CheckPermission(string functionId, string action, string[] roles)
+        public Task<bool> CheckPermission(Guid functionId, string action, string[] roles)
         {
-            var functions = _functionRepository.FindAll();
-            var permissions = _permissionRepository.FindAll();
+            var functions = _functionRepository.GetAll();
+            var permissions = _permissionRepository.GetAll();
             var query = from f in functions
                         join p in permissions on f.Id equals p.FunctionId
                         join r in _roleManager.Roles on p.RoleId equals r.Id
                         where roles.Contains(r.Name) && f.Id == functionId
-                        && ((p.CanCreate && action == "Create")
-                        || (p.CanUpdate && action == "Update")
-                        || (p.CanDelete && action == "Delete")
-                        || (p.CanRead && action == "Read"))
                         select p;
             return query.AnyAsync();
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteAsync(Guid id)
         {
-            var role = await _roleManager.FindByIdAsync(id);
+            var role = await _roleManager.GetAsync(id);
             await _roleManager.DeleteAsync(role);
         }
 
@@ -90,16 +87,16 @@ namespace TeduCore.Application.Systems.Roles
             return paginationSet;
         }
 
-        public async Task<AppRoleViewModel> GetById(string id)
+        public async Task<AppRoleViewModel> GetById(Guid id)
         {
-            var role = await _roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id.ToString());
             return Mapper.Map<AppRole, AppRoleViewModel>(role);
         }
 
-        public List<PermissionViewModel> GetListFunctionWithRole(string roleId)
+        public List<PermissionViewModel> GetListFunctionWithRole(Guid roleId)
         {
-            var functions = _functionRepository.FindAll();
-            var permissions = _permissionRepository.FindAll();
+            var functions = _functionRepository.GetAll();
+            var permissions = _permissionRepository.GetAll();
 
             var query = from f in functions
                         join p in permissions on f.Id equals p.FunctionId into fp
@@ -117,17 +114,17 @@ namespace TeduCore.Application.Systems.Roles
             return query.ToList();
         }
 
-        public void SavePermission(List<PermissionViewModel> permissionVms, string roleId)
+        public void SavePermission(List<PermissionViewModel> permissionVms, Guid roleId)
         {
             var permissions = Mapper.Map<List<PermissionViewModel>, List<Permission>>(permissionVms);
-            var oldPermission = _permissionRepository.FindAll().Where(x => x.RoleId == roleId).ToList();
+            var oldPermission = _permissionRepository.GetAll().Where(x => x.RoleId == roleId).ToList();
             if (oldPermission.Count > 0)
             {
-                _permissionRepository.RemoveMultiple(oldPermission);
+                _permissionRepository.DeleteMultiple(oldPermission);
             }
             foreach (var permission in permissions)
             {
-                _permissionRepository.Add(permission);
+                _permissionRepository.Insert(permission);
             }
             _unitOfWork.Commit();
         }

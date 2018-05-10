@@ -11,7 +11,7 @@ namespace TeduCore.Application.Systems.Announcements.Dtos
             AnnouncementUsers = new List<AnnouncementUserViewModel>();
         }
 
-        public int ID { set; get; }
+        public Guid id { set; get; }
 
         public string Title { set; get; }
 

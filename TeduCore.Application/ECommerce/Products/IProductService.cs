@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TeduCore.Application.Dtos;
 using TeduCore.Application.ECommerce.Products.Dtos;
 using TeduCore.Utilities.Dtos;
@@ -11,58 +12,50 @@ namespace TeduCore.Application.ECommerce.Products
 
         void Update(ProductViewModel product);
 
-        void Delete(int id);
+        void Delete(Guid id);
 
         List<ProductViewModel> GetAll();
 
-        PagedResult<ProductViewModel> GetAllPaging(int? categoryId, string keyword, int page, int pageSize, string sortBy);
+        PagedResult<ProductViewModel> GetAllPaging(Guid? categoryId, string keyword, int page, int pageSize, string sortBy);
 
         List<ProductViewModel> GetLastest(int top);
 
         List<ProductViewModel> GetHotProduct(int top);
 
-        List<ProductViewModel> GetListProductByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, out int totalRow);
+        List<ProductViewModel> GetListProductByCategoryIdPaging(Guid categoryId, int page, int pageSize, string sort, out int totalRow);
 
         List<ProductViewModel> Search(string keyword, int page, int pageSize, string sort, out int totalRow);
 
         List<ProductViewModel> GetListProduct(string keyword);
 
-        List<ProductViewModel> GetReatedProducts(int id, int top);
+        List<ProductViewModel> GetReatedProducts(Guid id, int top);
 
         List<string> GetListProductByName(string name);
 
-        ProductViewModel GetById(int id);
+        ProductViewModel GetById(Guid id);
 
         void Save();
 
-        List<TagViewModel> GetListTagByProductId(int id);
+        List<TagViewModel> GetListTagByProductId(Guid id);
 
         TagViewModel GetTag(string tagId);
 
-        void IncreaseView(int id);
+        void IncreaseView(Guid id);
 
         List<ProductViewModel> GetListProductByTag(string tagId, int page, int pagesize, out int totalRow);
 
-        bool SellProduct(int productId, int quantity);
+        bool SellProduct(Guid productId, int quantity);
 
         List<TagViewModel> GetListProductTag(string searchText);
 
-        void ImportExcel(string filePath, int categoryId);
+        void ImportExcel(string filePath, Guid categoryId);
 
-        void AddImages(int productId, string[] images);
+        void AddImages(Guid productId, string[] images);
 
-        List<ProductImageViewModel> GetImages(int productId);
-
-        void AddQuantity(int productId, List<ProductQuantityViewModel> quantities);
-
-        List<ProductQuantityViewModel> GetQuantities(int productId);
-
-        void AddWholePrice(int productId, List<WholePriceViewModel> wholePrices);
-
-        List<WholePriceViewModel> GetWholePrices(int productId);
+        List<ProductImageViewModel> GetImages(Guid productId);
 
         List<ProductViewModel> GetUpsellProducts(int top);
 
-        PagedResult<ProductViewModel> GetMyWishlist(string userId, int page, int pageSize);
+        PagedResult<ProductViewModel> GetMyWishlist(Guid userId, int page, int pageSize);
     }
 }

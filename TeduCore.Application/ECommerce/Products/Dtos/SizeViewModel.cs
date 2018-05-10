@@ -2,7 +2,7 @@
 {
     public class SizeViewModel
     {
-        public int Id { get; set; }
+        public Guid id { get; set; }
 
         public string Name { set; get; }
     }

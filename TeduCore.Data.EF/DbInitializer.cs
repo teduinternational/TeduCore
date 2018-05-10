@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,12 +24,13 @@ namespace TeduCore.Data.EF
             _roleManager = roleManager;
         }
 
-        public  async Task Seed()
+        public async Task Seed()
         {
             if (!_roleManager.Roles.Any())
             {
                 await _roleManager.CreateAsync(new AppRole()
                 {
+                    Id = Guid.NewGuid(),
                     Name = "Admin",
                     NormalizedName = "Admin",
                     Description = "Top manager"
@@ -38,6 +40,7 @@ namespace TeduCore.Data.EF
             {
                 await _userManager.CreateAsync(new AppUser()
                 {
+                    Id = Guid.NewGuid(),
                     UserName = "admin",
                     FullName = "Administrator",
                     Email = "admin@gmail.com",
@@ -51,35 +54,33 @@ namespace TeduCore.Data.EF
             {
                 _context.Functions.AddRange(new List<Function>()
                 {
-                    new Function() {Id = "SYSTEM", Name = "Hệ thống",ParentId = null,SortOrder = 1,Status = Status.Actived,URL = "/",IconCss = "fa-desktop"  },
-                    new Function() {Id = "ROLE", Name = "Nhóm",ParentId = "SYSTEM",SortOrder = 1,Status = Status.Actived,URL = "/admin/role/index",IconCss = "fa-home"  },
-                    new Function() {Id = "FUNCTION", Name = "Chức năng",ParentId = "SYSTEM",SortOrder = 2,Status = Status.Actived,URL = "/admin/function/index",IconCss = "fa-home"  },
-                    new Function() {Id = "USER", Name = "Người dùng",ParentId = "SYSTEM",SortOrder =3,Status = Status.Actived,URL = "/admin/user/index",IconCss = "fa-home"  },
-                    new Function() {Id = "ACTIVITY", Name = "Nhật ký",ParentId = "SYSTEM",SortOrder = 4,Status = Status.Actived,URL = "/admin/activity/index",IconCss = "fa-home"  },
-                    new Function() {Id = "ERROR", Name = "Lỗi",ParentId = "SYSTEM",SortOrder = 5,Status = Status.Actived,URL = "/admin/error/index",IconCss = "fa-home"  },
-                    new Function() {Id = "SETTING", Name = "Cấu hình",ParentId = "SYSTEM",SortOrder = 6,Status = Status.Actived,URL = "/admin/setting/index",IconCss = "fa-home"  },
-
-                    new Function() {Id = "PRODUCT",Name = "Sản phẩm",ParentId = null,SortOrder = 2,Status = Status.Actived,URL = "/",IconCss = "fa-chevron-down"  },
-                    new Function() {Id = "PRODUCT_CATEGORY",Name = "Danh mục",ParentId = "PRODUCT",SortOrder =1,Status = Status.Actived,URL = "/admin/productcategory/index",IconCss = "fa-chevron-down"  },
-                    new Function() {Id = "PRODUCT_LIST",Name = "Sản phẩm",ParentId = "PRODUCT",SortOrder = 2,Status = Status.Actived,URL = "/admin/product/index",IconCss = "fa-chevron-down"  },
-                    new Function() {Id = "BILL",Name = "Hóa đơn",ParentId = "PRODUCT",SortOrder = 3,Status = Status.Actived,URL = "/admin/bill/index",IconCss = "fa-chevron-down"  },
-
-                    new Function() {Id = "CONTENT",Name = "Nội dung",ParentId = null,SortOrder = 3,Status = Status.Actived,URL = "/",IconCss = "fa-table"  },
-                    new Function() {Id = "BLOG",Name = "Bài viết",ParentId = "CONTENT",SortOrder = 1,Status = Status.Actived,URL = "/admin/blog/index",IconCss = "fa-table"  },
-                    new Function() {Id = "PAGE",Name = "Trang",ParentId = "CONTENT",SortOrder = 2,Status = Status.Actived,URL = "/admin/page/index",IconCss = "fa-table"  },
-
-                    new Function() {Id = "UTILITY",Name = "Tiện ích",ParentId = null,SortOrder = 4,Status = Status.Actived,URL = "/",IconCss = "fa-clone"  },
-                    new Function() {Id = "FOOTER",Name = "Footer",ParentId = "UTILITY",SortOrder = 1,Status = Status.Actived,URL = "/admin/footer/index",IconCss = "fa-clone"  },
-                    new Function() {Id = "FEEDBACK",Name = "Phản hồi",ParentId = "UTILITY",SortOrder = 2,Status = Status.Actived,URL = "/admin/feedback/index",IconCss = "fa-clone"  },
-                    new Function() {Id = "ANNOUNCEMENT",Name = "Thông báo",ParentId = "UTILITY",SortOrder = 3,Status = Status.Actived,URL = "/admin/announcement/index",IconCss = "fa-clone"  },
-                    new Function() {Id = "CONTACT",Name = "Liên hệ",ParentId = "UTILITY",SortOrder = 4,Status = Status.Actived,URL = "/admin/contact/index",IconCss = "fa-clone"  },
-                    new Function() {Id = "SLIDE",Name = "Slide",ParentId = "UTILITY",SortOrder = 5,Status = Status.Actived,URL = "/admin/slide/index",IconCss = "fa-clone"  },
-                    new Function() {Id = "ADVERTISMENT",Name = "Quảng cáo",ParentId = "UTILITY",SortOrder = 6,Status = Status.Actived,URL = "/admin/advertistment/index",IconCss = "fa-clone"  },
-
-                    new Function() {Id = "REPORT",Name = "Báo cáo",ParentId = null,SortOrder = 5,Status = Status.Actived,URL = "/",IconCss = "fa-bar-chart-o"  },
-                    new Function() {Id = "REVENUES",Name = "Báo cáo doanh thu",ParentId = "REPORT",SortOrder = 1,Status = Status.Actived,URL = "/admin/report/revenues",IconCss = "fa-bar-chart-o"  },
-                    new Function() {Id = "ACCESS",Name = "Báo cáo truy cập",ParentId = "REPORT",SortOrder = 2,Status = Status.Actived,URL = "/admin/report/visitor",IconCss = "fa-bar-chart-o"  },
-                    new Function() {Id = "READER",Name = "Báo cáo độc giả",ParentId = "REPORT",SortOrder = 3,Status = Status.Actived,URL = "/admin/report/reader",IconCss = "fa-bar-chart-o"  },
+                    new Function() {Id =Guid.NewGuid(), UniqueCode = "SYSTEM", Name = "Hệ thống",ParentId = null,SortOrder = 1,Status = Status.Actived,Url = "/",CssClass = "fa-desktop"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "ROLE", Name = "Nhóm",ParentId = "SYSTEM",SortOrder = 1,Status = Status.Actived,Url = "/admin/role/index",CssClass = "fa-home"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "FUNCTION", Name = "Chức năng",ParentId = "SYSTEM",SortOrder = 2,Status = Status.Actived,Url = "/admin/function/index",CssClass = "fa-home"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "FUNCTION", Name = "Chức năng",ParentId = "SYSTEM",SortOrder = 2,Status = Status.Actived,Url = "/admin/function/index",CssClass = "fa-home"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "FUNCTION", Name = "Chức năng",ParentId = "SYSTEM",SortOrder = 2,Status = Status.Actived,Url = "/admin/function/index",CssClass = "fa-home"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "USER", Name = "Người dùng",ParentId = "SYSTEM",SortOrder =3,Status = Status.Actived,Url = "/admin/user/index",CssClass = "fa-home"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "ACTIVITY", Name = "Nhật ký",ParentId = "SYSTEM",SortOrder = 4,Status = Status.Actived,Url = "/admin/activity/index",CssClass = "fa-home"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "ERROR", Name = "Lỗi",ParentId = "SYSTEM",SortOrder = 5,Status = Status.Actived,Url = "/admin/error/index",CssClass = "fa-home"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "SETTING", Name = "Cấu hình",ParentId = "SYSTEM",SortOrder = 6,Status = Status.Actived,Url = "/admin/setting/index",CssClass = "fa-home"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "PRODUCT",Name = "Sản phẩm",ParentId = null,SortOrder = 2,Status = Status.Actived,Url = "/",CssClass = "fa-chevron-down"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "PRODUCT_CATEGORY",Name = "Danh mục",ParentId = "PRODUCT",SortOrder =1,Status = Status.Actived,Url = "/admin/productcategory/index",CssClass = "fa-chevron-down"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "PRODUCT_LIST",Name = "Sản phẩm",ParentId = "PRODUCT",SortOrder = 2,Status = Status.Actived,Url = "/admin/product/index",CssClass = "fa-chevron-down"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "BILL",Name = "Hóa đơn",ParentId = "PRODUCT",SortOrder = 3,Status = Status.Actived,Url = "/admin/bill/index",CssClass = "fa-chevron-down"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "CONTENT",Name = "Nội dung",ParentId = null,SortOrder = 3,Status = Status.Actived,Url = "/",CssClass = "fa-table"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "BLOG",Name = "Bài viết",ParentId = "CONTENT",SortOrder = 1,Status = Status.Actived,Url = "/admin/blog/index",CssClass = "fa-table"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "PAGE",Name = "Trang",ParentId = "CONTENT",SortOrder = 2,Status = Status.Actived,Url = "/admin/page/index",CssClass = "fa-table"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "UTILITY",Name = "Tiện ích",ParentId = null,SortOrder = 4,Status = Status.Actived,Url = "/",CssClass = "fa-clone"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "FOOTER",Name = "Footer",ParentId = "UTILITY",SortOrder = 1,Status = Status.Actived,Url = "/admin/footer/index",CssClass = "fa-clone"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "FEEDBACK",Name = "Phản hồi",ParentId = "UTILITY",SortOrder = 2,Status = Status.Actived,Url = "/admin/feedback/index",CssClass = "fa-clone"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "ANNOUNCEMENT",Name = "Thông báo",ParentId = "UTILITY",SortOrder = 3,Status = Status.Actived,Url = "/admin/announcement/index",CssClass = "fa-clone"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "CONTACT",Name = "Liên hệ",ParentId = "UTILITY",SortOrder = 4,Status = Status.Actived,Url = "/admin/contact/index",CssClass = "fa-clone"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "SLIDE",Name = "Slide",ParentId = "UTILITY",SortOrder = 5,Status = Status.Actived,Url = "/admin/slide/index",CssClass = "fa-clone"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "ADVERTISMENT",Name = "Quảng cáo",ParentId = "UTILITY",SortOrder = 6,Status = Status.Actived,Url = "/admin/advertistment/index",CssClass = "fa-clone"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "REPORT",Name = "Báo cáo",ParentId = null,SortOrder = 5,Status = Status.Actived,Url = "/",CssClass = "fa-bar-chart-o"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "REVENUES",Name = "Báo cáo doanh thu",ParentId = "REPORT",SortOrder = 1,Status = Status.Actived,Url = "/admin/report/revenues",CssClass = "fa-bar-chart-o"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "ACCESS",Name = "Báo cáo truy cập",ParentId = "REPORT",SortOrder = 2,Status = Status.Actived,Url = "/admin/report/visitor",CssClass = "fa-bar-chart-o"  },
+                    new Function() {Id =Guid.NewGuid(),UniqueCode = "READER",Name = "Báo cáo độc giả",ParentId = "REPORT",SortOrder = 3,Status = Status.Actived,Url = "/admin/report/reader",CssClass = "fa-bar-chart-o"  },
                 });
             }
 
@@ -99,159 +100,133 @@ namespace TeduCore.Data.EF
                 {
                     Id = CommonConstants.DefaultFooterId,
                     Name = "Panda Shop",
-                    Status =  Status.Actived,
+                    Status = Status.Actived,
                     Address = "Số 36 ngõ 133 Nguyễn Phong Sắc Cầu Giấy Hà Nội",
                     Email = "nguyenthanhhuong.hailong@gmail.com",
                     Phone = "0962 370 186",
                     Website = "http://phukientrangsucnu.com",
                     Lng = 21.0435483,
                     Lat = 105.790058,
-                    
                 });
                 _context.SaveChanges();
             }
-            if (!_context.Colors.Any())
-            {
-                List<Color> listColor = new List<Color>()
-                {
-                    new Color() {Name="Đen", Code="#000000" },
-                    new Color() {Name="Trắng", Code="#FFFFFF"},
-                    new Color() {Name="Đỏ", Code="#ff0000" },
-                    new Color() {Name="Xanh", Code="#1000ff" },
-                };
-                _context.Colors.AddRange(listColor);
-            }
+
             if (!_context.AdvertistmentPages.Any())
             {
                 List<AdvertistmentPage> pages = new List<AdvertistmentPage>()
                 {
-                    new AdvertistmentPage() {Id="home", Name="Trang chủ",AdvertistmentPositions = new List<AdvertistmentPosition>(){
-                        new AdvertistmentPosition(){Id="home-left",Name="Bên trái"}
-                    } },
-                    new AdvertistmentPage() {Id="product-cate", Name="Danh mục sản phẩm" ,
-                        AdvertistmentPositions = new List<AdvertistmentPosition>(){
-                        new AdvertistmentPosition(){Id="product-cate-left",Name="Bên trái"}
-                    }},
-                    new AdvertistmentPage() {Id="product-detail", Name="Chi tiết sản phẩm",
-                        AdvertistmentPositions = new List<AdvertistmentPosition>(){
-                        new AdvertistmentPosition(){Id="product-detail-left",Name="Bên trái"}
-                    } },
-
+                    new AdvertistmentPage() { Id = Guid.NewGuid(), UniqueCode="home", Name="Trang chủ"},
+                    new AdvertistmentPage() { Id =Guid.NewGuid(), UniqueCode ="product-cate", Name="Danh mục sản phẩm" },
+                    new AdvertistmentPage() { Id = Guid.NewGuid(), UniqueCode ="product-detail", Name="Chi tiết sản phẩm"},
                 };
                 _context.AdvertistmentPages.AddRange(pages);
             }
-
 
             if (!_context.Slides.Any())
             {
                 List<Slide> slides = new List<Slide>()
                 {
-                    new Slide() {Name="Slide 1",Image="/client-side/images/slider/slide-1.jpg",Url="#",DisplayOrder = 0,GroupAlias = "top",Status = true },
-                    new Slide() {Name="Slide 2",Image="/client-side/images/slider/slide-2.jpg",Url="#",DisplayOrder = 1,GroupAlias = "top",Status = true },
-                    new Slide() {Name="Slide 3",Image="/client-side/images/slider/slide-3.jpg",Url="#",DisplayOrder = 2,GroupAlias = "top",Status = true },
-
-                    new Slide() {Name="Slide 1",Image="/client-side/images/brand1.png",Url="#",DisplayOrder = 1,GroupAlias = "brand",Status = true },
-                    new Slide() {Name="Slide 2",Image="/client-side/images/brand2.png",Url="#",DisplayOrder = 2,GroupAlias = "brand",Status = true },
-                    new Slide() {Name="Slide 3",Image="/client-side/images/brand3.png",Url="#",DisplayOrder = 3,GroupAlias = "brand",Status = true },
-                    new Slide() {Name="Slide 4",Image="/client-side/images/brand4.png",Url="#",DisplayOrder = 4,GroupAlias = "brand",Status = true },
-                    new Slide() {Name="Slide 5",Image="/client-side/images/brand5.png",Url="#",DisplayOrder = 5,GroupAlias = "brand",Status = true },
-                    new Slide() {Name="Slide 6",Image="/client-side/images/brand6.png",Url="#",DisplayOrder = 6,GroupAlias = "brand",Status = true },
-                    new Slide() {Name="Slide 7",Image="/client-side/images/brand7.png",Url="#",DisplayOrder = 7,GroupAlias = "brand",Status = true },
-                    new Slide() {Name="Slide 8",Image="/client-side/images/brand8.png",Url="#",DisplayOrder = 8,GroupAlias = "brand",Status = true },
-                    new Slide() {Name="Slide 9",Image="/client-side/images/brand9.png",Url="#",DisplayOrder = 9,GroupAlias = "brand",Status = true },
-                    new Slide() {Name="Slide 10",Image="/client-side/images/brand10.png",Url="#",DisplayOrder = 10,GroupAlias = "brand",Status = true },
-                    new Slide() {Name="Slide 11",Image="/client-side/images/brand11.png",Url="#",DisplayOrder = 11,GroupAlias = "brand",Status = true },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 1",Image="/client-side/images/slider/slide-1.jpg",Url="#",DisplayOrder = 0,GroupAlias = Enums.SlideGroup.Top, },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 2",Image="/client-side/images/slider/slide-2.jpg",Url="#",DisplayOrder = 1,GroupAlias = Enums.SlideGroup.Top,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 3",Image="/client-side/images/slider/slide-3.jpg",Url="#",DisplayOrder = 2,GroupAlias = Enums.SlideGroup.Top,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 1",Image="/client-side/images/brand1.png",Url="#",DisplayOrder = 1,GroupAlias = Enums.SlideGroup.Branch,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 2",Image="/client-side/images/brand2.png",Url="#",DisplayOrder = 2,GroupAlias = Enums.SlideGroup.Branch,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 3",Image="/client-side/images/brand3.png",Url="#",DisplayOrder = 3,GroupAlias = Enums.SlideGroup.Branch,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 4",Image="/client-side/images/brand4.png",Url="#",DisplayOrder = 4,GroupAlias = Enums.SlideGroup.Branch,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 5",Image="/client-side/images/brand5.png",Url="#",DisplayOrder = 5,GroupAlias = Enums.SlideGroup.Branch,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 6",Image="/client-side/images/brand6.png",Url="#",DisplayOrder = 6,GroupAlias = Enums.SlideGroup.Branch,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 7",Image="/client-side/images/brand7.png",Url="#",DisplayOrder = 7,GroupAlias = Enums.SlideGroup.Branch,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 8",Image="/client-side/images/brand8.png",Url="#",DisplayOrder = 8,GroupAlias = Enums.SlideGroup.Branch,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 9",Image="/client-side/images/brand9.png",Url="#",DisplayOrder = 9,GroupAlias = Enums.SlideGroup.Branch,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 10",Image="/client-side/images/brand10.png",Url="#",DisplayOrder = 10,GroupAlias = Enums.SlideGroup.Branch,Status = Status.Actived },
+                    new Slide() { Id = Guid.NewGuid(),Name="Slide 11",Image="/client-side/images/brand11.png",Url="#",DisplayOrder = 11,GroupAlias = Enums.SlideGroup.Branch,Status = Status.Actived },
                 };
                 _context.Slides.AddRange(slides);
             }
 
-
-            if (!_context.Sizes.Any())
-            {
-                List<Size> listSize = new List<Size>()
-                {
-                    new Size() { Name="XXL" },
-                    new Size() { Name="XL"},
-                    new Size() { Name="L" },
-                    new Size() { Name="M" },
-                    new Size() { Name="S" },
-                    new Size() { Name="XS" }
-                };
-                _context.Sizes.AddRange(listSize);
-            }
-
             if (!_context.ProductCategories.Any())
             {
+                var id1 = Guid.NewGuid();
+                var id2 = Guid.NewGuid();
+                var id3 = Guid.NewGuid();
+                var id4 = Guid.NewGuid();
                 List<ProductCategory> listProductCategory = new List<ProductCategory>()
                 {
-                    new ProductCategory() { Name="Áo nam",SeoAlias="ao-nam",ParentId = null,Status=Status.Actived,SortOrder=1,
-                        Products = new List<Product>()
-                        {
-                            new Product(){Name = "Sản phẩm 1",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-1",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 2",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-2",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 3",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-3",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 4",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-4",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 5",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-5",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                        }
-                    },
-                    new ProductCategory() { Name="Áo nữ",SeoAlias="ao-nu",ParentId = null,Status=Status.Actived ,SortOrder=2,
-                        Products = new List<Product>()
-                        {
-                            new Product(){Name = "Sản phẩm 6",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-6",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 7",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-7",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 8",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-8",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 9",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-9",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 10",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-10",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                        }},
-                    new ProductCategory() { Name="Giày nam",SeoAlias="giay-nam",ParentId = null,Status=Status.Actived ,SortOrder=3,
-                        Products = new List<Product>()
-                        {
-                            new Product(){Name = "Sản phẩm 11",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-11",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 12",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-12",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 13",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-13",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 14",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-14",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 15",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-15",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                        }},
-                    new ProductCategory() { Name="Giày nữ",SeoAlias="giay-nu",ParentId = null,Status=Status.Actived,SortOrder=4,
-                        Products = new List<Product>()
-                        {
-                            new Product(){Name = "Sản phẩm 16",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-16",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 17",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-17",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 18",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-18",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 19",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-19",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){Name = "Sản phẩm 20",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-20",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                        }}
+                    new ProductCategory() { Id = Guid.NewGuid(), Name="Áo nam",SeoAlias="ao-nam",ParentId = null,Status=Status.Actived,SortOrder=1},
+                    new ProductCategory() { Id = Guid.NewGuid(), Name="Áo nữ",SeoAlias="ao-nu",ParentId = null,Status=Status.Actived ,SortOrder=2 },
+                    new ProductCategory() { Id = Guid.NewGuid(), Name="Giày nam",SeoAlias="giay-nam",ParentId = null,Status=Status.Actived ,SortOrder=3 },
+                    new ProductCategory() { Id = Guid.NewGuid(), Name="Giày nữ",SeoAlias="giay-nu",ParentId = null,Status=Status.Actived,SortOrder=4 }
                 };
+                var list1 = new List<Product>()
+                        {
+                            new Product(){CategoryId = id1, Name = "Sản phẩm 11",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-11",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product(){CategoryId = id1,Name = "Sản phẩm 12",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-12",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product(){CategoryId = id1,Name = "Sản phẩm 13",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-13",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product(){CategoryId = id1,Name = "Sản phẩm 14",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-14",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product(){CategoryId = id1,Name = "Sản phẩm 15",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-15",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                        };
+                var list2 = new List<Product>()
+                        {
+                            new Product(){CategoryId = id2,Name = "Sản phẩm 6",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-6",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product(){CategoryId = id2,Name = "Sản phẩm 7",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-7",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product(){CategoryId = id2,Name = "Sản phẩm 8",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-8",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product(){CategoryId = id2,Name = "Sản phẩm 9",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-9",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product(){CategoryId = id2,Name = "Sản phẩm 10",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-10",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                        };
+                var list3 = new List<Product>()
+                        {
+                            new Product() {CategoryId = id3, Name = "Sản phẩm 1",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-1",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product() {CategoryId = id3, Name = "Sản phẩm 2",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-2",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product() {CategoryId = id3, Name = "Sản phẩm 3",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-3",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product() {CategoryId = id3, Name = "Sản phẩm 4",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-4",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product() {CategoryId = id3, Name = "Sản phẩm 5",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-5",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                        };
+                var list4 = new List<Product>()
+                        {
+                            new Product() { CategoryId = id4,Name = "Sản phẩm 16",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-16",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product() { CategoryId = id4,Name = "Sản phẩm 17",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-17",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product() { CategoryId = id4,Name = "Sản phẩm 18",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-18",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product() { CategoryId = id4,Name = "Sản phẩm 19",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-19",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                            new Product() { CategoryId = id4,Name = "Sản phẩm 20",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-20",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
+                        };
+
                 _context.ProductCategories.AddRange(listProductCategory);
+                _context.Products.AddRange(list1);
+                _context.Products.AddRange(list2);
+                _context.Products.AddRange(list3);
+                _context.Products.AddRange(list4);
             }
 
-            if (!_context.SystemConfigs.Any(x => x.Id == "HomeTitle"))
+            if (!_context.SystemConfigs.Any(x => x.UniqueCode == "HomeTitle"))
             {
-                _context.SystemConfigs.Add(new SystemConfig()
+                _context.SystemConfigs.Add(new Setting()
                 {
-                    Id = "HomeTitle",
+                    Id = Guid.NewGuid(),
+                    UniqueCode = "HomeTitle",
                     Name = "Tiêu đề trang chủ",
-                    Value1 = "Trang chủ TeduShop",
+                    TextValue = "Trang chủ TeduShop",
                     Status = Status.Actived
                 });
             }
-            if (!_context.SystemConfigs.Any(x => x.Id == "HomeMetaKeyword"))
+            if (!_context.SystemConfigs.Any(x => x.UniqueCode == "HomeMetaKeyword"))
             {
-                _context.SystemConfigs.Add(new SystemConfig()
+                _context.SystemConfigs.Add(new Setting()
                 {
-                    Id = "HomeMetaKeyword",
+                    Id = Guid.NewGuid(),
+                    UniqueCode = "HomeMetaKeyword",
                     Name = "Từ khoá trang chủ",
-                    Value1 = "Trang chủ TeduShop",
+                    TextValue = "Trang chủ TeduShop",
                     Status = Status.Actived
                 });
             }
-            if (!_context.SystemConfigs.Any(x => x.Id == "HomeMetaDescription"))
+            if (!_context.SystemConfigs.Any(x => x.UniqueCode == "HomeMetaDescription"))
             {
-                _context.SystemConfigs.Add(new SystemConfig()
+                _context.SystemConfigs.Add(new Setting()
                 {
-                    Id = "HomeMetaDescription",
+                    Id = Guid.NewGuid(),
+                    UniqueCode = "HomeMetaDescription",
                     Name = "Mô tả trang chủ",
-                    Value1 = "Trang chủ TeduShop",
+                    TextValue = "Trang chủ TeduShop",
                     Status = Status.Actived
                 });
             }

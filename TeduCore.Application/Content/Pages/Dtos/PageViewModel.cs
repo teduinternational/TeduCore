@@ -8,7 +8,7 @@ namespace TeduCore.Application.Content.Pages.Dtos
 {
     public class PageViewModel
     {
-        public int Id { get; set; }
+        public Guid id { get; set; }
         [Required]
         [MaxLength(256)]
         public string Name { set; get; }

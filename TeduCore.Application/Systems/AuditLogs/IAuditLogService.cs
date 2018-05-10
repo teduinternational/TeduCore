@@ -7,7 +7,7 @@ namespace TeduCore.Application.Systems.AuditLogs
 {
     public interface IAuditLogService
     {
-        void Create(Error error);
+        void Create(AuditLog error);
 
         void Save();
     }

@@ -4,7 +4,7 @@ namespace TeduCore.Application.Content.Slides.Dtos
 {
     public class SlideViewModel
     {
-        public int Id { set; get; }
+        public Guid id { set; get; }
 
         [StringLength(250)]
         [Required]

@@ -13,10 +13,10 @@ namespace TeduCore.Application.Implementation
 {
     public class PageService : IPageService
     {
-        private IRepository<Page, int> _pageRepository;
+        private IRepository<Page, Guid> _pageRepository;
         private IUnitOfWork _unitOfWork;
 
-        public PageService(IRepository<Page, int> pageRepository,
+        public PageService(IRepository<Page, Guid> pageRepository,
             IUnitOfWork unitOfWork)
         {
             this._pageRepository = pageRepository;
@@ -26,12 +26,12 @@ namespace TeduCore.Application.Implementation
         public void Add(PageViewModel pageVm)
         {
             var page = Mapper.Map<PageViewModel, Page>(pageVm);
-            _pageRepository.Add(page);
+            _pageRepository.Insert(page);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
-            _pageRepository.Remove(id);
+            _pageRepository.Delete(id);
         }
 
         public void Dispose()
@@ -41,17 +41,17 @@ namespace TeduCore.Application.Implementation
 
         public List<PageViewModel> GetAll()
         {
-            return _pageRepository.FindAll().ProjectTo<PageViewModel>().ToList();
+            return _pageRepository.GetAll().ProjectTo<PageViewModel>().ToList();
         }
 
         public PagedResult<PageViewModel> GetAllPaging(string keyword, int page, int pageSize)
         {
-            var query = _pageRepository.FindAll();
+            var query = _pageRepository.GetAll();
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.Name.Contains(keyword));
 
             int totalRow = query.Count();
-            var data = query.OrderByDescending(x => x.Alias)
+            var data = query.OrderByDescending(x => x.UniqueCode)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize);
 
@@ -68,12 +68,12 @@ namespace TeduCore.Application.Implementation
 
         public PageViewModel GetByAlias(string alias)
         {
-            return Mapper.Map<Page, PageViewModel>(_pageRepository.FindSingle(x => x.Alias == alias));
+            return Mapper.Map<Page, PageViewModel>(_pageRepository.Single(x => x.UniqueCode == alias));
         }
 
-        public PageViewModel GetById(int id)
+        public PageViewModel GetById(Guid id)
         {
-            return Mapper.Map<Page, PageViewModel>(_pageRepository.FindById(id));
+            return Mapper.Map<Page, PageViewModel>(_pageRepository.Get(id));
         }
 
         public void SaveChanges()

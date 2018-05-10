@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TeduCore.Application.Dtos;
 using TeduCore.Application.ECommerce.Products.Dtos;
 using TeduCore.Data.Entities;
-
+using TeduCore.Data.Enums;
 using TeduCore.Infrastructure.Enums;
 using TeduCore.Infrastructure.Interfaces;
-using TeduCore.Utilities.Constants;
 using TeduCore.Utilities.Dtos;
 using TeduCore.Utilities.Helpers;
 
@@ -18,32 +18,26 @@ namespace TeduCore.Application.ECommerce.Products
 {
     public class ProductService : IProductService
     {
-        private readonly IRepository<Product, int> _productRepository;
+        private readonly IRepository<Product, Guid> _productRepository;
         private readonly IRepository<Tag, string> _tagRepository;
-        private readonly IRepository<ProductTag, int> _productTagRepository;
-        private readonly IRepository<ProductImage, int> _productImageRepository;
-        private readonly IRepository<ProductQuantity, int> _productQuantityRepository;
-        private readonly IRepository<WholePrice, int> _wholePriceRepository;
-        private readonly IRepository<ProductCategory, int> _productCategoryRepository;
-        private readonly IRepository<ProductWishlist, int> _productWishlistRepository;
+        private readonly IRepository<ProductTag, Guid> _productTagRepository;
+        private readonly IRepository<ProductImage, Guid> _productImageRepository;
+        private readonly IRepository<ProductCategory, Guid> _productCategoryRepository;
+        private readonly IRepository<ProductWishlist, Guid> _productWishlistRepository;
 
         private readonly IUnitOfWork _unitOfWork;
 
-        public ProductService(IRepository<Product, int> productRepository,
-            IRepository<ProductTag, int> productTagRepository,
-            IRepository<ProductWishlist, int> productWishlistRepository,
+        public ProductService(IRepository<Product, Guid> productRepository,
+            IRepository<ProductTag, Guid> productTagRepository,
+            IRepository<ProductWishlist, Guid> productWishlistRepository,
             IRepository<Tag, string> tagRepository,
-            IRepository<ProductCategory, int> productCategoryRepository,
-            IRepository<ProductImage, int> productImageRepository,
-            IRepository<ProductQuantity, int> productQuantityRepository,
-            IRepository<WholePrice, int> wholePriceRepository,
+            IRepository<ProductCategory, Guid> productCategoryRepository,
+            IRepository<ProductImage, Guid> productImageRepository,
             IUnitOfWork unitOfWork)
         {
             _productRepository = productRepository;
             _productTagRepository = productTagRepository;
             _productImageRepository = productImageRepository;
-            _productQuantityRepository = productQuantityRepository;
-            _wholePriceRepository = wholePriceRepository;
             _productCategoryRepository = productCategoryRepository;
             _tagRepository = tagRepository;
             _productWishlistRepository = productWishlistRepository;
@@ -58,7 +52,7 @@ namespace TeduCore.Application.ECommerce.Products
 
             if (string.IsNullOrEmpty(productVm.Code))
             {
-                var category = _productCategoryRepository.FindById(productVm.CategoryId);
+                var category = _productCategoryRepository.Get(productVm.CategoryId);
                 var code = category.Code + (category.CurrentIdentity + 1).ToString("0000");
                 category.CurrentIdentity += 1;
                 product.Code = code;
@@ -70,43 +64,43 @@ namespace TeduCore.Application.ECommerce.Products
                 foreach (string t in tags)
                 {
                     var tagId = TextHelper.ToUnsignString(t);
-                    if (!_tagRepository.FindAll(x => x.Id == tagId).Any())
+                    if (!_tagRepository.GetAll().Where(x => x.Id == tagId).Any())
                     {
                         Tag tag = new Tag
                         {
                             Id = tagId,
                             Name = t,
-                            Type = CommonConstants.ProductTag
+                            Type = TagType.Product
                         };
-                        _tagRepository.Add(tag);
+                        _tagRepository.Insert(tag);
                     }
 
                     ProductTag productTag = new ProductTag
                     {
                         TagId = tagId
                     };
-                    product.ProductTags.Add(productTag);
+                    //product.ProductTags.Insert(productTag);
                 }
             }
-            _productRepository.Add(product);
+            _productRepository.Insert(product);
 
             return productVm;
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
-            _productRepository.Remove(id);
+            _productRepository.Delete(id);
         }
 
         public List<ProductViewModel> GetAll()
         {
-            return _productRepository.FindAll(c => c.ProductCategory, c => c.ProductTags)
+            return _productRepository.GetAll()
                 .ProjectTo<ProductViewModel>().ToList();
         }
 
-        public PagedResult<ProductViewModel> GetAllPaging(int? categoryId, string keyword, int page, int pageSize, string sortBy)
+        public PagedResult<ProductViewModel> GetAllPaging(Guid? categoryId, string keyword, int page, int pageSize, string sortBy)
         {
-            var query = _productRepository.FindAll(c => c.Status == Status.Actived, i => i.ProductCategory);
+            var query = _productRepository.GetAll().Where(c => c.Status == Status.Actived);
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.Name.Contains(keyword) || x.Code.Contains(keyword));
 
@@ -147,9 +141,9 @@ namespace TeduCore.Application.ECommerce.Products
             return paginationSet;
         }
 
-        public ProductViewModel GetById(int id)
+        public ProductViewModel GetById(Guid id)
         {
-            return Mapper.Map<Product, ProductViewModel>(_productRepository.FindById(id));
+            return Mapper.Map<Product, ProductViewModel>(_productRepository.Get(id));
         }
 
         public void Save()
@@ -160,7 +154,7 @@ namespace TeduCore.Application.ECommerce.Products
         public void Update(ProductViewModel productVm)
         {
             var product = Mapper.Map<ProductViewModel, Product>(productVm);
-            _productTagRepository.RemoveMultiple(_productTagRepository.FindAll(x => x.Id == product.Id).ToList());
+            _productTagRepository.Delete(x => x.Id == product.Id);
 
             if (!string.IsNullOrEmpty(productVm.Tags))
             {
@@ -168,19 +162,19 @@ namespace TeduCore.Application.ECommerce.Products
                 foreach (string t in tags)
                 {
                     var tagId = TextHelper.ToUnsignString(t);
-                    if (!_tagRepository.FindAll(x => x.Id == tagId).Any())
+                    if (!_tagRepository.GetAll().Where(x => x.Id == tagId).Any())
                     {
                         Tag tag = new Tag();
                         tag.Id = tagId;
                         tag.Name = t;
-                        tag.Type = CommonConstants.ProductTag;
-                        _tagRepository.Add(tag);
+                        tag.Type = TagType.Product;
+                        _tagRepository.Insert(tag);
                     }
                     ProductTag productTag = new ProductTag
                     {
                         TagId = tagId
                     };
-                    product.ProductTags.Add(productTag);
+                    //product.ProductTags.Insert(productTag);
                 }
             }
             _productRepository.Update(product);
@@ -188,22 +182,22 @@ namespace TeduCore.Application.ECommerce.Products
 
         public List<ProductViewModel> GetLastest(int top)
         {
-            return _productRepository.FindAll(x => x.Status == Status.Actived).OrderByDescending(x => x.DateCreated)
+            return _productRepository.GetAll().Where(x => x.Status == Status.Actived).OrderByDescending(x => x.DateCreated)
                 .Take(top).ProjectTo<ProductViewModel>().ToList();
         }
 
         public List<ProductViewModel> GetHotProduct(int top)
         {
-            return _productRepository.FindAll(x => x.Status == Status.Actived && x.HotFlag == true)
+            return _productRepository.GetAll().Where(x => x.Status == Status.Actived && x.HotFlag == true)
                 .OrderByDescending(x => x.DateCreated)
                 .Take(top)
                 .ProjectTo<ProductViewModel>()
                 .ToList();
         }
 
-        public List<ProductViewModel> GetListProductByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, out int totalRow)
+        public List<ProductViewModel> GetListProductByCategoryIdPaging(Guid categoryId, int page, int pageSize, string sort, out int totalRow)
         {
-            var query = _productRepository.FindAll(x => x.Status == Status.Actived && x.CategoryId == categoryId);
+            var query = _productRepository.GetAll().Where(x => x.Status == Status.Actived && x.CategoryId == categoryId);
 
             switch (sort)
             {
@@ -233,13 +227,13 @@ namespace TeduCore.Application.ECommerce.Products
 
         public List<string> GetListProductByName(string name)
         {
-            return _productRepository.FindAll(x => x.Status == Status.Actived
+            return _productRepository.GetAll().Where(x => x.Status == Status.Actived
             && x.Name.Contains(name)).Select(y => y.Name).ToList();
         }
 
         public List<ProductViewModel> Search(string keyword, int page, int pageSize, string sort, out int totalRow)
         {
-            var query = _productRepository.FindAll(x => x.Status == Status.Actived
+            var query = _productRepository.GetAll().Where(x => x.Status == Status.Actived
             && x.Name.Contains(keyword));
 
             switch (sort)
@@ -269,10 +263,10 @@ namespace TeduCore.Application.ECommerce.Products
                 .ToList();
         }
 
-        public List<ProductViewModel> GetReatedProducts(int id, int top)
+        public List<ProductViewModel> GetReatedProducts(Guid id, int top)
         {
-            var product = _productRepository.FindById(id);
-            return _productRepository.FindAll(x => x.Status == Status.Actived
+            var product = _productRepository.Get(id);
+            return _productRepository.GetAll().Where(x => x.Status == Status.Actived
                 && x.Id != id && x.CategoryId == product.CategoryId)
             .OrderByDescending(x => x.DateCreated)
             .Take(top)
@@ -280,17 +274,17 @@ namespace TeduCore.Application.ECommerce.Products
             .ToList();
         }
 
-        public List<TagViewModel> GetListTagByProductId(int id)
+        public List<TagViewModel> GetListTagByProductId(Guid id)
         {
-            return _productTagRepository.FindAll(x => x.ProductId == id, c => c.Tag)
-                .Select(y => y.Tag)
+            return _productTagRepository.GetAll().Where(x => x.ProductId == id)
+                //.Select(y => y.Tag)
                 .ProjectTo<TagViewModel>()
                 .ToList();
         }
 
-        public void IncreaseView(int id)
+        public void IncreaseView(Guid id)
         {
-            var product = _productRepository.FindById(id);
+            var product = _productRepository.Get(id);
             if (product.ViewCount.HasValue)
                 product.ViewCount += 1;
             else
@@ -299,8 +293,8 @@ namespace TeduCore.Application.ECommerce.Products
 
         public List<ProductViewModel> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow)
         {
-            var query = from p in _productRepository.FindAll()
-                        join pt in _productTagRepository.FindAll()
+            var query = from p in _productRepository.GetAll()
+                        join pt in _productTagRepository.GetAll()
                         on p.Id equals pt.ProductId
                         where pt.TagId == tagId
                         select p;
@@ -314,13 +308,13 @@ namespace TeduCore.Application.ECommerce.Products
 
         public TagViewModel GetTag(string tagId)
         {
-            return Mapper.Map<Tag, TagViewModel>(_tagRepository.FindSingle(x => x.Id == tagId));
+            return Mapper.Map<Tag, TagViewModel>(_tagRepository.Single(x => x.Id == tagId));
         }
 
         //Selling product
-        public bool SellProduct(int productId, int quantity)
+        public bool SellProduct(Guid productId, int quantity)
         {
-            var product = _productRepository.FindById(productId);
+            var product = _productRepository.Get(productId);
             //if (product.Quantity < quantity)
             //    return false;
             //product.Quantity -= quantity;
@@ -331,19 +325,19 @@ namespace TeduCore.Application.ECommerce.Products
         {
             IQueryable<ProductViewModel> query;
             if (!string.IsNullOrEmpty(keyword))
-                query = _productRepository.FindAll(x => x.Name.Contains(keyword)).ProjectTo<ProductViewModel>();
+                query = _productRepository.GetAll().Where(x => x.Name.Contains(keyword)).ProjectTo<ProductViewModel>();
             else
-                query = _productRepository.FindAll().ProjectTo<ProductViewModel>();
+                query = _productRepository.GetAll().ProjectTo<ProductViewModel>();
             return query.ToList();
         }
 
         public List<TagViewModel> GetListProductTag(string searchText)
         {
-            return _tagRepository.FindAll(x => x.Type == CommonConstants.ProductTag
+            return _tagRepository.GetAll().Where(x => x.Type == TagType.Product
             && searchText.Contains(x.Name)).ProjectTo<TagViewModel>().ToList();
         }
 
-        public void ImportExcel(string filePath, int categoryId)
+        public void ImportExcel(string filePath, Guid categoryId)
         {
             using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
@@ -373,17 +367,17 @@ namespace TeduCore.Application.ECommerce.Products
 
                     product.Status = Status.Actived;
 
-                    _productRepository.Add(product);
+                    _productRepository.Insert(product);
                 }
             }
         }
 
-        public void AddImages(int productId, string[] images)
+        public void AddImages(Guid productId, string[] images)
         {
-            _productImageRepository.RemoveMultiple(_productImageRepository.FindAll(x => x.ProductId == productId).ToList());
+            _productImageRepository.Delete(x => x.ProductId == productId);
             foreach (var image in images)
             {
-                _productImageRepository.Add(new ProductImage()
+                _productImageRepository.Insert(new ProductImage()
                 {
                     Path = image,
                     ProductId = productId,
@@ -392,63 +386,23 @@ namespace TeduCore.Application.ECommerce.Products
             }
         }
 
-        public List<ProductImageViewModel> GetImages(int productId)
+        public List<ProductImageViewModel> GetImages(Guid productId)
         {
-            return _productImageRepository.FindAll(x => x.ProductId == productId)
+            return _productImageRepository.GetAll().Where(x => x.ProductId == productId)
                 .ProjectTo<ProductImageViewModel>().ToList();
-        }
-
-        public void AddQuantity(int productId, List<ProductQuantityViewModel> quantities)
-        {
-            _productQuantityRepository.RemoveMultiple(_productQuantityRepository.FindAll(x => x.ProductId == productId).ToList());
-            foreach (var quantity in quantities)
-            {
-                _productQuantityRepository.Add(new ProductQuantity()
-                {
-                    ProductId = productId,
-                    ColorId = quantity.ColorId,
-                    SizeId = quantity.SizeId,
-                    Quantity = quantity.Quantity
-                });
-            }
-        }
-
-        public List<ProductQuantityViewModel> GetQuantities(int productId)
-        {
-            return _productQuantityRepository.FindAll(x => x.ProductId == productId).ProjectTo<ProductQuantityViewModel>().ToList();
-        }
-
-        public void AddWholePrice(int productId, List<WholePriceViewModel> wholePrices)
-        {
-            _wholePriceRepository.RemoveMultiple(_wholePriceRepository.FindAll(x => x.ProductId == productId).ToList());
-            foreach (var wholePrice in wholePrices)
-            {
-                _wholePriceRepository.Add(new WholePrice()
-                {
-                    ProductId = productId,
-                    FromQuantity = wholePrice.FromQuantity,
-                    ToQuantity = wholePrice.ToQuantity,
-                    Price = wholePrice.Price
-                });
-            }
-        }
-
-        public List<WholePriceViewModel> GetWholePrices(int productId)
-        {
-            return _wholePriceRepository.FindAll(x => x.ProductId == productId).ProjectTo<WholePriceViewModel>().ToList();
         }
 
         public List<ProductViewModel> GetUpsellProducts(int top)
         {
-            return _productRepository.FindAll(x => x.PromotionPrice != null)
+            return _productRepository.GetAll().Where(x => x.PromotionPrice != null)
                 .OrderByDescending(x => x.DateModified)
                 .Take(top)
                 .ProjectTo<ProductViewModel>().ToList();
         }
 
-        public PagedResult<ProductViewModel> GetMyWishlist(string userId, int page, int pageSize)
+        public PagedResult<ProductViewModel> GetMyWishlist(Guid userId, int page, int pageSize)
         {
-            var query = _productWishlistRepository.FindAll(c => c.UserId == userId, i => i.Product).Select(x => x.Product);
+            var query = _productWishlistRepository.GetAll().Where(c => c.UserId == userId);
 
             int totalRow = query.Count();
 

@@ -8,10 +8,5 @@ namespace TeduCore.Data.Interfaces
     public interface IHasOwner<T>
     {
         T OwnerId { set; get; }
-
-        /// <summary>
-        /// The Person instance this object belongs to.
-        /// </summary>
-        AppUser Owner { get; set; }
     }
 }

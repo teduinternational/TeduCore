@@ -7,8 +7,8 @@ namespace TeduCore.Application.ECommerce.Products.Dtos
 {
     public class ProductWishlistViewModel
     {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
+        public Guid id { get; set; }
+        public Guid productId { get; set; }
 
         public string UserId { get; set; }
 

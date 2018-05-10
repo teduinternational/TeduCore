@@ -10,13 +10,13 @@ namespace TeduCore.Application.Content.Feedbacks
 
         void Update(FeedbackViewModel feedbackVm);
 
-        void Delete(int id);
+        void Delete(Guid id);
 
         List<FeedbackViewModel> GetAll();
 
         PagedResult<FeedbackViewModel> GetAllPaging(string keyword, int page, int pageSize);
 
-        FeedbackViewModel GetById(int id);
+        FeedbackViewModel GetById(Guid id);
 
         void SaveChanges();
     }

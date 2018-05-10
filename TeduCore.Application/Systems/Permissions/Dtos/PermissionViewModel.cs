@@ -10,7 +10,7 @@ namespace TeduCore.Application.Systems.Permissions.Dtos
     public class PermissionViewModel
     {
 
-        public int Id { get; set; }
+        public Guid id { get; set; }
 
 
         public string RoleId { get; set; }

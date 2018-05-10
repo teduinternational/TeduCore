@@ -15,25 +15,19 @@ namespace TeduCore.Application.ECommerce.Bills
 {
     public class BillService : IBillService
     {
-        private readonly IRepository<Bill, int> _orderRepository;
-        private readonly IRepository<BillDetail, int> _orderDetailRepository;
-        private readonly IRepository<Color, int> _colorRepository;
-        private readonly IRepository<Size, int> _sizeRepository;
-        private readonly IRepository<Product, int> _productRepository;
+        private readonly IRepository<Bill, Guid> _orderRepository;
+        private readonly IRepository<BillDetail, Guid> _orderDetailRepository;
+        private readonly IRepository<Product, Guid> _productRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public BillService(IRepository<Bill, int> orderRepository,
-            IRepository<BillDetail, int> orderDetailRepository,
-            IRepository<Product, int> productRepository,
-            IRepository<Color, int> colorRepository,
-            IRepository<Size, int> sizeRepository,
+        public BillService(IRepository<Bill, Guid> orderRepository,
+            IRepository<BillDetail, Guid> orderDetailRepository,
+            IRepository<Product, Guid> productRepository,
             IUnitOfWork unitOfWork)
         {
             _orderRepository = orderRepository;
             _orderDetailRepository = orderDetailRepository;
-            _colorRepository = colorRepository;
             _productRepository = productRepository;
-            _sizeRepository = sizeRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -43,29 +37,29 @@ namespace TeduCore.Application.ECommerce.Bills
             var orderDetails = Mapper.Map<List<BillDetailViewModel>, List<BillDetail>>(billVm.BillDetails);
             foreach (var detail in orderDetails)
             {
-                var product = _productRepository.FindById(detail.ProductId);
+                var product = _productRepository.Get(detail.ProductId);
                 detail.Price = product.PromotionPrice ?? product.Price;
             }
-            order.BillDetails = orderDetails;
-            _orderRepository.Add(order);
+            //order.BillDetails = orderDetails;
+            _orderRepository.Insert(order);
         }
 
         public void Update(BillViewModel billVm)
         {
             //Mapping to order domain
-            var order = _orderRepository.FindById(billVm.Id, i => i.BillDetails);
+            var order = _orderRepository.Get(billVm.Id);
 
             //Get order Detail
             var newDetails = Mapper.Map<List<BillDetailViewModel>, List<BillDetail>>(billVm.BillDetails);
 
             //new details added
-            var addedDetails = newDetails.Where(x => x.Id == 0).ToList();
+            var addedDetails = newDetails.Where(x => x.Id == Guid.Empty).ToList();
 
             //get updated details
-            var updatedDetailVms = newDetails.Where(x => x.Id != 0).ToList();
+            var updatedDetailVms = newDetails.Where(x => x.Id != Guid.Empty).ToList();
 
             //Existed details
-            var existedDetails = _orderDetailRepository.FindAll(x => x.BillId == billVm.Id);
+            var existedDetails = _orderDetailRepository.GetAll().Where(x => x.BillId == billVm.Id);
 
             //Clear db
 
@@ -73,10 +67,10 @@ namespace TeduCore.Application.ECommerce.Bills
 
             foreach (var detailVm in updatedDetailVms)
             {
-                var detail = _orderDetailRepository.FindById(detailVm.Id);
+                var detail = _orderDetailRepository.Get(detailVm.Id);
                 detail.Quantity = detailVm.Quantity;
                 detail.ProductId = detailVm.ProductId;
-                var product = _productRepository.FindById(detailVm.ProductId);
+                var product = _productRepository.Get(detailVm.ProductId);
                 detail.Price = product.PromotionPrice ?? product.Price;
                 _orderDetailRepository.Update(detail);
                 updatedDetails.Add(detail);
@@ -84,13 +78,13 @@ namespace TeduCore.Application.ECommerce.Bills
 
             foreach (var detail in addedDetails)
             {
-                var product = _productRepository.FindById(detail.ProductId);
+                var product = _productRepository.Get(detail.ProductId);
                 detail.Price = product.PromotionPrice ?? product.Price;
                 detail.BillId = order.Id;
-                _orderDetailRepository.Add(detail);
+                _orderDetailRepository.Insert(detail);
             }
 
-            _orderDetailRepository.RemoveMultiple(existedDetails.Except(updatedDetails).ToList());
+            //_orderDetailRepository.Delete(existedDetails.Except(updatedDetails));
 
             if (order.BillStatus != BillStatus.Completed && billVm.BillStatus == BillStatus.Completed)
             {
@@ -112,16 +106,11 @@ namespace TeduCore.Application.ECommerce.Bills
             _orderRepository.Update(order);
         }
 
-        public void UpdateStatus(int billId, BillStatus status)
+        public void UpdateStatus(Guid billId, BillStatus status)
         {
-            var order = _orderRepository.FindById(billId);
+            var order = _orderRepository.Get(billId);
             order.BillStatus = status;
             _orderRepository.Update(order);
-        }
-
-        public List<SizeViewModel> GetSizes()
-        {
-            return _sizeRepository.FindAll().ProjectTo<SizeViewModel>().ToList();
         }
 
         public void Save()
@@ -129,15 +118,16 @@ namespace TeduCore.Application.ECommerce.Bills
             _unitOfWork.Commit();
         }
 
-        public void ConfirmBill(int id)
+        public void ConfirmBill(Guid id)
         {
-            var bill = _orderRepository.FindById(id, i => i.BillDetails);
+            var bill = _orderRepository.Get(id);
+            var billDetails = _orderDetailRepository.GetAll().Where(x => x.BillId == id);
             if (bill.BillStatus != BillStatus.Completed)
             {
                 bill.BillStatus = BillStatus.Completed;
-                foreach (var detail in bill.BillDetails)
+                foreach (var detail in billDetails)
                 {
-                    var product = _productRepository.FindById(detail.ProductId);
+                    var product = _productRepository.Get(detail.ProductId);
                     if (product.Quantity >= detail.Quantity)
                     {
                         product.Quantity -= detail.Quantity;
@@ -152,15 +142,16 @@ namespace TeduCore.Application.ECommerce.Bills
             }
         }
 
-        public void CancelBill(int id)
+        public void CancelBill(Guid id)
         {
-            var bill = _orderRepository.FindById(id, i => i.BillDetails);
+            var bill = _orderRepository.Get(id);
+            var billDetails = _orderDetailRepository.GetAll().Where(x => x.BillId == id);
             if (bill.BillStatus != BillStatus.Cancelled)
             {
                 bill.BillStatus = BillStatus.Cancelled;
-                foreach (var detail in bill.BillDetails)
+                foreach (var detail in billDetails)
                 {
-                    var product = _productRepository.FindById(detail.ProductId);
+                    var product = _productRepository.Get(detail.ProductId);
                     product.Quantity += detail.Quantity;
                 }
             }
@@ -170,9 +161,9 @@ namespace TeduCore.Application.ECommerce.Bills
             }
         }
 
-        public void PendingBill(int id)
+        public void PendingBill(Guid id)
         {
-            var bill = _orderRepository.FindById(id, i => i.BillDetails);
+            var bill = _orderRepository.Get(id);
             if (bill.BillStatus != BillStatus.Pending)
             {
                 bill.BillStatus = BillStatus.Pending;
@@ -186,7 +177,7 @@ namespace TeduCore.Application.ECommerce.Bills
         public PagedResult<BillViewModel> GetAllPaging(string startDate, string endDate, string keyword
             , int pageIndex, int pageSize)
         {
-            var query = _orderRepository.FindAll();
+            var query = _orderRepository.GetAll();
             if (!string.IsNullOrEmpty(startDate))
             {
                 DateTime start = DateTime.ParseExact(startDate, "dd/MM/yyyy", CultureInfo.GetCultureInfo("vi-VN"));
@@ -216,39 +207,35 @@ namespace TeduCore.Application.ECommerce.Bills
             };
         }
 
-        public BillViewModel GetDetail(int billId)
+        public BillViewModel GetDetail(Guid billId)
         {
-            var bill = _orderRepository.FindSingle(x => x.Id == billId);
+            var bill = _orderRepository.Single(x => x.Id == billId);
             var billVm = Mapper.Map<Bill, BillViewModel>(bill);
-            var billDetailVm = _orderDetailRepository.FindAll(x => x.BillId == billId).ProjectTo<BillDetailViewModel>().ToList();
+            var billDetailVm = _orderDetailRepository.GetAll().Where(x => x.BillId == billId).ProjectTo<BillDetailViewModel>().ToList();
             billVm.BillDetails = billDetailVm;
             return billVm;
         }
 
-        public List<BillDetailViewModel> GetBillDetails(int billId)
+        public List<BillDetailViewModel> GetBillDetails(Guid billId)
         {
             return _orderDetailRepository
-                .FindAll(x => x.BillId == billId, c => c.Bill, c => c.Product)
+                .GetAll().Where(x => x.BillId == billId)
                 .ProjectTo<BillDetailViewModel>().ToList();
         }
 
-        public List<ColorViewModel> GetColors()
-        {
-            return _colorRepository.FindAll().ProjectTo<ColorViewModel>().ToList();
-        }
 
         public BillDetailViewModel CreateDetail(BillDetailViewModel billDetailVm)
         {
             var billDetail = Mapper.Map<BillDetailViewModel, BillDetail>(billDetailVm);
-            _orderDetailRepository.Add(billDetail);
+            _orderDetailRepository.Insert(billDetail);
             return billDetailVm;
         }
 
-        public void DeleteDetail(int productId, int billId, int colorId, int sizeId)
+        public void DeleteDetail(Guid productId, Guid billId)
         {
-            var detail = _orderDetailRepository.FindSingle(x => x.ProductId == productId
+            var detail = _orderDetailRepository.Single(x => x.ProductId == productId
            && x.BillId == billId);
-            _orderDetailRepository.Remove(detail);
+            _orderDetailRepository.Delete(detail);
         }
     }
 }

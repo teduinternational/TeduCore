@@ -30,11 +30,11 @@ namespace TeduCore.Application.AutoMapper
             CreateMap<Color, ColorViewModel>().MaxDepth(2);
             CreateMap<Size, SizeViewModel>().MaxDepth(2);
             CreateMap<ProductTag, ProductTagViewModel>().MaxDepth(2);
-            CreateMap<Blog, BlogViewModel>().MaxDepth(2);
-            CreateMap<BlogTag, BlogTagViewModel>().MaxDepth(2);
+            CreateMap<Post, BlogViewModel>().MaxDepth(2);
+            CreateMap<PostTag, BlogTagViewModel>().MaxDepth(2);
             CreateMap<Footer, FooterViewModel>().MaxDepth(2);
             CreateMap<Slide, SlideViewModel>().MaxDepth(2);
-            CreateMap<SystemConfig, SystemConfigViewModel>().MaxDepth(2);
+            CreateMap<Setting, SystemConfigViewModel>().MaxDepth(2);
             CreateMap<AppUser, AppUserViewModel>().MaxDepth(2);
             CreateMap<AppRole, AppRoleViewModel>().MaxDepth(2);
             CreateMap<ProductImage, ProductImageViewModel>().MaxDepth(2);

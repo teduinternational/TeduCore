@@ -8,13 +8,13 @@ namespace TeduCore.Application.ECommerce.Products.Dtos
 {
     public class ProductViewModel
     {
-        public int Id { get; set; }
+        public Guid id { get; set; }
         public string Name { set; get; }
 
         public string Code { set; get; }
 
         [Required]
-        public int CategoryId { set; get; }
+        public Guid CategoryId { set; get; }
 
         [MaxLength(256)]
         public string ThumbnailImage { set; get; }
@@ -42,10 +42,6 @@ namespace TeduCore.Application.ECommerce.Products.Dtos
 
         [StringLength(50)]
         public string Unit { get; set; }
-
-        public ProductCategoryViewModel ProductCategory { set; get; }
-
-        public ICollection<ProductTagViewModel> ProductTags { set; get; }
 
         public DateTime DateCreated { set; get; }
         public DateTime DateModified { set; get; }

@@ -2,9 +2,9 @@
 {
     public class ProductImageViewModel
     {
-        public int Id { get; set; }
+        public Guid id { get; set; }
 
-        public int ProductId { get; set; }
+        public Guid productId { get; set; }
 
         public ProductViewModel Product { get; set; }
 

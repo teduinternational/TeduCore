@@ -32,8 +32,8 @@ namespace TeduCore.Application.AutoMapper
                     c.HomeFlag, c.SortOrder, c.Status, c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription))
                 .ForMember("Products", conf => conf.Ignore());
 
-            CreateMap<BlogViewModel, Blog>()
-              .ConstructUsing(c => new Blog(c.Name, c.Image, c.Description,
+            CreateMap<BlogViewModel, Post>()
+              .ConstructUsing(c => new Post(c.Name, c.Image, c.Description,
               c.Content, c.HomeFlag, c.HotFlag, c.Tags, c.Status,
               c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
 

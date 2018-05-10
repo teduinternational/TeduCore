@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TeduCore.Application.Content.Blogs.Dtos;
 using TeduCore.Application.Dtos;
 using TeduCore.Utilities.Dtos;
@@ -11,7 +12,7 @@ namespace TTeduCore.Application.Content.Blogs
 
         void Update(BlogViewModel product);
 
-        void Delete(int id);
+        void Delete(Guid id);
 
         List<BlogViewModel> GetAll();
 
@@ -27,19 +28,19 @@ namespace TTeduCore.Application.Content.Blogs
 
         List<BlogViewModel> GetList(string keyword);
 
-        List<BlogViewModel> GetReatedBlogs(int id, int top);
+        List<BlogViewModel> GetReatedBlogs(Guid id, int top);
 
         List<string> GetListByName(string name);
 
-        BlogViewModel GetById(int id);
+        BlogViewModel GetById(Guid id);
 
         void Save();
 
-        List<TagViewModel> GetListTagById(int id);
+        List<TagViewModel> GetListTagById(Guid id);
 
         TagViewModel GetTag(string tagId);
 
-        void IncreaseView(int id);
+        void IncreaseView(Guid id);
 
         List<BlogViewModel> GetListByTag(string tagId, int page, int pagesize, out int totalRow);
 

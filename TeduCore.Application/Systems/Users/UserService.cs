@@ -44,7 +44,7 @@ namespace TeduCore.Application.Systems.Users
 
         public async Task DeleteAsync(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.GetAsync(id);
             await _userManager.DeleteAsync(user);
         }
 
@@ -90,7 +90,7 @@ namespace TeduCore.Application.Systems.Users
 
         public async Task<AppUserViewModel> GetById(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.GetAsync(id);
             var roles = await _userManager.GetRolesAsync(user);
             var userVm = Mapper.Map<AppUser, AppUserViewModel>(user);
             userVm.Roles = roles;
@@ -99,7 +99,7 @@ namespace TeduCore.Application.Systems.Users
 
         public async Task UpdateAsync(AppUserViewModel userVm)
         {
-            var user = await _userManager.FindByIdAsync(userVm.Id);
+            var user = await _userManager.GetAsync(userVm.Id);
             //Remove current roles in db
             var currentRoles = await _userManager.GetRolesAsync(user);
             var result = await _userManager.AddToRolesAsync(user,
@@ -107,7 +107,7 @@ namespace TeduCore.Application.Systems.Users
             if (result.Succeeded)
             {
                 string[] needRemoveRoles = currentRoles.Except(userVm.Roles).ToArray();
-                await _userManager.RemoveFromRolesAsync(user, needRemoveRoles);
+                await _userManager.DeleteFromRolesAsync(user, needRemoveRoles);
 
                 //Update user detail
                 user.FullName = userVm.FullName;

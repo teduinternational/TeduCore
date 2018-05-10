@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TeduCore.Application.ECommerce.Bills.Dtos;
 using TeduCore.Application.ECommerce.Products.Dtos;
 using TeduCore.Application.ViewModels;
@@ -16,15 +17,15 @@ namespace TeduCore.Application.ECommerce.Bills
         PagedResult<BillViewModel> GetAllPaging(string startDate, string endDate, string keyword,
             int pageIndex, int pageSize);
 
-        BillViewModel GetDetail(int billId);
+        BillViewModel GetDetail(Guid billId);
 
         BillDetailViewModel CreateDetail(BillDetailViewModel billDetailVm);
 
-        void DeleteDetail(int productId, int billId, int colorId, int sizeId);
+        void DeleteDetail(Guid productId, Guid billId);
 
         void UpdateStatus(int orderId, BillStatus status);
 
-        List<BillDetailViewModel> GetBillDetails(int billId);
+        List<BillDetailViewModel> GetBillDetails(Guid billId);
 
         List<ColorViewModel> GetColors();
 
@@ -32,10 +33,10 @@ namespace TeduCore.Application.ECommerce.Bills
 
         void Save();
 
-        void ConfirmBill(int id);
+        void ConfirmBill(Guid id);
 
-        void CancelBill(int id);
+        void CancelBill(Guid id);
 
-        void PendingBill(int id);
+        void PendingBill(Guid id);
     }
 }

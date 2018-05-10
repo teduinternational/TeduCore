@@ -8,7 +8,7 @@ namespace TeduCore.Application.Systems.Functions.Dtos
 {
     public class FunctionViewModel
     {
-        public string Id { set; get; }
+        public Guid Id { set; get; }
 
         [Required]
         [MaxLength(50)]

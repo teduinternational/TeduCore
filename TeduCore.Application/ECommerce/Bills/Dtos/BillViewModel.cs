@@ -9,7 +9,7 @@ namespace TeduCore.Application.ECommerce.Bills.Dtos
 {
     public class BillViewModel
     {
-        public int Id { set; get; }
+        public Guid Id { set; get; }
 
         [Required]
         [MaxLength(256)]
