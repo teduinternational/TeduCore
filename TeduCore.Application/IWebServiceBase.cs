@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using TeduCore.Infrastructure.Enums;
+using TeduCore.Infrastructure.SharedKernel;
 using TeduCore.Utilities.Dtos;
 
 namespace TeduCore.Application
 {
     public interface IWebServiceBase<TEntity,TPrimaryKey,ViewModel> where ViewModel : class
-        where TEntity : class
+        where TEntity : DomainEntity<TPrimaryKey>
     {
         void Add(ViewModel viewModel);
 
