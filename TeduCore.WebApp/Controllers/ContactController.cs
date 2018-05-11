@@ -44,7 +44,7 @@ namespace TeduCore.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 _feedbackService.Add(model.Feedback);
-                _feedbackService.SaveChanges();
+                _feedbackService.Save();
                 var content = await _viewRenderService.RenderToStringAsync("Contact/_ContactMail", model.Feedback);
                 await _emailSender.SendEmailAsync(_configuration["MailSettings:AdminMail"], "Có liên hệ mới", content);
                 ViewData["Success"] = true;

@@ -22,7 +22,7 @@ var simple_widget_1 = require("./simple.widget");
 var node_1 = require("./node");
 var util_1 = require("./util");
 var node_element_1 = require("./node_element");
-var JqTreeWidget = (function (_super) {
+var JqTreeWidget = /** @class */ (function (_super) {
     __extends(JqTreeWidget, _super);
     function JqTreeWidget() {
         return _super !== null && _super.apply(this, arguments) || this;
