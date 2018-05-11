@@ -283,7 +283,7 @@
                             Code: item.Code,
                             OriginalPrice: tedu.formatNumber(item.OriginalPrice, 0),
                             Quantity: tedu.formatNumber(item.Quantity, 0),
-                            CategoryName: item.ProductCategory.Name,
+                            CategoryName: item.CategoryName,
                             Price: tedu.formatNumber(item.Price, 0),
                             Image: item.ThumbnailImage == undefined ? '<img src="/admin-side/images/user.png" width=25 />' : '<img src="' + item.ThumbnailImage + '" width=25 />',
                             DateCreated: tedu.dateTimeFormatJson(item.DateCreated),

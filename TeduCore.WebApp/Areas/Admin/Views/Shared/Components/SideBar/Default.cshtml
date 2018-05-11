@@ -1,9 +1,9 @@
-﻿@model List<FunctionViewModel>
+﻿@model List<TeduCore.Application.Systems.Functions.Dtos.FunctionViewModel>
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
     <div class="menu_section">
         <h3>Chức năng</h3>
         <ul class="nav side-menu">
-            @foreach (var item in Model.Where(x => string.IsNullOrEmpty(x.ParentId)))
+            @foreach (var item in Model.Where(x => x.ParentId.HasValue == false))
             {
                 <li>
                     <a><i class="fa @item.IconCss"></i> @item.Name <span class="fa fa-chevron-down"></span></a>
