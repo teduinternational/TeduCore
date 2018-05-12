@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeduCore.WebApp", "TeduCore
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeduCore.WebApi", "TeduCore.WebApi\TeduCore.WebApi.csproj", "{DBCF11E9-781A-4BFB-9B25-853311BAABFA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. API", "2. API", "{A4E731D2-8816-4EA7-BA02-A7F3A0B8B63C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - API", "2 - API", "{A4E731D2-8816-4EA7-BA02-A7F3A0B8B63C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeduCore.Application", "TeduCore.Application\TeduCore.Application.csproj", "{843BAB14-3E0B-489A-A366-11AE70A6C903}"
 EndProject
