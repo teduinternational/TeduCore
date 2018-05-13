@@ -11,7 +11,7 @@ using TeduCore.Infrastructure.Enums;
 using TeduCore.Infrastructure.Interfaces;
 using TeduCore.Utilities.Dtos;
 using TeduCore.Utilities.Helpers;
-using TTeduCore.Application.Content.Posts;
+using TeduCore.Application.Content.Posts;
 
 namespace TeduCore.Application.Content.Posts
 {

@@ -10,29 +10,13 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using System;
-using TeduCore.Application.Content.Posts;
-using TeduCore.Application.Content.Contacts;
-using TeduCore.Application.Content.Feedbacks;
-using TeduCore.Application.Content.Pages;
-using TeduCore.Application.Content.Slides;
-using TeduCore.Application.ECommerce.Bills;
-using TeduCore.Application.ECommerce.ProductCategories;
-using TeduCore.Application.ECommerce.Products;
-using TeduCore.Application.Implementation;
-using TeduCore.Application.Systems.Commons;
-using TeduCore.Application.Systems.Functions;
-using TeduCore.Application.Systems.Roles;
-using TeduCore.Application.Systems.Users;
 using TeduCore.Data.EF;
 using TeduCore.Data.Entities;
 using TeduCore.Infrastructure.Interfaces;
-using TeduCore.Services.Dapper.Implementation;
-using TeduCore.Services.Dapper.Interfaces;
 using TeduCore.WebApp.Authorization;
 using TeduCore.WebApp.Extensions;
 using TeduCore.WebApp.Helpers;
 using TeduCore.WebApp.Services;
-using TTeduCore.Application.Content.Posts;
 
 namespace TeduCore.WebApp
 {
@@ -115,27 +99,14 @@ namespace TeduCore.WebApp
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IViewRenderService, ViewRenderService>();
 
-            services.AddTransient<IFunctionService, FunctionService>();
-            services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<IProductCategoryService, ProductCategoryService>();
-            services.AddTransient<IPostService, PostService>();
-            services.AddTransient<ICommonService, CommonService>();
-            services.AddTransient<IPageService, PageService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IRoleService, RoleService>();
-            services.AddTransient<IBillService, BillService>();
-            services.AddTransient<ISlideService, SlideService>();
-            services.AddTransient<IPageService, PageService>();
-
-            services.AddTransient<IContactService, ContactService>();
-            services.AddTransient<IFeedbackService, FeedbackService>();
-            services.AddTransient<IReportService, ReportService>();
-
             services.AddTransient<IAuthorizationHandler, BaseResourceAuthorizationHandler>();
 
             // Add application services.
             services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
             services.AddScoped(typeof(IRepository<,>), typeof(EFRepository<,>));
+            
+            //Register for service
+            ServiceRegister.Register(services);
 
             services.AddTransient<DbInitializer>();
 
@@ -187,6 +158,5 @@ namespace TeduCore.WebApp
 
             //dbInitializer.Seed().Wait();
         }
-
     }
 }

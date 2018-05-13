@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using TeduCore.Services.Dapper.Interfaces;
+using TeduCore.Application.Dapper.Reports;
 
 namespace TeduCore.WebApp.Areas.Admin.Controllers
 {

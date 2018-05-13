@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using TeduCore.WebApp.Models;
-using TTeduCore.Application.Content.Posts;
+using TeduCore.Application.Content.Posts;
 
 namespace TeduCore.WebApp.Controllers
 {

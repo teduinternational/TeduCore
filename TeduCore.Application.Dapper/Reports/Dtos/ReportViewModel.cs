@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeduCore.Services.Dapper.ViewModels
+namespace TeduCore.Application.Dapper.Reports.Dtos
 {
     public class ReportViewModel
     {

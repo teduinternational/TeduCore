@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using TeduCore.Services.Dapper.Interfaces;
-using TeduCore.Services.Dapper.ViewModels;
+using TeduCore.Application.Dapper.Reports.Dtos;
 
-namespace TeduCore.Services.Dapper.Implementation
+namespace TeduCore.Application.Dapper.Reports
 {
     public class ReportService : IReportService
     {

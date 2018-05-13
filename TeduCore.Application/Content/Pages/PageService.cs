@@ -9,7 +9,7 @@ using TeduCore.Data.Entities;
 using TeduCore.Infrastructure.Interfaces;
 using TeduCore.Utilities.Dtos;
 
-namespace TeduCore.Application.Implementation
+namespace TeduCore.Application.Content.Pages
 {
     public class PageService : IPageService
     {
