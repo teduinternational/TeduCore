@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response, Jsonp } from '@angular/http';
 import { SystemConstants } from '@shared/common/system.constants';
-import { LoggedInUser } from '../domain/loggedin.user';
+import { LoggedInUser } from '@shared/domain/loggedin.user';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 
 @Injectable()
@@ -10,7 +11,7 @@ export class AuthenService {
 
   constructor(private _http: Http) { }
 
-  login(username: string, password: string) {
+  login(username: string, password: string): Observable<Response> {
     var body = {
       UserName: username,
       Password: password,
@@ -21,10 +22,9 @@ export class AuthenService {
     let options = new RequestOptions({ headers: headers });
 
     return this._http.post(environment.API_URL + '/api/account/login', JSON.stringify(body), options)
-    .map(res => res.json())
-    .map(res => {
-      return true;
-    });
+      .map((response: Response) => {
+        return response;
+      });
   }
   logout() {
     localStorage.removeItem(SystemConstants.CURRENT_USER);
@@ -47,7 +47,9 @@ export class AuthenService {
         userData.username,
         userData.fullName,
         userData.email,
-        userData.avatar, userData.roles, userData.permissions);
+        userData.avatar,
+        userData.roles,
+        userData.permissions);
     }
     else
       user = null;
@@ -89,4 +91,6 @@ export class AuthenService {
     }
     return result;
   }
+
+
 }

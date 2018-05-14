@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ using TeduCore.WebApi.Models;
 
 namespace TeduCore.WebApi.Controllers
 {
+    [EnableCors("TeduCorsPolicy")]
     public class AccountController : ApiController
     {
         private readonly UserManager<AppUser> _userManager;

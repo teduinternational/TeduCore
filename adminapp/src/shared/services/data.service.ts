@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Router } from '@angular/router';
-import { SystemConstants } from './../common/system.constants';
-import { AuthenService } from './authen.service';
-import { NotificationService } from './notification.service';
-import { UtilityService } from './utility.service';
+import { SystemConstants } from '@shared/common/system.constants';
+import { AuthenService } from '@shared/services/authen.service';
+import { NotificationService } from '@shared/services/notification.service';
+import { UtilityService } from '@shared/services/utility.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { MessageContstants } from './../common/message.constants';
+import { MessageContstants } from '@shared/common/message.constants';
 import { environment } from '@environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -27,23 +27,23 @@ export class DataService {
   get(uri: string) {
     return this._http.get(environment.API_URL + uri, {
       headers: this.headers
-    }).pipe(map(res => res.json()));
+    }).map(res => res.json());
   }
   post(uri: string, data?: any) {
     return this._http.post(environment.API_URL + uri, data, {
       headers: this.headers
-    }).pipe(map(res => res.json()));
+    }).map(res => res.json());
   }
   put(uri: string, data?: any) {
 
     return this._http.put(environment.API_URL + uri, data, {
       headers: this.headers
-    }).pipe(map(res => res.json()));
+    }).map(res => res.json());
   }
   delete(uri: string, key: string, id: string) {
     return this._http.delete(environment.API_URL + uri + "/?" + key + "=" + id, {
       headers: this.headers
-    }).pipe(map(res => res.json()));
+    }).map(res => res.json());
   }
   deleteWithMultiParams(uri: string, params) {
     var paramStr: string = '';
@@ -52,14 +52,14 @@ export class DataService {
     }
     return this._http.delete(environment.API_URL + uri + "/?" + paramStr, {
       headers: this.headers
-    }).pipe(map(res => res.json()));
+    }).map(res => res.json());
 
   }
   postFile(uri: string, data?: any) {
     this.headers.delete('Content-Type');
     return this._http.post(environment.API_URL + uri, data, {
       headers: this.headers
-    }).pipe(map(res => res.json()));
+    }).map(res => res.json());
   }
   private extractData(res: Response) {
     let body = res.json();
