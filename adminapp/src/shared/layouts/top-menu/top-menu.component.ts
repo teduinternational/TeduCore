@@ -1,13 +1,13 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { LoggedInUser } from '../../domain/loggedin.user';
-import { AuthenService } from '../../services/authen.service';
-import { SystemConstants } from '../../common/system.constants';
-import { UrlConstants } from '../../common/url.constants';
+import { LoggedInUser } from '@shared/domain/loggedin.user';
+import { AuthenService } from '@shared/services/authen.service';
+import { SystemConstants } from '@shared/common/system.constants';
+import { UrlConstants } from '@shared/common/url.constants';
 
-import { SignalrService } from '../../services/signalr.service';
-import { DataService } from '../../services/data.service';
-import { UtilityService } from '../../services/utility.service';
-import {environment} from '../../../../environments/environment';
+import { SignalrService } from '@shared/services/signalr.service';
+import { DataService } from '@shared/services/data.service';
+import { UtilityService } from '@shared/services/utility.service';
+import {environment} from '@environments/environment';
 
 @Component({
   selector: 'app-top-menu',

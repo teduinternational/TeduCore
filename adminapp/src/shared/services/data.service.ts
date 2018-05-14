@@ -5,10 +5,11 @@ import { SystemConstants } from './../common/system.constants';
 import { AuthenService } from './authen.service';
 import { NotificationService } from './notification.service';
 import { UtilityService } from './utility.service';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageContstants } from './../common/message.constants';
-import { environment } from '../../../environments/environment';
+import { environment } from '@environments/environment';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class DataService {
@@ -78,7 +79,7 @@ export class DataService {
     else {
       let errMsg = JSON.parse(error._body).Message;
       this._notificationService.printErrorMessage(errMsg);
-
+      console.log(error);
       return Observable.throw(errMsg);
     }
 

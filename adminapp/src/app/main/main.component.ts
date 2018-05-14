@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SystemConstants } from '../shared/common/system.constants';
-import { UrlConstants } from '../shared/common/url.constants';
-import { UtilityService } from '../shared/services/utility.service';
-import { AuthenService } from '../shared/services/authen.service';
-import { LoggedInUser } from '../shared/domain/loggedin.user';
-import { environment } from '../../environments/environment';
+import { SystemConstants } from '@shared/common/system.constants';
+import { UrlConstants } from '@shared/common/url.constants';
+import { UtilityService } from '@shared/services/utility.service';
+import { AuthenService } from '@shared/services/authen.service';
+import { LoggedInUser } from '@shared/domain/loggedin.user';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-main',

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { SystemConstants } from '../../shared/common/system.constants';
+import { Http, Headers, RequestOptions, Response, Jsonp } from '@angular/http';
+import { SystemConstants } from '@shared/common/system.constants';
 import { LoggedInUser } from '../domain/loggedin.user';
-import { map } from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
+import { map, tap } from 'rxjs/operators';
+import { environment } from '@environments/environment';
 
 @Injectable()
 export class AuthenService {
@@ -11,14 +11,16 @@ export class AuthenService {
   constructor(private _http: Http) { }
 
   login(username: string, password: string) {
-    let body = "userName=" + encodeURIComponent(username) +
-      "&password=" + encodeURIComponent(password) +
-      "&grant_type=password";
+    var body = {
+      UserName: encodeURIComponent(username),
+      Password: encodeURIComponent(password),
+      RememberMe: true
+    }
     let headers = new Headers();
-    headers.append("Content-Type", "application/x-www-form-urlencoded");
+    headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
 
-    return this._http.post(environment.API_URL + '/api/oauth/token', body, options)
+    return this._http.post(environment.API_URL + '/api/account/login',JSON.stringify(body), options)
       .pipe(map(res => res.json()));
   }
   logout() {

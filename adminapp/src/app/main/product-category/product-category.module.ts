@@ -5,8 +5,8 @@ import { ProductCategoryRouter } from './product-category.routes';
 
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
-import { DataService } from './../../shared/services/data.service';
-import { UtilityService } from './../../shared/services/utility.service';
+import { DataService } from '@shared/services/data.service';
+import { UtilityService } from '@shared/services/utility.service';
 
 @NgModule({
   imports: [

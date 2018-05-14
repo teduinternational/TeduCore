@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataService } from '../../shared/services/data.service';
+import { DataService } from '@shared/services/data.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { NotificationService } from '../../shared/services/notification.service';
-import { MessageContstants } from '../../shared/common/message.constants';
+import { NotificationService } from '@shared/services/notification.service';
+import { MessageContstants } from '@shared/common/message.constants';
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',

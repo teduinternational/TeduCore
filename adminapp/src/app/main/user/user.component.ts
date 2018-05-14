@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { DataService } from '../../shared/services/data.service';
+import { DataService } from '@shared/services/data.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { NotificationService } from '../../shared/services/notification.service';
-import { UploadService } from '../../shared/services/upload.service';
-import { AuthenService } from '../../shared/services/authen.service';
-import { UtilityService } from '../../shared/services/utility.service';
+import { NotificationService } from '@shared/services/notification.service';
+import { UploadService } from '@shared/services/upload.service';
+import { AuthenService } from '@shared/services/authen.service';
+import { UtilityService } from '@shared/services/utility.service';
 
-import { MessageContstants } from '../../shared/common/message.constants';
-import { SystemConstants } from '../../shared/common/system.constants';
-import {environment} from '../../../environments/environment';
+import { MessageContstants } from '@shared/common/message.constants';
+import { SystemConstants } from '@shared/common/system.constants';
+import {environment} from '@environments/environment';
 
 
 @Component({

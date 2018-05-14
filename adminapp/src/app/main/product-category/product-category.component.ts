@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataService } from '../../shared/services/data.service';
+import { DataService } from '@shared/services/data.service';
 
-import { NotificationService } from '../../shared/services/notification.service';
-import { UtilityService } from '../../shared/services/utility.service';
-import { MessageContstants } from '../../shared/common/message.constants';
+import { NotificationService } from '@shared/services/notification.service';
+import { UtilityService } from '@shared/services/utility.service';
+import { MessageContstants } from '@shared/common/message.constants';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({

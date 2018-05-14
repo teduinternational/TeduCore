@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { SystemConstants } from './../common/system.constants';
 import { AuthenService } from './authen.service';
-import {environment} from '../../../environments/environment';
+import {environment} from '@environments/environment';
 
 @Injectable()
 export class SignalrService {

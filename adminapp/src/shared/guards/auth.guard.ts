@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { SystemConstants } from '../../shared/common/system.constants';
-import { UrlConstants } from '../../shared/common/url.constants';
+import { SystemConstants } from '@shared/common/system.constants';
+import { UrlConstants } from '@shared/common/url.constants';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

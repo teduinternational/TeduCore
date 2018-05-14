@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataService } from '../../../shared/services/data.service';
+import { DataService } from '@shared/services/data.service';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 @Component({
   selector: 'app-revenue',

@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
-import { UrlConstants } from '../../shared/common/url.constants';
+import { UrlConstants } from '@shared/common/url.constants';
 import { UtilityService } from './utility.service';
 
 @Injectable()

@@ -1,15 +1,15 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataService } from '../../shared/services/data.service';
-import { NotificationService } from '../../shared/services/notification.service';
-import { UtilityService } from '../../shared/services/utility.service';
-import { AuthenService } from '../../shared/services/authen.service';
+import { DataService } from '@shared/services/data.service';
+import { NotificationService } from '@shared/services/notification.service';
+import { UtilityService } from '@shared/services/utility.service';
+import { AuthenService } from '@shared/services/authen.service';
 
-import { MessageContstants } from '../../shared/common/message.constants';
-import { SystemConstants } from '../../shared/common/system.constants';
-import { UploadService } from '../../shared/services/upload.service';
+import { MessageContstants } from '@shared/common/message.constants';
+import { SystemConstants } from '@shared/common/system.constants';
+import { UploadService } from '@shared/services/upload.service';
 import { Router } from '@angular/router';
-import {environment} from '../../../environments/environment';
+import {environment} from '@environments/environment';
 
 @Component({
   selector: 'app-product',

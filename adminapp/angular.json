@@ -4,8 +4,8 @@
   "newProjectRoot": "projects",
   "projects": {
     "adminapp": {
-      "root": "",
-      "sourceRoot": "src",
+      "root": ".",
+      "sourceRoot": ".",
       "projectType": "application",
       "prefix": "app",
       "schematics": {},

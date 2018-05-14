@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from '../shared/services/notification.service';
-import { AuthenService } from '../shared/services/authen.service';
-import { MessageContstants } from '../shared/common/message.constants';
-import { UrlConstants } from '../shared/common/url.constants';
+import { NotificationService } from '@shared/services/notification.service';
+import { AuthenService } from '@shared/services/authen.service';
+import { MessageContstants } from '@shared/common/message.constants';
+import { UrlConstants } from '@shared/common/url.constants';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { SystemConstants } from '../shared/common/system.constants';
-import { LoggedInUser } from '../shared/domain/loggedin.user';
+import { SystemConstants } from '@shared/common/system.constants';
+import { LoggedInUser } from '@shared/domain/loggedin.user';
 
 @Component({
   selector: 'app-login',

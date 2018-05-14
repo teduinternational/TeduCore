@@ -4,8 +4,8 @@ import { AnnouncementComponent } from './announcement.component';
 import { AnnouncementRouter } from './announcement.routes';
 import { PaginationModule, ModalModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { DataService } from './../../shared/services/data.service';
-import { UtilityService } from './../../shared/services/utility.service';
+import { DataService } from '@shared/services/data.service';
+import { UtilityService } from '@shared/services/utility.service';
 @NgModule({
   imports: [
     FormsModule,
