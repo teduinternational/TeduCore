@@ -105,6 +105,7 @@ namespace TeduCore.WebApi
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
 
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            services.AddTransient<DbInitializer>();
 
             services.AddMvc()
                 .AddViewLocalization()

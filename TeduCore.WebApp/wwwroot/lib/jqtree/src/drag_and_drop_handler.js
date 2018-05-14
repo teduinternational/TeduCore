@@ -12,7 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 exports.__esModule = true;
 var node_1 = require("./node");
 var util_1 = require("./util");
-var DragAndDropHandler = /** @class */ (function () {
+var DragAndDropHandler = (function () {
     function DragAndDropHandler(tree_widget) {
         this.tree_widget = tree_widget;
         this.hovered_area = null;
@@ -269,7 +269,7 @@ var DragAndDropHandler = /** @class */ (function () {
     return DragAndDropHandler;
 }());
 exports.DragAndDropHandler = DragAndDropHandler;
-var VisibleNodeIterator = /** @class */ (function () {
+var VisibleNodeIterator = (function () {
     function VisibleNodeIterator(tree) {
         this.tree = tree;
     }
@@ -319,7 +319,7 @@ var VisibleNodeIterator = /** @class */ (function () {
     };
     return VisibleNodeIterator;
 }());
-var HitAreasGenerator = /** @class */ (function (_super) {
+var HitAreasGenerator = (function (_super) {
     __extends(HitAreasGenerator, _super);
     function HitAreasGenerator(tree, current_node, tree_bottom) {
         var _this = _super.call(this, tree) || this;
@@ -443,7 +443,7 @@ var HitAreasGenerator = /** @class */ (function (_super) {
     return HitAreasGenerator;
 }(VisibleNodeIterator));
 exports.HitAreasGenerator = HitAreasGenerator;
-var DragElement = /** @class */ (function () {
+var DragElement = (function () {
     function DragElement(node_name, offset_x, offset_y, $tree) {
         this.offset_x = offset_x;
         this.offset_y = offset_y;

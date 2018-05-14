@@ -29,15 +29,16 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.authenService.login(this.model.username, this.model.password)
       .subscribe(data => {
-        let user: LoggedInUser = data.json();
-        if (user && user.access_token) {
-          localStorage.removeItem(SystemConstants.CURRENT_USER);
-          localStorage.setItem(SystemConstants.CURRENT_USER, JSON.stringify(user));
-        }
+        // let user: LoggedInUser = data.json();
+        // if (user && user.access_token) {
+        //   localStorage.removeItem(SystemConstants.CURRENT_USER);
+        //   localStorage.setItem(SystemConstants.CURRENT_USER, JSON.stringify(user));
+        // }
         this.router.navigate([UrlConstants.HOME]);
       }, error => {
         this.notificationService.printErrorMessage(MessageContstants.SYSTEM_ERROR_MSG);
         this.loading = false;
+        console.log(error);
       });
   }
 

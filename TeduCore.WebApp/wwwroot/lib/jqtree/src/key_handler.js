@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var KeyHandler = /** @class */ (function () {
+var KeyHandler = (function () {
     function KeyHandler(tree_widget) {
         this.tree_widget = tree_widget;
         if (tree_widget.options.keyboardSupport) {

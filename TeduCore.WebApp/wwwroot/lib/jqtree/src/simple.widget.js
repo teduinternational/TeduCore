@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var SimpleWidget = /** @class */ (function () {
+var SimpleWidget = (function () {
     function SimpleWidget(el, options) {
         this.$el = $(el);
         var defaults = this.constructor.defaults;

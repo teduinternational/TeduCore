@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 var node_1 = require("./node");
-var NodeElement = /** @class */ (function () {
+var NodeElement = (function () {
     function NodeElement(node, tree_widget) {
         this.init(node, tree_widget);
     }
@@ -61,7 +61,7 @@ var NodeElement = /** @class */ (function () {
     return NodeElement;
 }());
 exports.NodeElement = NodeElement;
-var FolderElement = /** @class */ (function (_super) {
+var FolderElement = (function (_super) {
     __extends(FolderElement, _super);
     function FolderElement() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -147,7 +147,7 @@ var FolderElement = /** @class */ (function (_super) {
     return FolderElement;
 }(NodeElement));
 exports.FolderElement = FolderElement;
-var BorderDropHint = /** @class */ (function () {
+var BorderDropHint = (function () {
     function BorderDropHint($element) {
         var $div = $element.children(".jqtree-element");
         var width = $element.width() - 4;
@@ -164,7 +164,7 @@ var BorderDropHint = /** @class */ (function () {
     return BorderDropHint;
 }());
 exports.BorderDropHint = BorderDropHint;
-var GhostDropHint = /** @class */ (function () {
+var GhostDropHint = (function () {
     function GhostDropHint(node, $element, position) {
         this.$element = $element;
         this.node = node;

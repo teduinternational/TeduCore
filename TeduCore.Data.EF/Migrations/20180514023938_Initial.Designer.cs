@@ -13,7 +13,7 @@ using TeduCore.Infrastructure.Enums;
 namespace TeduCore.Data.EF.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180510153357_Initial")]
+    [Migration("20180514023938_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

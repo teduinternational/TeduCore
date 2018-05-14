@@ -66,6 +66,7 @@ export class DataService {
     return body || {};
   }
   public handleError(error: any) {
+    
     if (error.status == 401) {
       localStorage.removeItem(SystemConstants.CURRENT_USER);
       this._notificationService.printErrorMessage(MessageContstants.LOGIN_AGAIN_MSG);
@@ -79,10 +80,7 @@ export class DataService {
     else {
       let errMsg = JSON.parse(error._body).Message;
       this._notificationService.printErrorMessage(errMsg);
-      console.log(error);
       return Observable.throw(errMsg);
     }
-
-
   }
 }
