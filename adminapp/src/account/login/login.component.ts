@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     private notificationService: NotificationService,
     private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit() {  
     $('body').attr('class', 'login');
   }
   login() {

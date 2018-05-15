@@ -2,23 +2,25 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule,ChildrenOutletContexts } from '@angular/router';
 import { AppComponent } from './app.component';
-import { appRoutes } from './app.routes';
+import { AppRoutingModule } from './app-routing.module';
+
 import { AuthGuard } from '@shared/guards/auth.guard';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
     BrowserModule,
+    RouterModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes, { useHash: true }),
+    AppRoutingModule,
     PaginationModule.forRoot()
   ],
-  providers: [AuthGuard],
-  bootstrap: [AppComponent]
+  providers: [AuthGuard]
 })
 export class AppModule { }
