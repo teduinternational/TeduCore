@@ -14,7 +14,9 @@ import { environment } from '@environments/environment';
 export class MainComponent implements OnInit {
   public user: LoggedInUser;
   public baseFolder: string = environment.API_URL;
-  constructor(private utilityService: UtilityService, private authenService: AuthenService) { }
+  
+  constructor(private utilityService: UtilityService, 
+    private authenService: AuthenService) { }
 
   ngOnInit() {
     $('body').attr('class', 'nav-md');
