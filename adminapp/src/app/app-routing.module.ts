@@ -10,7 +10,7 @@ import { AuthGuard } from '@shared/guards/auth.guard';
                 path: 'app',
                 component: AppComponent,
                 canActivate: [AuthGuard],
-                canActivateChild: [AuthGuard],
+                // canActivateChild: [AuthGuard],
                 children: [
                     {
                         path: '',

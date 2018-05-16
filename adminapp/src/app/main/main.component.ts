@@ -14,15 +14,13 @@ import { environment } from '@environments/environment';
 export class MainComponent implements OnInit {
   public user: LoggedInUser;
   public baseFolder: string = environment.API_URL;
-  
-  constructor(private utilityService: UtilityService, 
+
+  constructor(private utilityService: UtilityService,
     private authenService: AuthenService) { }
 
   ngOnInit() {
     $('body').attr('class', 'nav-md');
-
     this.user = JSON.parse(localStorage.getItem(SystemConstants.CURRENT_USER));
-    console.log(this.user);
   }
   logout() {
     localStorage.removeItem(SystemConstants.CURRENT_USER);
