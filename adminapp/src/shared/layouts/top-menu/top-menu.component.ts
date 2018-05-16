@@ -32,7 +32,7 @@ export class TopMenuComponent implements OnInit {
 
   ngOnInit() {
     this.user = this._authenService.getLoggedInUser();
-    this.loadAnnouncements();
+    //this.loadAnnouncements();
   }
   logout() {
     localStorage.removeItem(SystemConstants.CURRENT_USER);

@@ -6,7 +6,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account.component';
 import { LoginComponent } from './login/login.component';
-
+import { NotificationService } from '@shared/services/notification.service';
+import { AuthenService } from '@shared/services/authen.service';
 @NgModule({
     imports: [
         ngCommon.CommonModule,
@@ -20,8 +21,7 @@ import { LoginComponent } from './login/login.component';
         AccountComponent,
         LoginComponent
     ],
-    providers: [
-    ]
+    providers: [AuthenService, NotificationService]
 })
 export class AccountModule {
 

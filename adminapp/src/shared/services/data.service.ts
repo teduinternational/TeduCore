@@ -22,7 +22,9 @@ export class DataService {
     this.headers = new Headers();
     this.headers.delete('Authorization');
     this.headers.append('Content-Type', 'application/json');
-    this.headers.append("Authorization", "Bearer " + this._authenService.getLoggedInUser().access_token);
+    var authenUser = this._authenService.getLoggedInUser();
+    if (authenUser != null)
+      this.headers.append("Authorization", "Bearer " + authenUser.access_token);
   }
   get(uri: string) {
     return this._http.get(environment.API_URL + uri, {
@@ -66,7 +68,7 @@ export class DataService {
     return body || {};
   }
   public handleError(error: any) {
-    
+
     if (error.status == 401) {
       localStorage.removeItem(SystemConstants.CURRENT_USER);
       this._notificationService.printErrorMessage(MessageContstants.LOGIN_AGAIN_MSG);

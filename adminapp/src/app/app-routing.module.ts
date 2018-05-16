@@ -15,7 +15,7 @@ import { AuthGuard } from '@shared/guards/auth.guard';
                     {
                         path: '',
                         children: [
-                            { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+                            { path: '', redirectTo: 'main/home', pathMatch: 'full' }
                         ]
                     },
                     {
