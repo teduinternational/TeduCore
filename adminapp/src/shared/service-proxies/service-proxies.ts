@@ -13,14 +13,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
-import { environment } from '@environments/environment';
+
 import { Observable } from 'rxjs/Observable';
-import { Injectable, Inject, Optional,InjectionToken } from '@angular/core';
+import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { Http, Headers, ResponseContentType, Response } from '@angular/http';
 
 import * as moment from 'moment';
 
-export const API_BASE_URL = environment.API_URL;
+export const API_BASE_URL = new InjectionToken('API_BASE_URL');
 
 @Injectable()
 export class AccountServiceProxy {
@@ -43,15 +43,15 @@ export class AccountServiceProxy {
 
         const content_ = JSON.stringify(model);
 
-        let options_: any = {
+        let options_ : any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json",
+                "Content-Type": "application/json", 
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_: any) => {
+        return this.http.request(url_, options_).flatMap((response_ : any) => {
             return this.processLogin(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -88,23 +88,23 @@ export class AccountServiceProxy {
         if (email === undefined || email === null)
             throw new Error("The parameter 'email' must be defined and cannot be null.");
         else
-            url_ += "Email=" + encodeURIComponent("" + email) + "&";
+            url_ += "Email=" + encodeURIComponent("" + email) + "&"; 
         if (password === undefined || password === null)
             throw new Error("The parameter 'password' must be defined and cannot be null.");
         else
-            url_ += "Password=" + encodeURIComponent("" + password) + "&";
+            url_ += "Password=" + encodeURIComponent("" + password) + "&"; 
         if (confirmPassword !== undefined)
-            url_ += "ConfirmPassword=" + encodeURIComponent("" + confirmPassword) + "&";
+            url_ += "ConfirmPassword=" + encodeURIComponent("" + confirmPassword) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_: any = {
+        let options_ : any = {
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json",
+                "Content-Type": "application/json", 
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_: any) => {
+        return this.http.request(url_, options_).flatMap((response_ : any) => {
             return this.processRegister(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -151,14 +151,14 @@ export class ApiServiceProxy {
         let url_ = this.baseUrl + "/api/Function";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_: any = {
+        let options_ : any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json",
+                "Content-Type": "application/json", 
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_: any) => {
+        return this.http.request(url_, options_).flatMap((response_ : any) => {
             return this.processFunction(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -193,14 +193,14 @@ export class ApiServiceProxy {
         let url_ = this.baseUrl + "/api/Product";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_: any = {
+        let options_ : any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json",
+                "Content-Type": "application/json", 
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_: any) => {
+        return this.http.request(url_, options_).flatMap((response_ : any) => {
             return this.processProduct(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -263,7 +263,7 @@ export class LoginViewModel implements ILoginViewModel {
         data["UserName"] = this.userName;
         data["Password"] = this.password;
         data["RememberMe"] = this.rememberMe;
-        return data;
+        return data; 
     }
 }
 
@@ -275,10 +275,10 @@ export interface ILoginViewModel {
 
 export class SwaggerException extends Error {
     message: string;
-    status: number;
-    response: string;
+    status: number; 
+    response: string; 
     headers: { [key: string]: any; };
-    result: any;
+    result: any; 
 
     constructor(message: string, status: number, response: string, headers: { [key: string]: any; }, result: any) {
         super();
@@ -298,7 +298,7 @@ export class SwaggerException extends Error {
 }
 
 function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
-    if (result !== null && result !== undefined)
+    if(result !== null && result !== undefined)
         return Observable.throw(result);
     else
         return Observable.throw(new SwaggerException(message, status, response, headers, null));
@@ -310,12 +310,12 @@ function blobToText(blob: any): Observable<string> {
             observer.next("");
             observer.complete();
         } else {
-            let reader = new FileReader();
-            reader.onload = function () {
+            let reader = new FileReader(); 
+            reader.onload = function() { 
                 observer.next(this.result);
                 observer.complete();
             }
-            reader.readAsText(blob);
+            reader.readAsText(blob); 
         }
     });
 }
