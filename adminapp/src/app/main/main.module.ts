@@ -1,24 +1,30 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MainComponent } from './main.component';
-import { mainRoutes } from './main.routes';
+import { MainRoutingModule } from './main-routing.module';
 import { RouterModule, Routes } from '@angular/router';
 import { UserModule } from './user/user.module';
-import { HomeModule } from './home/home.module';
 import { UtilityService } from '@shared/services/utility.service';
 import { AuthenService } from '@shared/services/authen.service';
 import { SignalrService } from '@shared/services/signalr.service';
-import { SidebarMenuComponent } from '@shared/layouts/sidebar-menu/sidebar-menu.component';
-import { TopMenuComponent } from '@shared/layouts/top-menu/top-menu.component';
+
+import { TreeModule } from 'angular-tree-component';
+import { ModalModule } from 'ngx-bootstrap';
+
+import { HomeComponent } from './home/home.component';
+import { FunctionComponent } from './function/function.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    TreeModule,
+    ModalModule,
+    FormsModule,
     UserModule,
-    HomeModule,
-    RouterModule.forChild(mainRoutes)
+    MainRoutingModule
   ],
-  declarations: [MainComponent, SidebarMenuComponent, TopMenuComponent],
-  providers: [UtilityService, AuthenService, SignalrService]
+  declarations: [MainComponent, HomeComponent, FunctionComponent],
+  providers: [UtilityService, AuthenService]
 })
 export class MainModule { }

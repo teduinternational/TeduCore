@@ -1,16 +1,27 @@
-import { Component, AfterViewChecked, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SystemConstants } from '@shared/common/system.constants';
+import { UrlConstants } from '@shared/common/url.constants';
+import { UtilityService } from '@shared/services/utility.service';
+import { AuthenService } from '@shared/services/authen.service';
+import { LoggedInUser } from '@shared/domain/loggedin.user';
+import { environment } from '@environments/environment';
 
 @Component({
-  template: '<router-outlet></router-outlet>',
+  templateUrl: './app.component.html',
 })
-export class AppComponent implements AfterViewChecked {
-  constructor(private elementRef: ElementRef) {
+export class AppComponent {
+  public user: LoggedInUser;
+  public baseFolder: string = environment.API_URL;
 
+  constructor(private utilityService: UtilityService,
+    private authenService: AuthenService) { }
+
+  ngOnInit() {
+    $('body').attr('class', 'nav-md');
+    this.user = JSON.parse(localStorage.getItem(SystemConstants.CURRENT_USER));
   }
-  ngAfterViewChecked() {
-    var s = document.createElement("script");
-    s.type = "text/javascript";
-    s.src = "../assets/js/custom.js";
-    this.elementRef.nativeElement.appendChild(s);
+  logout() {
+    localStorage.removeItem(SystemConstants.CURRENT_USER);
+    this.utilityService.navigate(UrlConstants.LOGIN);
   }
 }

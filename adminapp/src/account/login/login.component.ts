@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
         var base64Url = result.token.split('.')[1];
         var base64 = base64Url.replace('-', '+').replace('_', '/');
         var user: LoggedInUser = JSON.parse(window.atob(base64));
-        user.access_token = result;
+        user.access_token = result.token;
         if (user && result.token) {
           localStorage.removeItem(SystemConstants.CURRENT_USER);
           localStorage.setItem(SystemConstants.CURRENT_USER, JSON.stringify(user));

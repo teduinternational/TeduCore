@@ -21,13 +21,13 @@ export class TopMenuComponent implements OnInit {
   public announcements: any[];
   constructor(private _authenService: AuthenService,
     private utilityService: UtilityService,
-    private _signalRService: SignalrService,
+   // private _signalRService: SignalrService,
     private _dataService: DataService,
     private _ngZone: NgZone) {
     // this can subscribe for events  
-    this.subscribeToEvents();
+    //this.subscribeToEvents();
     // this can check for conenction exist or not.  
-    this.canSendMessage = _signalRService.connectionExists;
+    //this.canSendMessage = _signalRService.connectionExists;
   }
 
   ngOnInit() {
@@ -38,26 +38,24 @@ export class TopMenuComponent implements OnInit {
     localStorage.removeItem(SystemConstants.CURRENT_USER);
     this.utilityService.navigate(UrlConstants.LOGIN);
   }
-  private subscribeToEvents(): void {
+  // private subscribeToEvents(): void {
 
-    var self = this;
-    self.announcements = [];
+  //   var self = this;
+  //   self.announcements = [];
 
-    // if connection exists it can call of method.  
-    this._signalRService.connectionEstablished.subscribe(() => {
-      this.canSendMessage = true;
-    });
+  //   this._signalRService.connectionEstablished.subscribe(() => {
+  //     this.canSendMessage = true;
+  //   });
 
-    // finally our service method to call when response received from server event and transfer response to some variable to be shwon on the browser.  
-    this._signalRService.announcementReceived.subscribe((announcement: any) => {
-      this._ngZone.run(() => {
-        console.log(announcement);
-        moment.locale('vi');
-        announcement.CreatedDate = moment(announcement.CreatedDate).fromNow();
-        self.announcements.push(announcement);
-      });
-    });
-  }
+  //   this._signalRService.announcementReceived.subscribe((announcement: any) => {
+  //     this._ngZone.run(() => {
+  //       console.log(announcement);
+  //       moment.locale('vi');
+  //       announcement.CreatedDate = moment(announcement.CreatedDate).fromNow();
+  //       self.announcements.push(announcement);
+  //     });
+  //   });
+  // }
 
   markAsRead(id: number) {
     var body = { announId: id };

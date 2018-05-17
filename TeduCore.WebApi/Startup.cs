@@ -11,7 +11,9 @@ using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
+using TeduCore.Application;
 using TeduCore.Application.ECommerce.ProductCategories;
+using TeduCore.Application.Systems.Functions;
 using TeduCore.Data.EF;
 using TeduCore.Data.Entities;
 using TeduCore.Infrastructure.Interfaces;
@@ -103,8 +105,11 @@ namespace TeduCore.WebApi
             services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
+            services.AddTransient(typeof(IWebServiceBase<,,>),typeof(WebServiceBase<,,>));
 
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            services.AddTransient<IFunctionService, FunctionService>();
+
             services.AddTransient<DbInitializer>();
 
             services.AddMvc()
@@ -116,6 +121,8 @@ namespace TeduCore.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseAuthentication();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -129,7 +136,6 @@ namespace TeduCore.WebApi
             });
             app.UseCors("TeduCorsPolicy");
 
-            app.UseAuthentication();
             app.UseMvc();
             app.UseSwagger();
             app.UseStaticFiles();

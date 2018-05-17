@@ -15,7 +15,6 @@ using TeduCore.WebApi.Models;
 
 namespace TeduCore.WebApi.Controllers
 {
-    [EnableCors("TeduCorsPolicy")]
     public class AccountController : ApiController
     {
         private readonly UserManager<AppUser> _userManager;
