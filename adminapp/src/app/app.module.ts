@@ -17,7 +17,9 @@ import { UtilityService } from '@shared/services/utility.service';
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarMenuComponent, TopMenuComponent
+    SidebarMenuComponent, 
+    TopMenuComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -27,6 +29,11 @@ import { UtilityService } from '@shared/services/utility.service';
     AppRoutingModule,
     PaginationModule.forRoot()
   ],
-  providers: [AuthGuard, DataService, AuthenService, NotificationService,UtilityService],
+  providers: [AuthGuard,
+    DataService,
+    AuthenService,
+    NotificationService,
+    UtilityService
+  ],
 })
 export class AppModule { }

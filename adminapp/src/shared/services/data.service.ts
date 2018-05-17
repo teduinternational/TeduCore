@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SystemConstants } from '@shared/common/system.constants';
 import { AuthenService } from '@shared/services/authen.service';
@@ -13,39 +14,35 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class DataService {
-  private headers: Headers;
-  constructor(private _http: Http,
+  private headers: HttpHeaders;
+  constructor(private _http: HttpClient,
     private _router: Router,
     private _authenService: AuthenService,
     private _notificationService: NotificationService,
     private _utilityService: UtilityService) {
-    this.headers = new Headers();
+
+    this.headers = new HttpHeaders();
     this.headers.delete('Authorization');
     this.headers.append('Content-Type', 'application/json');
-    var authenUser = this._authenService.getLoggedInUser();
-    if (authenUser != null)
-      this.headers.append("Authorization", "Bearer " + authenUser.access_token);
   }
   get(uri: string) {
-    return this._http.get(environment.API_URL + uri, {
-      headers: this.headers
-    }).map(res => res.json());
+    return this._http.get(environment.API_URL + uri, { headers: this.headers });
   }
   post(uri: string, data?: any) {
     return this._http.post(environment.API_URL + uri, data, {
       headers: this.headers
-    }).map(res => res.json());
+    });
   }
   put(uri: string, data?: any) {
 
     return this._http.put(environment.API_URL + uri, data, {
       headers: this.headers
-    }).map(res => res.json());
+    });
   }
   delete(uri: string, key: string, id: string) {
     return this._http.delete(environment.API_URL + uri + "/?" + key + "=" + id, {
       headers: this.headers
-    }).map(res => res.json());
+    });
   }
   deleteWithMultiParams(uri: string, params) {
     var paramStr: string = '';
@@ -54,14 +51,14 @@ export class DataService {
     }
     return this._http.delete(environment.API_URL + uri + "/?" + paramStr, {
       headers: this.headers
-    }).map(res => res.json());
+    });
 
   }
   postFile(uri: string, data?: any) {
     this.headers.delete('Content-Type');
     return this._http.post(environment.API_URL + uri, data, {
       headers: this.headers
-    }).map(res => res.json());
+    });
   }
   private extractData(res: Response) {
     let body = res.json();

@@ -11,7 +11,7 @@ export class SidebarMenuComponent implements OnInit, AfterViewChecked {
     constructor(private dataService: DataService) { }
 
     ngOnInit() {
-        this.dataService.get('/api/function').subscribe((response: any[]) => {
+        this.dataService.get('/api/function').subscribe((response: any) => {
             var data = response.sort((n1, n2) => {
                 if (n1.DisplayOrder > n2.DisplayOrder)
                     return 1;

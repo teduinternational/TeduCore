@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Reflection;
 using System.Text;
 using TeduCore.Application;
 using TeduCore.Application.ECommerce.ProductCategories;
@@ -69,6 +70,14 @@ namespace TeduCore.WebApi
                     Description = "TEDU API Swagger surface",
                     Contact = new Contact { Name = "ToanBN", Email = "tedu.international@gmail.com", Url = "http://www.tedu.com.vn" },
                     License = new License { Name = "MIT", Url = "https://github.com/teduinternational/teducoreapp" }
+                });
+
+                s.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
                 });
             });
 
@@ -139,6 +148,8 @@ namespace TeduCore.WebApi
             app.UseMvc();
             app.UseSwagger();
             app.UseStaticFiles();
+
+            // Enable the Swagger UI middleware and the Swagger generator
             app.UseSwaggerUI(s =>
             {
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "Project API v1.1");

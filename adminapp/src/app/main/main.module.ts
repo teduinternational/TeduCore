@@ -4,16 +4,12 @@ import { CommonModule } from '@angular/common';
 import { MainComponent } from './main.component';
 import { MainRoutingModule } from './main-routing.module';
 import { RouterModule, Routes } from '@angular/router';
-import { UserModule } from './user/user.module';
 import { UtilityService } from '@shared/services/utility.service';
 import { AuthenService } from '@shared/services/authen.service';
 import { SignalrService } from '@shared/services/signalr.service';
-
 import { TreeModule } from 'angular-tree-component';
 import { ModalModule } from 'ngx-bootstrap';
-
 import { HomeComponent } from './home/home.component';
-import { FunctionComponent } from './function/function.component';
 
 @NgModule({
   imports: [
@@ -21,10 +17,9 @@ import { FunctionComponent } from './function/function.component';
     TreeModule,
     ModalModule,
     FormsModule,
-    UserModule,
     MainRoutingModule
   ],
-  declarations: [MainComponent, HomeComponent, FunctionComponent],
+  declarations: [MainComponent, HomeComponent],
   providers: [UtilityService, AuthenService]
 })
 export class MainModule { }

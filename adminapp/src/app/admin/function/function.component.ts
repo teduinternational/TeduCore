@@ -19,7 +19,7 @@ export class FunctionComponent implements OnInit {
   public entity: any;
   public editFlag: boolean;
   public filter: string = '';
-  public functionId : string;
+  public functionId: string;
   public _permission: any[];
 
   constructor(private _dataService: DataService,
@@ -29,7 +29,7 @@ export class FunctionComponent implements OnInit {
   ngOnInit() {
     this.search();
   }
-public showPermission(id: any) {
+  public showPermission(id: any) {
     this._dataService.get('/api/appRole/getAllPermission?functionId=' + id).subscribe((response: any[]) => {
       this.functionId = id;
       this._permission = response;
