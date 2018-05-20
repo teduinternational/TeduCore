@@ -10,12 +10,11 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using System;
-using TeduCore.Application.Content.Posts;
 using TeduCore.Application.Content.Contacts;
 using TeduCore.Application.Content.Feedbacks;
 using TeduCore.Application.Content.Pages;
+using TeduCore.Application.Content.Posts;
 using TeduCore.Application.Content.Slides;
-using TeduCore.Application.ECommerce.Bills;
 using TeduCore.Application.ECommerce.ProductCategories;
 using TeduCore.Application.ECommerce.Products;
 using TeduCore.Application.Implementation;
@@ -117,13 +116,12 @@ namespace TeduCore.WebApp
 
             services.AddTransient<IFunctionService, FunctionService>();
             services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<IPageService, PageService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
-            services.AddTransient<IBillService, BillService>();
             services.AddTransient<ISlideService, SlideService>();
             services.AddTransient<IPageService, PageService>();
 
@@ -187,6 +185,5 @@ namespace TeduCore.WebApp
 
             //dbInitializer.Seed().Wait();
         }
-
     }
 }

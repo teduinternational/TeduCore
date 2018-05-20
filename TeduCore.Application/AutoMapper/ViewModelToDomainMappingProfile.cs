@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using TeduCore.Application.Content.Posts.Dtos;
 using TeduCore.Application.Content.Contacts.Dtos;
 using TeduCore.Application.Content.Feedbacks.Dtos;
 using TeduCore.Application.Content.Pages.Dtos;
+using TeduCore.Application.Content.Posts.Dtos;
 using TeduCore.Application.Content.Slides.Dtos;
-using TeduCore.Application.ECommerce.Bills.Dtos;
-using TeduCore.Application.ECommerce.ProductCategories.Dtos;
 using TeduCore.Application.ECommerce.Products.Dtos;
 using TeduCore.Application.Systems.Functions.Dtos;
 using TeduCore.Application.Systems.Permissions.Dtos;
@@ -22,25 +20,10 @@ namespace TeduCore.Application.AutoMapper
               .ConstructUsing(c => new Function(c.Name, c.URL, c.ParentId,
               c.IconCss, c.DisplayOrder));
 
-            CreateMap<ProductViewModel, Product>()
-              .ConstructUsing(c => new Product(c.Id, c.Name, c.Code, c.CategoryId, c.ThumbnailImage, c.Price, c.OriginalPrice,
-              c.PromotionPrice, c.Description, c.Content, c.HomeFlag, c.HotFlag, c.Tags, c.Quantity, c.Unit, c.Status,
-              c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
-
-            CreateMap<ProductCategoryViewModel, ProductCategory>()
-                .ConstructUsing(c => new ProductCategory(c.Id, c.Name, c.Code, c.Description, c.ParentId, c.HomeOrder, c.Image,
-                    c.HomeFlag, c.SortOrder, c.Status, c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
-
             CreateMap<PostViewModel, Post>()
               .ConstructUsing(c => new Post(c.Name, c.Image, c.Description,
               c.Content, c.HomeFlag, c.HotFlag, c.Tags, c.Status,
               c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
-
-            CreateMap<BillViewModel, Bill>()
-              .ConstructUsing(c => new Bill(c.Id, c.CustomerName, c.CustomerAddress, c.CustomerMobile, c.CustomerMessage, c.BillStatus, c.PaymentMethod, c.CustomerFacebook, c.ShippingFee));
-
-            CreateMap<BillDetailViewModel, BillDetail>()
-              .ConstructUsing(c => new BillDetail(c.Id, c.BillId, c.ProductId, c.Quantity, c.Price));
 
             CreateMap<AppUserViewModel, AppUser>()
              .ConstructUsing(c => new AppUser(c.FullName, c.UserName, c.Email, c.PhoneNumber, c.Avatar, c.Status));

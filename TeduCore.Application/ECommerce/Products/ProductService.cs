@@ -8,6 +8,7 @@ using System.Linq;
 using TeduCore.Application.Dtos;
 using TeduCore.Application.ECommerce.Products.Dtos;
 using TeduCore.Data.Entities;
+using TeduCore.Data.Entities.ECommerce;
 using TeduCore.Data.Enums;
 using TeduCore.Infrastructure.Enums;
 using TeduCore.Infrastructure.Interfaces;
@@ -46,16 +47,7 @@ namespace TeduCore.Application.ECommerce.Products
         public override void Add(ProductViewModel productVm)
         {
             var product = Mapper.Map<ProductViewModel, Product>(productVm);
-            if (string.IsNullOrEmpty(productVm.SeoAlias))
-                product.SeoAlias = TextHelper.ToUnsignString(productVm.Name);
-
-            if (string.IsNullOrEmpty(productVm.Code))
-            {
-                var category = _productCategoryRepository.GetById(productVm.CategoryId);
-                var code = category.Code + (category.CurrentIdentity + 1).ToString("0000");
-                category.CurrentIdentity += 1;
-                product.Code = code;
-            }
+           
 
             if (!string.IsNullOrEmpty(productVm.Tags))
             {
@@ -87,11 +79,7 @@ namespace TeduCore.Application.ECommerce.Products
         public PagedResult<ProductViewModel> GetAllPaging(Guid? categoryId, string keyword, int page, int pageSize, string sortBy)
         {
             var query = _productRepository.GetAll().Where(c => c.Status == Status.Actived);
-            if (!string.IsNullOrEmpty(keyword))
-                query = query.Where(x => x.Name.Contains(keyword) || x.Code.Contains(keyword));
-
-            if (categoryId.HasValue)
-                query = query.Where(x => x.CategoryId == categoryId.Value);
+           
 
             int totalRow = query.Count();
             switch (sortBy)
@@ -100,9 +88,7 @@ namespace TeduCore.Application.ECommerce.Products
                     query = query.OrderByDescending(x => x.Price);
                     break;
 
-                case "name":
-                    query = query.OrderBy(x => x.Name);
-                    break;
+               
 
                 case "lastest":
                     query = query.OrderByDescending(x => x.DateCreated);
@@ -164,7 +150,7 @@ namespace TeduCore.Application.ECommerce.Products
 
         public List<ProductViewModel> GetHotProduct(int top)
         {
-            return _productRepository.GetAll().Where(x => x.Status == Status.Actived && x.HotFlag == true)
+            return _productRepository.GetAll().Where(x => x.Status == Status.Actived)
                 .OrderByDescending(x => x.DateCreated)
                 .Take(top)
                 .ProjectTo<ProductViewModel>()
@@ -173,17 +159,11 @@ namespace TeduCore.Application.ECommerce.Products
 
         public List<ProductViewModel> GetListProductByCategoryIdPaging(Guid categoryId, int page, int pageSize, string sort, out int totalRow)
         {
-            var query = _productRepository.GetAll().Where(x => x.Status == Status.Actived && x.CategoryId == categoryId);
+            var query = _productRepository.GetAll().Where(x => x.Status == Status.Actived);
 
             switch (sort)
             {
-                case "popular":
-                    query = query.OrderByDescending(x => x.ViewCount);
-                    break;
-
-                case "discount":
-                    query = query.OrderByDescending(x => x.PromotionPrice.HasValue);
-                    break;
+              
 
                 case "price":
                     query = query.OrderBy(x => x.Price);
@@ -203,24 +183,16 @@ namespace TeduCore.Application.ECommerce.Products
 
         public List<string> GetListProductByName(string name)
         {
-            return _productRepository.GetAll().Where(x => x.Status == Status.Actived
-            && x.Name.Contains(name)).Select(y => y.Name).ToList();
+            return _productRepository.GetAll().Where(x => x.Status == Status.Actived).Select(y => y.Model).ToList();
         }
 
         public List<ProductViewModel> Search(string keyword, int page, int pageSize, string sort, out int totalRow)
         {
-            var query = _productRepository.GetAll().Where(x => x.Status == Status.Actived
-            && x.Name.Contains(keyword));
+            var query = _productRepository.GetAll().Where(x => x.Status == Status.Actived);
 
             switch (sort)
             {
-                case "popular":
-                    query = query.OrderByDescending(x => x.ViewCount);
-                    break;
-
-                case "discount":
-                    query = query.OrderByDescending(x => x.PromotionPrice.HasValue);
-                    break;
+                
 
                 case "price":
                     query = query.OrderBy(x => x.Price);
@@ -243,7 +215,7 @@ namespace TeduCore.Application.ECommerce.Products
         {
             var product = _productRepository.GetById(id);
             return _productRepository.GetAll().Where(x => x.Status == Status.Actived
-                && x.Id != id && x.CategoryId == product.CategoryId)
+                && x.Id != id )
             .OrderByDescending(x => x.DateCreated)
             .Take(top)
             .ProjectTo<ProductViewModel>()
@@ -261,10 +233,7 @@ namespace TeduCore.Application.ECommerce.Products
         public void IncreaseView(Guid id)
         {
             var product = _productRepository.GetById(id);
-            if (product.ViewCount.HasValue)
-                product.ViewCount += 1;
-            else
-                product.ViewCount = 1;
+           
         }
 
         public List<ProductViewModel> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow)
@@ -292,7 +261,7 @@ namespace TeduCore.Application.ECommerce.Products
         {
             IQueryable<ProductViewModel> query;
             if (!string.IsNullOrEmpty(keyword))
-                query = _productRepository.GetAll().Where(x => x.Name.Contains(keyword)).ProjectTo<ProductViewModel>();
+                query = _productRepository.GetAll().ProjectTo<ProductViewModel>();
             else
                 query = _productRepository.GetAll().ProjectTo<ProductViewModel>();
             return query.ToList();
@@ -313,24 +282,17 @@ namespace TeduCore.Application.ECommerce.Products
                 for (int i = workSheet.Dimension.Start.Row + 1; i <= workSheet.Dimension.End.Row; i++)
                 {
                     product = new Product();
-                    product.CategoryId = categoryId;
-                    product.Name = workSheet.Cells[i, 1].Value.ToString();
-                    product.Description = workSheet.Cells[i, 2].Value.ToString();
+                   
                     decimal.TryParse(workSheet.Cells[i, 3].Value.ToString(), out var originalPrice);
-                    product.OriginalPrice = originalPrice;
                     decimal.TryParse(workSheet.Cells[i, 4].Value.ToString(), out var price);
                     product.Price = price;
                     decimal.TryParse(workSheet.Cells[i, 5].Value.ToString(), out var promotionPrice);
 
-                    product.PromotionPrice = promotionPrice;
-                    product.Content = workSheet.Cells[i, 6].Value.ToString();
-                    product.SeoKeywords = workSheet.Cells[i, 7].Value.ToString();
-
-                    product.SeoDescription = workSheet.Cells[i, 8].Value.ToString();
+               
                     bool.TryParse(workSheet.Cells[i, 9].Value.ToString(), out var hotFlag);
-                    product.HotFlag = hotFlag;
+                
                     bool.TryParse(workSheet.Cells[i, 10].Value.ToString(), out var homeFlag);
-                    product.HomeFlag = homeFlag;
+                    
 
                     product.Status = Status.Actived;
 
@@ -361,7 +323,7 @@ namespace TeduCore.Application.ECommerce.Products
 
         public List<ProductViewModel> GetUpsellProducts(int top)
         {
-            return _productRepository.GetAll().Where(x => x.PromotionPrice != null)
+            return _productRepository.GetAll()
                 .OrderByDescending(x => x.DateModified)
                 .Take(top)
                 .ProjectTo<ProductViewModel>().ToList();

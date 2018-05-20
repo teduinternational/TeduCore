@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using TeduCore.Data.Interfaces;
 using TeduCore.Infrastructure.SharedKernel;
 
-namespace TeduCore.Data.Entities
+namespace TeduCore.Data.Entities.ECommerce
 {
-    [Table("ProductImages")]
+    [Table("EComProductImages")]
     public class ProductImage : DomainEntity<Guid>,ISortable
     {
         public Guid ProductId { get; set; }

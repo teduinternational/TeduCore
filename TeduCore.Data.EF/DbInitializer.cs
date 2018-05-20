@@ -151,58 +151,7 @@ namespace TeduCore.Data.EF
                 _context.Slides.AddRange(slides);
             }
 
-            if (!_context.ProductCategories.Any())
-            {
-                var id1 = Guid.NewGuid();
-                var id2 = Guid.NewGuid();
-                var id3 = Guid.NewGuid();
-                var id4 = Guid.NewGuid();
-                List<ProductCategory> listProductCategory = new List<ProductCategory>()
-                {
-                    new ProductCategory() { Id = Guid.NewGuid(), Name="Áo nam",SeoAlias="ao-nam",ParentId = null,Status=Status.Actived,SortOrder=1},
-                    new ProductCategory() { Id = Guid.NewGuid(), Name="Áo nữ",SeoAlias="ao-nu",ParentId = null,Status=Status.Actived ,SortOrder=2 },
-                    new ProductCategory() { Id = Guid.NewGuid(), Name="Giày nam",SeoAlias="giay-nam",ParentId = null,Status=Status.Actived ,SortOrder=3 },
-                    new ProductCategory() { Id = Guid.NewGuid(), Name="Giày nữ",SeoAlias="giay-nu",ParentId = null,Status=Status.Actived,SortOrder=4 }
-                };
-                var list1 = new List<Product>()
-                        {
-                            new Product(){CategoryId = id1, Name = "Sản phẩm 11",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-11",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){CategoryId = id1,Name = "Sản phẩm 12",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-12",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){CategoryId = id1,Name = "Sản phẩm 13",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-13",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){CategoryId = id1,Name = "Sản phẩm 14",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-14",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){CategoryId = id1,Name = "Sản phẩm 15",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-15",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                        };
-                var list2 = new List<Product>()
-                        {
-                            new Product(){CategoryId = id2,Name = "Sản phẩm 6",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-6",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){CategoryId = id2,Name = "Sản phẩm 7",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-7",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){CategoryId = id2,Name = "Sản phẩm 8",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-8",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){CategoryId = id2,Name = "Sản phẩm 9",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-9",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product(){CategoryId = id2,Name = "Sản phẩm 10",ThumbnailImage="/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-10",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                        };
-                var list3 = new List<Product>()
-                        {
-                            new Product() {CategoryId = id3, Name = "Sản phẩm 1",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-1",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product() {CategoryId = id3, Name = "Sản phẩm 2",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-2",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product() {CategoryId = id3, Name = "Sản phẩm 3",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-3",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product() {CategoryId = id3, Name = "Sản phẩm 4",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-4",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product() {CategoryId = id3, Name = "Sản phẩm 5",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-5",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                        };
-                var list4 = new List<Product>()
-                        {
-                            new Product() { CategoryId = id4,Name = "Sản phẩm 16",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-16",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product() { CategoryId = id4,Name = "Sản phẩm 17",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-17",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product() { CategoryId = id4,Name = "Sản phẩm 18",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-18",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product() { CategoryId = id4,Name = "Sản phẩm 19",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-19",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                            new Product() { CategoryId = id4,Name = "Sản phẩm 20",ThumbnailImage = "/client-side/images/products/product-1.jpg",SeoAlias = "san-pham-20",Price = 1000,Status = Status.Actived,OriginalPrice = 1000},
-                        };
-
-                _context.ProductCategories.AddRange(listProductCategory);
-                _context.Products.AddRange(list1);
-                _context.Products.AddRange(list2);
-                _context.Products.AddRange(list3);
-                _context.Products.AddRange(list4);
-            }
+           
 
             if (!_context.SystemConfigs.Any(x => x.UniqueCode == "HomeTitle"))
             {

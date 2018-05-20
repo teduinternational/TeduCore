@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using TeduCore.Application.Dtos;
 using TeduCore.Application.ECommerce.Products.Dtos;
-using TeduCore.Data.Entities;
+using TeduCore.Data.Entities.ECommerce;
 using TeduCore.Utilities.Dtos;
 
 namespace TeduCore.Application.ECommerce.Products
 {
     public interface IProductService : IWebServiceBase<Product, Guid, ProductViewModel>
     {
-
         PagedResult<ProductViewModel> GetAllPaging(Guid? categoryId, string keyword, int page, int pageSize, string sortBy);
 
         List<ProductViewModel> GetLastest(int top);
