@@ -5,7 +5,7 @@ using TeduCore.Application.ECommerce.Products;
 using TeduCore.Application.Systems.Commons;
 using TeduCore.Data.Enums;
 using TeduCore.WebApp.Models;
-using TTeduCore.Application.Content.Posts;
+using TeduCore.Application.Content.Posts;
 
 namespace TeduCore.WebApp.Controllers
 {

@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using TeduCore.Infrastructure.Enums;
 
 namespace TeduCore.Application.Systems.Functions.Dtos
 {
     public class FunctionViewModel
     {
+        public FunctionViewModel()
+        {
+            ChildFunctions = new List<FunctionViewModel>();
+        }
+
         public Guid Id { set; get; }
 
         [Required]
@@ -25,5 +29,7 @@ namespace TeduCore.Application.Systems.Functions.Dtos
         public Status Status { set; get; }
 
         public string IconCss { get; set; }
+
+        public List<FunctionViewModel> ChildFunctions { get; set; }
     }
 }

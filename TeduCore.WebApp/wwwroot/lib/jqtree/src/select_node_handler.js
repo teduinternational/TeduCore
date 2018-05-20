@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var SelectNodeHandler = /** @class */ (function () {
+var SelectNodeHandler = (function () {
     function SelectNodeHandler(tree_widget) {
         this.tree_widget = tree_widget;
         this.clear();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -61,7 +62,6 @@ namespace TeduCore.WebApi.Controllers
                     new Claim("permissions",""),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
-                _logger.LogError(_config["Tokens"]);
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -70,7 +70,6 @@ namespace TeduCore.WebApi.Controllers
                     claims,
                     expires: DateTime.UtcNow.AddMinutes(30),
                     signingCredentials: creds);
-                _logger.LogInformation(1, "User logged in.");
 
                 return new OkObjectResult(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
             }

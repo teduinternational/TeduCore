@@ -13,13 +13,12 @@ using TeduCore.Infrastructure.Interfaces;
 
 namespace TeduCore.Application.Systems.Functions
 {
-    public class FunctionService : IFunctionService
+    public class FunctionService : WebServiceBase<Function, Guid, FunctionViewModel>, IFunctionService
     {
         private IRepository<Function, Guid> _functionRepository;
         private IRepository<Permission, Guid> _permissionRepository;
         private RoleManager<AppRole> _roleManager;
         private UserManager<AppUser> _userManager;
-        private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public FunctionService(IMapper mapper,
@@ -27,36 +26,18 @@ namespace TeduCore.Application.Systems.Functions
               UserManager<AppUser> userManager,
              IRepository<Permission, Guid> permissionRepository,
             IRepository<Function, Guid> functionRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork) : base(functionRepository, unitOfWork)
         {
             _functionRepository = functionRepository;
             _userManager = userManager;
             _roleManager = roleManager;
             _permissionRepository = permissionRepository;
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         public bool CheckExistedId(Guid id)
         {
             return _functionRepository.GetById(id) != null;
-        }
-
-        public void Add(FunctionViewModel functionVm)
-        {
-            var function = _mapper.Map<Function>(functionVm);
-            _functionRepository.Insert(function);
-        }
-
-        public void Delete(Guid id)
-        {
-            _functionRepository.Delete(id);
-        }
-
-        public FunctionViewModel GetById(Guid id)
-        {
-            var function = _functionRepository.Single(x => x.Id == id);
-            return Mapper.Map<Function, FunctionViewModel>(function);
         }
 
         public Task<List<FunctionViewModel>> GetAll(string filter)
@@ -67,9 +48,11 @@ namespace TeduCore.Application.Systems.Functions
             return query.OrderBy(x => x.ParentId).ProjectTo<FunctionViewModel>().ToListAsync();
         }
 
-        public IEnumerable<FunctionViewModel> GetAllWithParentId(Guid? parentId)
+        public List<FunctionViewModel> GetAllWithParentId(Guid? parentId)
         {
-            return _functionRepository.GetAll().Where(x => x.ParentId == parentId).ProjectTo<FunctionViewModel>();
+            return _functionRepository.GetAll()
+                .Where(x => x.ParentId == parentId)
+                .ProjectTo<FunctionViewModel>().ToList();
         }
 
         public async Task<List<FunctionViewModel>> GetAllWithPermission(string userName)
@@ -88,17 +71,6 @@ namespace TeduCore.Application.Systems.Functions
             query = query.Union(_functionRepository.GetAll().Where(f => parentIds.Contains(f.Id)));
 
             return await query.OrderBy(x => x.ParentId).ProjectTo<FunctionViewModel>().ToListAsync();
-        }
-
-        public void Save()
-        {
-            _unitOfWork.Commit();
-        }
-
-        public void Update(FunctionViewModel functionVm)
-        {
-            var functionDb = _functionRepository.GetById(functionVm.Id);
-            var function = _mapper.Map<Function>(functionVm);
         }
 
         public void ReOrder(Guid sourceId, Guid targetId)

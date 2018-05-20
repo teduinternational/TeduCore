@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TeduCore.Services.Dapper.ViewModels;
+using TeduCore.Application.Dapper.Reports.Dtos;
 
-namespace TeduCore.Services.Dapper.Interfaces
+namespace TeduCore.Application.Dapper.Reports
 {
     public interface IReportService
     {

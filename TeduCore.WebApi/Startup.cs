@@ -10,8 +10,11 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Reflection;
 using System.Text;
+using TeduCore.Application;
 using TeduCore.Application.ECommerce.ProductCategories;
+using TeduCore.Application.Systems.Functions;
 using TeduCore.Data.EF;
 using TeduCore.Data.Entities;
 using TeduCore.Infrastructure.Interfaces;
@@ -68,6 +71,14 @@ namespace TeduCore.WebApi
                     Contact = new Contact { Name = "ToanBN", Email = "tedu.international@gmail.com", Url = "http://www.tedu.com.vn" },
                     License = new License { Name = "MIT", Url = "https://github.com/teduinternational/teducoreapp" }
                 });
+
+                s.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
             });
 
             services.AddCors(o => o.AddPolicy("TeduCorsPolicy", builder =>
@@ -98,12 +109,21 @@ namespace TeduCore.WebApi
             services.AddSingleton(Mapper.Configuration);
             services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService));
             services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
+            services.AddTransient(typeof(IRepository<,>), typeof(EFRepository<,>));
 
             services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
+            services.AddTransient(typeof(IWebServiceBase<,,>),typeof(WebServiceBase<,,>));
 
+<<<<<<< HEAD
            
+=======
+            services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            services.AddTransient<IFunctionService, FunctionService>();
+
+            services.AddTransient<DbInitializer>();
+>>>>>>> origin/develop
 
             services.AddMvc()
                 .AddViewLocalization()
@@ -114,6 +134,8 @@ namespace TeduCore.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseAuthentication();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -127,10 +149,11 @@ namespace TeduCore.WebApi
             });
             app.UseCors("TeduCorsPolicy");
 
-            app.UseAuthentication();
             app.UseMvc();
             app.UseSwagger();
             app.UseStaticFiles();
+
+            // Enable the Swagger UI middleware and the Swagger generator
             app.UseSwaggerUI(s =>
             {
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "Project API v1.1");

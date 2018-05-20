@@ -19,14 +19,14 @@ namespace TeduCore.Application
     /// <typeparam name="TEntity">Main entity for WS</typeparam>
     /// <typeparam name="TPrimaryKey">Primary key type for main entity</typeparam>
     /// <typeparam name="ViewModel">View Model class</typeparam>
-    public abstract class WebServiceBase<TEntity, TPrimaryKey, ViewModel> : IWebServiceBase<TEntity, TPrimaryKey, ViewModel>
+    public class WebServiceBase<TEntity, TPrimaryKey, ViewModel> : IWebServiceBase<TEntity, TPrimaryKey, ViewModel>
         where ViewModel : class
         where TEntity : DomainEntity<TPrimaryKey>
     {
         private readonly IRepository<TEntity, TPrimaryKey> _repository;
         private readonly IUnitOfWork _unitOfWork;
 
-        protected WebServiceBase(IRepository<TEntity, TPrimaryKey> repository, IUnitOfWork unitOfWork)
+        public WebServiceBase(IRepository<TEntity, TPrimaryKey> repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;

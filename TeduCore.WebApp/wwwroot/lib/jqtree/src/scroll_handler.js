@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var ScrollHandler = /** @class */ (function () {
+var ScrollHandler = (function () {
     function ScrollHandler(tree_widget) {
         this.tree_widget = tree_widget;
         this.previous_top = -1;

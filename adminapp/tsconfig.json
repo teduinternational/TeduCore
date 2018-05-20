@@ -12,6 +12,11 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "paths": {
+      "@environments/*": [ "./src/environments/*" ],
+      "@shared/*": [ "./src/shared/*" ],
+      "@node_modules/*": [ "../node_modules/*" ]
+    },
     "lib": [
       "es2017",
       "dom"

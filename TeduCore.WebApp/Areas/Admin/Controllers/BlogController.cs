@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TeduCore.Application.Content.Posts.Dtos;
 using TeduCore.Utilities.Helpers;
-using TTeduCore.Application.Content.Posts;
+using TeduCore.Application.Content.Posts;
 
 namespace TeduCore.WebApp.Areas.Admin.Controllers
 {

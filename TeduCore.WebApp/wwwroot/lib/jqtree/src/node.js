@@ -28,7 +28,7 @@ function getPosition(name) {
     return exports.position_names[name];
 }
 exports.getPosition = getPosition;
-var Node = /** @class */ (function () {
+var Node = (function () {
     function Node(o, is_root, node_class) {
         if (is_root === void 0) { is_root = false; }
         if (node_class === void 0) { node_class = Node; }

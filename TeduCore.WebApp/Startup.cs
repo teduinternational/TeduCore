@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using System;
+<<<<<<< HEAD
 using TeduCore.Application.Content.Contacts;
 using TeduCore.Application.Content.Feedbacks;
 using TeduCore.Application.Content.Pages;
@@ -22,16 +23,15 @@ using TeduCore.Application.Systems.Commons;
 using TeduCore.Application.Systems.Functions;
 using TeduCore.Application.Systems.Roles;
 using TeduCore.Application.Systems.Users;
+=======
+>>>>>>> origin/develop
 using TeduCore.Data.EF;
 using TeduCore.Data.Entities;
 using TeduCore.Infrastructure.Interfaces;
-using TeduCore.Services.Dapper.Implementation;
-using TeduCore.Services.Dapper.Interfaces;
 using TeduCore.WebApp.Authorization;
 using TeduCore.WebApp.Extensions;
 using TeduCore.WebApp.Helpers;
 using TeduCore.WebApp.Services;
-using TTeduCore.Application.Content.Posts;
 
 namespace TeduCore.WebApp
 {
@@ -114,6 +114,7 @@ namespace TeduCore.WebApp
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IViewRenderService, ViewRenderService>();
 
+<<<<<<< HEAD
             services.AddTransient<IFunctionService, FunctionService>();
             services.AddTransient<IProductService, ProductService>();
             
@@ -129,11 +130,16 @@ namespace TeduCore.WebApp
             services.AddTransient<IFeedbackService, FeedbackService>();
             services.AddTransient<IReportService, ReportService>();
 
+=======
+>>>>>>> origin/develop
             services.AddTransient<IAuthorizationHandler, BaseResourceAuthorizationHandler>();
 
             // Add application services.
             services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
             services.AddScoped(typeof(IRepository<,>), typeof(EFRepository<,>));
+            
+            //Register for service
+            ServiceRegister.Register(services);
 
             services.AddTransient<DbInitializer>();
 

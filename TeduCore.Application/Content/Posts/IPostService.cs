@@ -6,7 +6,7 @@ using TeduCore.Application.Dtos;
 using TeduCore.Data.Entities;
 using TeduCore.Utilities.Dtos;
 
-namespace TTeduCore.Application.Content.Posts
+namespace TeduCore.Application.Content.Posts
 {
     public interface IPostService : IWebServiceBase<Post,Guid,PostViewModel>
     {
