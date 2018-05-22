@@ -5,7 +5,6 @@ using TeduCore.Application.Content.Pages;
 using TeduCore.Application.Content.Posts;
 using TeduCore.Application.Content.Slides;
 using TeduCore.Application.Dapper.Reports;
-using TeduCore.Application.ECommerce.Bills;
 using TeduCore.Application.ECommerce.ProductCategories;
 using TeduCore.Application.ECommerce.Products;
 using TeduCore.Application.Systems.Commons;
@@ -21,13 +20,11 @@ namespace TeduCore.WebApi
         {
             services.AddTransient<IFunctionService, FunctionService>();
             services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<IProductCategoryService, ProductCategoryService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<IPageService, PageService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
-            services.AddTransient<IBillService, BillService>();
             services.AddTransient<ISlideService, SlideService>();
             services.AddTransient<IPageService, PageService>();
 
