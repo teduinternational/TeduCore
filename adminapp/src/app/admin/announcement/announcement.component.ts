@@ -7,8 +7,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-announcement',
-  templateUrl: './announcement.component.html',
-  styleUrls: ['./announcement.component.css']
+  templateUrl: './announcement.component.html'
 })
 export class AnnouncementComponent implements OnInit {
 

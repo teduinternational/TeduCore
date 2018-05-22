@@ -1,22 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminRoutingModule } from './admin-routing.module';
-import { FunctionComponent } from './function/function.component'
+import { adminRoutes } from './admin.routes';
+import { FunctionModule } from './function/function.module';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
 import { TreeModule } from 'angular-tree-component';
-import { UserModule } from './user/user.module';
+import { Router, RouterModule } from '@angular/router';
+import { AdminComponent } from './admin.component';
+
+import { UtilityService } from '@shared/services/utility.service';
+import { AuthenService } from '@shared/services/authen.service';
+import { SignalrService } from '@shared/services/signalr.service';
 
 @NgModule({
   imports: [
     CommonModule,
-    AdminRoutingModule,
     FormsModule,
     ModalModule,
     TreeModule,
-    UserModule
+    FunctionModule,
+    RouterModule.forChild(adminRoutes)
   ],
-  declarations: [FunctionComponent],
-  providers: []
+  declarations: [AdminComponent],
+  providers: [UtilityService, AuthenService, SignalrService]
 })
 export class AdminModule { }

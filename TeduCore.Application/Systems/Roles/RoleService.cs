@@ -64,7 +64,7 @@ namespace TeduCore.Application.Systems.Roles
             return await _roleManager.Roles.ProjectTo<AppRoleViewModel>().ToListAsync();
         }
 
-        public PagedResult<AppRoleViewModel> GetAllPagingAsync(string keyword, int page, int pageSize)
+        public async Task<PagedResult<AppRoleViewModel>> GetAllPagingAsync(string keyword, int page, int pageSize)
         {
             var query = _roleManager.Roles;
             if (!string.IsNullOrEmpty(keyword))
@@ -75,7 +75,7 @@ namespace TeduCore.Application.Systems.Roles
             query = query.Skip((page - 1) * pageSize)
                .Take(pageSize);
 
-            var data = query.ProjectTo<AppRoleViewModel>().ToList();
+            var data = await query.ProjectTo<AppRoleViewModel>().ToListAsync();
             var paginationSet = new PagedResult<AppRoleViewModel>()
             {
                 Results = data,
@@ -131,7 +131,7 @@ namespace TeduCore.Application.Systems.Roles
 
         public async Task UpdateAsync(AppRoleViewModel roleVm)
         {
-            var role = await _roleManager.FindByIdAsync(roleVm.Id);
+            var role = await _roleManager.FindByIdAsync(roleVm.Id.ToString());
             role.Description = roleVm.Description;
             role.Name = roleVm.Name;
             await _roleManager.UpdateAsync(role);

@@ -116,8 +116,9 @@ namespace TeduCore.WebApi
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient(typeof(IWebServiceBase<,,>),typeof(WebServiceBase<,,>));
 
-            
+            services.AddTransient<IProductCategoryService, ProductCategoryService>();
             services.AddTransient<IFunctionService, FunctionService>();
+            ServiceRegister.Register(services);
 
             services.AddTransient<DbInitializer>();
 

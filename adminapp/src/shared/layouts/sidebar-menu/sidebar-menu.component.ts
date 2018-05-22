@@ -20,7 +20,6 @@ export class SidebarMenuComponent implements OnInit, AfterViewChecked {
                 return 0;
             });
             this.functions = data;
-            console.log(data);
         }, error => this.dataService.handleError(error));
     }
 
