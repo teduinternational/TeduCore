@@ -32,7 +32,7 @@ namespace TeduCore.WebApp.Controllers
             ViewData["BodyClass"] = "cms-index-index cms-home-page";
             var homeVm = new HomeViewModel
             {
-                HomeCategories = _productCategoryService.GetHomeCategories(5),
+                //HomeCategories = _productCategoryService.GetHomeCategories(5),
                 HotProducts = _productService.GetHotProduct(5),
                 TopSellProducts = _productService.GetLastest(5),
                 LastestBlogs = _blogService.GetLastest(5),

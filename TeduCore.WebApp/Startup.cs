@@ -10,21 +10,17 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using System;
-<<<<<<< HEAD
 using TeduCore.Application.Content.Contacts;
 using TeduCore.Application.Content.Feedbacks;
 using TeduCore.Application.Content.Pages;
 using TeduCore.Application.Content.Posts;
 using TeduCore.Application.Content.Slides;
-using TeduCore.Application.ECommerce.ProductCategories;
+using TeduCore.Application.Dapper.Reports;
 using TeduCore.Application.ECommerce.Products;
-using TeduCore.Application.Implementation;
 using TeduCore.Application.Systems.Commons;
 using TeduCore.Application.Systems.Functions;
 using TeduCore.Application.Systems.Roles;
 using TeduCore.Application.Systems.Users;
-=======
->>>>>>> origin/develop
 using TeduCore.Data.EF;
 using TeduCore.Data.Entities;
 using TeduCore.Infrastructure.Interfaces;
@@ -114,10 +110,9 @@ namespace TeduCore.WebApp
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IViewRenderService, ViewRenderService>();
 
-<<<<<<< HEAD
             services.AddTransient<IFunctionService, FunctionService>();
             services.AddTransient<IProductService, ProductService>();
-            
+
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<IPageService, PageService>();
@@ -130,14 +125,12 @@ namespace TeduCore.WebApp
             services.AddTransient<IFeedbackService, FeedbackService>();
             services.AddTransient<IReportService, ReportService>();
 
-=======
->>>>>>> origin/develop
             services.AddTransient<IAuthorizationHandler, BaseResourceAuthorizationHandler>();
 
             // Add application services.
             services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
             services.AddScoped(typeof(IRepository<,>), typeof(EFRepository<,>));
-            
+
             //Register for service
             ServiceRegister.Register(services);
 
