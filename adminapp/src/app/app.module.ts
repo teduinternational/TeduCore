@@ -5,10 +5,12 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, ChildrenOutletContexts } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+
 import { SidebarMenuComponent } from '@shared/layouts/sidebar-menu/sidebar-menu.component';
 import { TopMenuComponent } from '@shared/layouts/top-menu/top-menu.component';
 import { AuthGuard } from '@shared/guards/auth.guard';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+
 import { AuthenService } from '@shared/services/authen.service';
 import { NotificationService } from '@shared/services/notification.service';
 import { DataService } from '@shared/services/data.service';

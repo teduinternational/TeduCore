@@ -4,12 +4,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TeduCore.Application.Systems.Permissions.Dtos;
 using TeduCore.Application.Systems.Roles.Dtos;
-using TeduCore.Application.ViewModels;
+using TeduCore.Data.Entities;
 using TeduCore.Utilities.Dtos;
 
 namespace TeduCore.Application.Systems.Roles
 {
-    public interface IRoleService
+    public interface IRoleService 
     {
         Task<bool> AddAsync(AppRoleViewModel userVm);
 
@@ -17,7 +17,7 @@ namespace TeduCore.Application.Systems.Roles
 
         Task<List<AppRoleViewModel>> GetAllAsync();
 
-        PagedResult<AppRoleViewModel> GetAllPagingAsync(string keyword, int page, int pageSize);
+        Task<PagedResult<AppRoleViewModel>> GetAllPagingAsync(string keyword, int page, int pageSize);
 
         Task<AppRoleViewModel> GetById(Guid id);
 

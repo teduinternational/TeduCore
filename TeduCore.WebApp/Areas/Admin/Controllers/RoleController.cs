@@ -54,7 +54,7 @@ namespace TeduCore.WebApp.Areas.Admin.Controllers
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
                 return new BadRequestObjectResult(allErrors);
             }
-            if (string.IsNullOrWhiteSpace(roleVm.Id))
+            if (roleVm.Id == Guid.Empty)
             {
                 await _roleService.AddAsync(roleVm);
             }

@@ -7,13 +7,15 @@ import { NotificationService } from '@shared/services/notification.service';
 import { PaginationModule  } from 'ngx-bootstrap/pagination';
 import {FormsModule} from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { RoleAddEditComponent } from './role-add-edit/role-add-edit.component';
 
 const roleRoutes: Routes = [
-  //localhost:4200/main/user
   { path: '', redirectTo: 'index', pathMatch: 'full' },
-  //localhost:4200/main/home/index
-  { path: 'index', component: RoleComponent }
+  { path: 'index', component: RoleComponent },
+  { path: 'add', component: RoleAddEditComponent },
+  { path: 'edit/:id', component: RoleAddEditComponent },
 ]
+
 @NgModule({
   imports: [
     CommonModule,
@@ -22,7 +24,7 @@ const roleRoutes: Routes = [
     ModalModule.forRoot(),
     RouterModule.forChild(roleRoutes)
   ],
-  declarations: [RoleComponent],
+  declarations: [RoleComponent, RoleAddEditComponent],
   providers:[DataService,NotificationService]
 })
 export class RoleModule { }
