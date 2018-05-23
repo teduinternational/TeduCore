@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TeduCore.Application.Systems.Functions;
 using TeduCore.Application.Systems.Functions.Dtos;
-
+using TeduCore.WebApi.Authorization;
 
 namespace TeduCore.WebApi.Controllers
 {
@@ -17,7 +17,7 @@ namespace TeduCore.WebApi.Controllers
             _functionService = functionService;
         }
 
-        // GET: /<controller>/
+        [Authorize(PermissionItem.Function, PermissionAction.Read)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
