@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-TeduCore.WebApp-335984DF-E2C0-4E8C-95DA-DAA5EC2A6341</UserSecretsId>
-    <TypeScriptToolsVersion>2.6</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.4</TypeScriptToolsVersion>
     <BaseNuGetRuntimeIdentifier>win7-x64</BaseNuGetRuntimeIdentifier>
     <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
