@@ -1,0 +1,8 @@
+[
+  {
+    "outputFileName": "wwwroot/app/modules/role/index.min.js",
+    "inputFiles": [
+      "wwwroot/app/modules/role/index.js"
+    ]
+  }
+]
