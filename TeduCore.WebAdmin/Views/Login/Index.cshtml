@@ -20,6 +20,10 @@
     <!-- Bootstrap Core Css -->
     <link href="/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2018.2.516/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2018.2.516/styles/kendo.blueopal.min.css" />
+
+
     <!-- Waves Effect Css -->
     <link href="/plugins/node-waves/waves.css" rel="stylesheet" />
 
@@ -30,8 +34,10 @@
     <link href="/css/style.css" rel="stylesheet">
 </head>
 
-<body class="login-page">
-    <div class="login-box" id="login-view">
+<body class="login-page" id="login-view">
+    <div data-role="notification" id="notificationContent"></div>
+    <div class="login-box" >
+
         <div class="logo">
             <a href="javascript:void(0);">Admin<b>BSB</b></a>
             <small>Admin BootStrap Based - Material Design</small>
@@ -58,11 +64,11 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-8 p-t-5">
-                            <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
-                            <label for="rememberme">Remember Me</label>
+                            <input type="checkbox" name="rememberme" data-bind="checked: isRememberMe" id="rememberme" class="filled-in chk-col-pink">
+                            <label for="rememberme" >Remember Me</label>
                         </div>
                         <div class="col-xs-4">
-                            <button class="btn btn-block bg-pink waves-effect" data-bind="click: events.login">SIGN IN</button>
+                            <button class="btn btn-block bg-pink waves-effect" type="button" data-bind="click: events.login">SIGN IN</button>
                         </div>
                     </div>
                     <div class="row m-t-15 m-b--20">
@@ -97,7 +103,9 @@
     <script src="/js/pages/examples/sign-in.js"></script>
 
     <script src="~/app/shared/settings.js"></script>
+    <script src="~/app/shared/notification.js"></script>
     <script src="~/app/modules/login/index.js" asp-append-version="true"></script>
+
     <script>
         var loginObj = new LoginController();
         loginObj.initialize();

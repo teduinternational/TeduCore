@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,10 @@ namespace TeduCore.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add localization based on JSON files.
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AppDbConnection"),
                     b => b.MigrationsAssembly("TeduCore.Data.EF")));
@@ -59,7 +64,7 @@ namespace TeduCore.WebApi
                 options.User.RequireUniqueEmail = true;
             });
 
-            services.AddMvc();
+            services.AddMvc().AddDataAnnotationsLocalization(); ;
 
             services.AddSwaggerGen(s =>
             {

@@ -48,7 +48,7 @@ namespace TeduCore.WebApi.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
                 if (!result.Succeeded)
                 {
-                    return new BadRequestObjectResult(result.ToString());
+                    return new BadRequestObjectResult("Mật khẩu không đúng");
                 }
                 var roles = await _userManager.GetRolesAsync(user);
                 var claims = new[]
@@ -73,7 +73,7 @@ namespace TeduCore.WebApi.Controllers
 
                 return new OkObjectResult(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
             }
-            return new BadRequestObjectResult("Login failure");
+            return new NotFoundObjectResult($"Không tìm thấy tài khoản {model.UserName}");
         }
 
         [HttpPost]

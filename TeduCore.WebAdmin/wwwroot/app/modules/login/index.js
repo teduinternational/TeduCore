@@ -4,6 +4,7 @@
     var viewModel = kendo.observable({
         userName: "",
         password: "",
+        isRememberMe: false,
         events: {
             login: authenticate
         }
@@ -16,15 +17,21 @@
     function authenticate() {
         $.ajax({
             url: SETTINGS.API_URL + "/api/account/login",
-            data: {
-                userName: viewModel.userName,
-                password: viewModel.password
-            }, 
+            data: JSON.stringify({
+                UserName: viewModel.userName,
+                Password: viewModel.password,
+                RememberMe: viewModel.isRememberMe
+            }),
             type: 'POST',
-            contentType: 'json',
+            contentType: 'application/json',
+            dataType: 'json',
             success: function (response) {
                 var token = response.token;
                 sessionStorage.setItem(SETTINGS.TOKEN_STORAGE, token);
+                window.location.href = "/Home/Index";
+            },
+            error: function (err) {
+                notification.showError(err.responseJSON);
             }
         });
     }
