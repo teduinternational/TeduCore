@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Kendo.DynamicLinqCore2;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TeduCore.Application.Systems.Roles;
 using TeduCore.Application.Systems.Roles.Dtos;
@@ -68,9 +70,11 @@ namespace TeduCore.WebApi.Controllers
         }
         [HttpGet]
         [Route("getAllPaging")]
-        public async Task<IActionResult> GetAllPaging(int page, int pageSize, string filter = null)
+        public IActionResult GetAllPaging(int take, int skip, IEnumerable<Sort> sort,
+            Filter filter, IEnumerable<Aggregator> aggregates, IEnumerable<Group> group)
         {
-            var model = await _roleService.GetAllPagingAsync(filter, page, pageSize);
+            var model = _roleService.GetAll().ToDataSourceResult(take, skip, sort, filter, aggregates, group);
+
             return new OkObjectResult(model);
         }
 

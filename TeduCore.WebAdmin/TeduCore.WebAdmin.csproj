@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="tsconfig.json" />
+    <None Remove="file.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -230,6 +230,10 @@
     <None Include="wwwroot\pages\scripts\ui-tree.min.js" />
     <None Include="wwwroot\pages\scripts\widgets.js" />
     <None Include="wwwroot\pages\scripts\widgets.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="file.ts" />
   </ItemGroup>
 
 </Project>

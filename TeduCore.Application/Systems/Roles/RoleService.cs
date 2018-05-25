@@ -59,6 +59,11 @@ namespace TeduCore.Application.Systems.Roles
             await _roleManager.DeleteAsync(role);
         }
 
+        public IQueryable<AppRoleViewModel> GetAll()
+        {
+            return _roleManager.Roles.ProjectTo<AppRoleViewModel>();
+        }
+
         public async Task<List<AppRoleViewModel>> GetAllAsync()
         {
             return await _roleManager.Roles.ProjectTo<AppRoleViewModel>().ToListAsync();

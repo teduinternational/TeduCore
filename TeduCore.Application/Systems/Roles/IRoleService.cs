@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeduCore.Application.Systems.Permissions.Dtos;
@@ -17,10 +18,11 @@ namespace TeduCore.Application.Systems.Roles
 
         Task<List<AppRoleViewModel>> GetAllAsync();
 
+        IQueryable<AppRoleViewModel> GetAll();
+
         Task<PagedResult<AppRoleViewModel>> GetAllPagingAsync(string keyword, int page, int pageSize);
 
         Task<AppRoleViewModel> GetById(Guid id);
-
 
         Task UpdateAsync(AppRoleViewModel userVm);
 
